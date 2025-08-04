@@ -1,9 +1,10 @@
-import { Mail, Github, Linkedin } from "lucide-react";
+import { Mail, Github, Linkedin, Folder } from "lucide-react";
 
 const contacts = [
     { icon: Mail, label: 'Email', value: 'ahmadaquino.2002@gmail.com', href: 'mailto:ahmadaquino.2002@gmail.com' },
     { icon: Github, label: 'GitHub', value: 'zxcoding123', href: 'https://github.com/zxcoding123' },
     { icon: Linkedin, label: 'LinkedIn', value: 'Ahmad Aquino', href: 'https://www.linkedin.com/in/ahmad-aquino-34b318243/' },
+    { icon: Folder, label: 'Resume', value: 'View My Resume', href: 'https://drive.google.com/file/d/1YL5hLT5AwNjuxlZQtV0LwV2b0EqxqPi9/view?usp=sharing' },
 ];
 
 export function Contact() {
