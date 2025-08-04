@@ -1,9 +1,9 @@
 import { Mail, Github, Linkedin } from "lucide-react";
 
 const contacts = [
-    { icon: Mail, label: 'Email', value: 'hello@example.com', href: 'mailto:ahmadaquino.2002@gmail.com' },
-    { icon: Github, label: 'GitHub', value: 'github_username', href: 'https://github.com/zxcoding123' },
-    { icon: Linkedin, label: 'LinkedIn', value: 'linkedin_profile', href: 'https://www.linkedin.com/in/ahmad-aquino-34b318243/' },
+    { icon: Mail, label: 'Email', value: 'ahmadaquino.2002@gmail.com', href: 'mailto:ahmadaquino.2002@gmail.com' },
+    { icon: Github, label: 'GitHub', value: 'zxcoding123', href: 'https://github.com/zxcoding123' },
+    { icon: Linkedin, label: 'LinkedIn', value: 'Ahmad Aquino', href: 'https://www.linkedin.com/in/ahmad-aquino-34b318243/' },
 ];
 
 export function Contact() {
