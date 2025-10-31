@@ -80,7 +80,6 @@ export function Terminal() {
             }
         }
     };
-    
     // Initial welcome message
     useEffect(() => {
         setHistory([<Home key="home-initial" />]);
