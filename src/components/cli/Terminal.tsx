@@ -86,11 +86,7 @@ export function Terminal() {
         setHistory([<Home key="home-initial" />]);
     }, []);
 
-    useEffect(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
-    }, []);
+
 
     useEffect(() => {
         if (scrollRef.current) {
