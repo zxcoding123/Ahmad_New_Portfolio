@@ -101,7 +101,7 @@ export function Terminal() {
     return (
        <div 
   className="p-4 overflow-y-auto h-[calc(90vh-52px)]"
-  onClick={() => inputRef.current?.focus()}
+
 >
 
             <div className="bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary rounded-t-md">
