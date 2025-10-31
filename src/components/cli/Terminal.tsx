@@ -86,11 +86,7 @@ export function Terminal() {
         setHistory([<Home key="home-initial" />]);
     }, []);
 
-    useEffect(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
-    }, []);
+
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -99,11 +95,10 @@ export function Terminal() {
     }, [history]);
 
     return (
-       <div 
-  className="p-4 overflow-y-auto h-[calc(90vh-52px)]"
-
->
-
+        <div 
+            className="w-full h-[90vh] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base"
+        
+        >
             <div className="bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary rounded-t-md">
                 <div className="flex gap-2">
                     <span className="h-4 w-4 rounded-full bg-red-500"></span>
