@@ -13,19 +13,19 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const projects = [
- {
-    title: "Kanvas",
-    description: "A visual dashboard builder that allows users to create interactive, customizable data dashboards without writing code. Kanvas empowers teams, students, and organizations to turn raw data into clear, insightful visuals through a drag-and-drop workspace.",
-    tags: ["React", "Tailwind", "Node.js"],
-    live: "https://kanvas-app-landing-site.com/", 
-    repo: "",
-    images: [
-        "https://i.ibb.co/yFrY8gbR/Screenshot-2025-11-07-012834.png",
-    ],
-    aiHint: "no-code dashboard builder for data visualization"
-},
+    {
+        title: "Kanvas",
+        description: "A visual dashboard builder that allows users to create interactive, customizable data dashboards without writing code. Kanvas empowers teams, students, and organizations to turn raw data into clear, insightful visuals through a drag-and-drop workspace.",
+        tags: ["React", "Tailwind", "Node.js"],
+        live: "https://kanvas-app-landing-site.com/",
+        repo: "",
+        images: [
+            "https://i.ibb.co/yFrY8gbR/Screenshot-2025-11-07-012834.png",
+        ],
+        aiHint: "no-code dashboard builder for data visualization"
+    },
 
-     {
+    {
         title: "Lexora",
         description: "A legal support service platform designed to provide client-focused guidance for businesses and individuals. Lexora simplifies legal processes, clarifies complex requirements, and helps clients make confident and informed decisions.",
         tags: ["Webflow", "Webflow CMS"],
@@ -33,7 +33,7 @@ const projects = [
         repo: "",
         images: [
             "https://i.ibb.co/zhmMk6TY/lexxora-1.png",
-          
+
         ],
         aiHint: "client-focused legal guidance brand"
     },
