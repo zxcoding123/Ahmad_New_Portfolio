@@ -17,7 +17,7 @@ const projects = [
         title: "Kanvas",
         description: "A visual dashboard builder that allows users to create interactive, customizable data dashboards without writing code. Kanvas empowers teams, students, and organizations to turn raw data into clear, insightful visuals through a drag-and-drop workspace.",
         tags: ["React", "Tailwind", "Node.js"],
-        live: "https://kanvas-app-landing-site.com/",
+        live: "hhttps://kanvas-landing-page.vercel.app/",
         repo: "",
         images: [
             "https://i.ibb.co/yFrY8gbR/Screenshot-2025-11-07-012834.png",
