@@ -29,7 +29,7 @@ const projects = [
         title: "Lexora",
         description: "A legal support service platform designed to provide client-focused guidance for businesses and individuals. Lexora simplifies legal processes, clarifies complex requirements, and helps clients make confident and informed decisions.",
         tags: ["Webflow", "Webflow CMS"],
-        live: "https://firstplace-site.webflow.io/",
+        live: "https://lexora-site.webflow.io/",
         repo: "",
         images: [
             "https://i.ibb.co/zhmMk6TY/lexxora-1.png",
