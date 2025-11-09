@@ -8,6 +8,7 @@ import { Works } from './content/Works';
 import { Contact } from './content/Contact';
 import { NotFound } from './content/NotFound';
 
+
 export function Terminal() {
     const [input, setInput] = useState('');
     const [history, setHistory] = useState<React.ReactNode[]>([]);
