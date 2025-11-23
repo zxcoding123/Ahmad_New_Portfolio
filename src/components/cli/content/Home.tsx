@@ -14,7 +14,13 @@ export function Home() {
 `}
             </pre>
             <p>Welcome to my interactive CLI portfolio.</p>
-            <p className="mt-2">Type '<span className="text-accent-foreground bg-accent px-1 rounded">help</span>' to see the list of available commands.</p>
+            <div className="mt-4">
+                <p>
+                    I am a passionate software engineer with a knack for creating beautiful, performant, and accessible user experiences. 
+                    I love working with modern web technologies and building cool things on the internet.
+                </p>
+            </div>
+            <p className="mt-4">Type '<span className="text-accent-foreground bg-accent px-1 rounded">help</span>' to see the list of available commands.</p>
         </div>
     );
 }

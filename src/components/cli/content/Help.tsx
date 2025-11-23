@@ -8,6 +8,7 @@ const commands = [
     { cmd: 'whoami', desc: 'Alias for about.' },
     { cmd: 'projects', desc: 'Alias for works.' },
     { cmd: 'socials', desc: 'Alias for contact.' },
+    { cmd: 'theme', desc: 'Change the color theme. Usage: theme <light|dark|system>' },
 ];
 
 export function Help() {
