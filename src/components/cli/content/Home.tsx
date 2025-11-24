@@ -1,7 +1,7 @@
 export function Home() {
     return (
         <div>
-           <pre className="text-primary whitespace-pre-wrap text-[0.55rem] sm:text-xs md:text-base">
+           <pre className="text-primary whitespace-pre-wrap text-[0.55rem] sm:text-xs md:text-base text-center">
 
 {`
         _                         _                       _    __       _ _        
@@ -13,10 +13,10 @@ export function Home() {
 
 `}
             </pre>
-            <p>Welcome to my interactive CLI portfolio.</p>
+            <p className="text-center font-bold">Welcome to my interactive CLI portfolio.</p>
             <div className="mt-4">
                 <p>
-                    I am a passionate software engineer with a knack for creating beautiful, performant, and accessible user experiences. 
+                    I am a passionate web developer with a knack for creating beautiful, performant, and accessible user experiences. 
                     I love working with modern web technologies and building cool things on the internet.
                 </p>
             </div>

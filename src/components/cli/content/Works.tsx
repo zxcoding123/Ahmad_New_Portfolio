@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import { Github, Link as LinkIcon } from 'lucide-react';
@@ -20,7 +22,7 @@ const projects = [
         live: "https://kanvas-landing-page.vercel.app/",
         repo: "",
         images: [
-            "https://i.ibb.co/yFrY8gbR/Screenshot-2025-11-07-012834.png",
+            "kanvas/kanvas.png",
         ],
         aiHint: "no-code dashboard builder for data visualization"
     },
@@ -32,7 +34,7 @@ const projects = [
         live: "https://lexora-site.webflow.io/",
         repo: "",
         images: [
-            "https://i.ibb.co/zhmMk6TY/lexxora-1.png",
+            "lexora/lexora.png",
 
         ],
         aiHint: "client-focused legal guidance brand"
@@ -44,10 +46,7 @@ const projects = [
         live: "",
         repo: "",
         images: [
-            "https://i.ibb.co/QjC3xs1c/Screenshot-20241115-101805.png",
-            "https://i.ibb.co/mxLts0P/CanScan.png",
-            "https://i.ibb.co/7N0KvSmT/Screenshot-20241115-095415.png",
-            "https://i.ibb.co/Z1FhWQS1/Screenshot-20241115-095503.png"
+            "learnmate/learnmate.png"
         ],
         aiHint: "mobile app learning courseware"
     },
@@ -58,19 +57,19 @@ const projects = [
         live: "",
         repo: "",
         images: [
-            "https://i.ibb.co/kgg6nkBr/BITCRAFT-1.png",
-            "https://i.ibb.co/gLnWb2jB/BITCRAFT-2.png",
-            "https://i.ibb.co/0VVfrY5Z/BITCRAFT-3.png",
-            "https://i.ibb.co/vCf1xJf9/BITCRAFT-4.png",
-            "https://i.ibb.co/1GtVWwdP/BITCRAFT-5.png",
-            "https://i.ibb.co/F1jk95B/BITCRAFT-6.png",
-            "https://i.ibb.co/spJFt4Sq/BITCRAFT-7.png",
-            "https://i.ibb.co/qYrzwptc/BITCRAFT-8.png",
-            "https://i.ibb.co/FbrKkhgk/BITCRAFT-9.png",
-            "https://i.ibb.co/RmPdW8N/BITCRAFT-10.png",
-            "https://i.ibb.co/Y4nNJPdY/BITCRAFT-11.png",
-            "https://i.ibb.co/k6qr8x4b/BITCRAFT-12.png",
-            "https://i.ibb.co/HLvTgfR1/BITCRAFT-13.png"
+          "bitcraft/bitcraft - 1.png",
+          "bitcraft/bitcraft - 2.png",
+          "bitcraft/bitcraft - 3.png",    
+          "bitcraft/bitcraft - 4.png",
+          "bitcraft/bitcraft - 5.png",
+          "bitcraft/bitcraft - 6.png",
+          "bitcraft/bitcraft - 7.png",
+          "bitcraft/bitcraft - 8.png",
+          "bitcraft/bitcraft - 9.png",
+          "bitcraft/bitcraft - 10.png",
+          "bitcraft/bitcraft - 11.png",
+          "bitcraft/bitcraft - 12.png",
+             "bitcraft/bitcraft - 13.png",
         ],
         aiHint: "desktop courseware application"
     },
@@ -81,48 +80,48 @@ const projects = [
         live: "",
         repo: "",
         images: [
-            "https://i.ibb.co/7P83RDK/KIQNA-1.png",
-            "https://i.ibb.co/bg7Dk7wL/KIQNA-2.png",
-            "https://i.ibb.co/mnfmHHT/KIQNA-3.png",
-            "https://i.ibb.co/5x8KB5Yc/KIQNA-4.png",
-            "https://i.ibb.co/LBTLBz7/KIQNA-5.png",
-            "https://i.ibb.co/TD4W5YGF/KIQNA-6.png",
-            "https://i.ibb.co/LXrxB0TH/KIQNA-7.png",
-            "https://i.ibb.co/5WhvRcqf/KIQNA-8.png",
-            "https://i.ibb.co/2Yq4R6FK/KIQNA-9.png",
-            "https://i.ibb.co/zhWnhCKV/KIQNA-10.png",
-            "https://i.ibb.co/Ndf35vMW/KIQNA-11.png",
-            "https://i.ibb.co/hxbs0R9w/KIQNA-12.png",
-            "https://i.ibb.co/QvRnLVGj/KIQNA-13.png",
-            "https://i.ibb.co/mFYDc8qW/KIQNA-14.png",
-            "https://i.ibb.co/bpgywRY/KIQNA-15.png",
-            "https://i.ibb.co/gLfGMPHZ/KIQNA-16.png",
-            "https://i.ibb.co/dsc3L7CC/KIQNA-17.png",
-            "https://i.ibb.co/MxP21Hss/KIQNA-18.png",
-            "https://i.ibb.co/7xzfBRv4/KIQNA-19.png",
-            "https://i.ibb.co/mKghy3w/KIQNA-20.png",
-            "https://i.ibb.co/wNHLBpSx/KIQNA-21.png",
-            "https://i.ibb.co/0RGh5mhh/KIQNA-22.png",
-            "https://i.ibb.co/1t8x0qXY/KIQNA-23.png",
-            "https://i.ibb.co/zVQNGXf0/KIQNA-24.png",
-            "https://i.ibb.co/N6X64JvN/KIQNA-25.png",
-            "https://i.ibb.co/cKV1N09j/KIQNA-26.png",
-            "https://i.ibb.co/3mnhv4bB/KIQNA-27.png",
-            "https://i.ibb.co/7tCxgWKG/KIQNA-28.png",
-            "https://i.ibb.co/vCGVjL3S/KIQNA-29.png",
-            "https://i.ibb.co/sJkgC8qR/KIQNA-30.png",
-            "https://i.ibb.co/v6WcwHhb/KIQNA-31.png",
-            "https://i.ibb.co/G3TnNWqb/KIQNA-32.png",
-            "https://i.ibb.co/GZ5Fpdj/KIQNA-33.png",
-            "https://i.ibb.co/MDYj0Y9m/KIQNA-34.png",
-            "https://i.ibb.co/RpcchtdR/KIQNA-35.png",
-            "https://i.ibb.co/tw487ykp/KIQNA-36.png",
-            "https://i.ibb.co/zTtCxNdT/KIQNA-37.png",
-            "https://i.ibb.co/6JJDnDHP/KIQNA-38.png",
-            "https://i.ibb.co/7dSLWV0C/KIQNA-39.png",
-            "https://i.ibb.co/5XbbnYsr/KIQNA-40.png",
-            "https://i.ibb.co/tTttdWZ1/KIQNA-41.png",
-            "https://i.ibb.co/kVhQFHgS/KIQNA-42.png"
+           "kiqna/kiqna - 1.png",
+           "kiqna/kiqna - 2.png",
+           "kiqna/kiqna - 3.png",
+           "kiqna/kiqna - 4.png",
+           "kiqna/kiqna - 5.png",
+           "kiqna/kiqna - 6.png",
+           "kiqna/kiqna - 7.png",
+           "kiqna/kiqna - 8.png",
+           "kiqna/kiqna - 9.png",
+           "kiqna/kiqna - 10.png",
+           "kiqna/kiqna - 11.png",
+           "kiqna/kiqna - 12.png",
+           "kiqna/kiqna - 13.png",
+           "kiqna/kiqna - 14.png",
+           "kiqna/kiqna - 15.png",
+           "kiqna/kiqna - 16.png",
+           "kiqna/kiqna - 17.png",
+           "kiqna/kiqna - 18.png",
+           "kiqna/kiqna - 19.png",
+           "kiqna/kiqna - 20.png",
+           "kiqna/kiqna - 21.png",
+           "kiqna/kiqna - 22.png",
+           "kiqna/kiqna - 23.png",
+            "kiqna/kiqna - 24.png",
+            "kiqna/kiqna - 25.png",
+            "kiqna/kiqna - 26.png",
+            "kiqna/kiqna - 27.png",
+            "kiqna/kiqna - 28.png",
+            "kiqna/kiqna - 29.png",
+            "kiqna/kiqna - 30.png",
+            "kiqna/kiqna - 31.png",
+            "kiqna/kiqna - 32.png",
+            "kiqna/kiqna - 33.png",
+            "kiqna/kiqna - 34.png",
+            "kiqna/kiqna - 35.png",
+            "kiqna/kiqna - 36.png",
+            "kiqna/kiqna - 37.png",
+            "kiqna/kiqna - 38.png",
+            "kiqna/kiqna - 39.png",
+            "kiqna/kiqna - 40.png",
+            "kiqna/kiqna - 41.png",
+            "kiqna/kiqna - 42.png",
         ],
 
         aiHint: "e-commerce ecommerce project"
@@ -134,7 +133,7 @@ const projects = [
         live: "",
         repo: "",
         images: [
-            "https://i.ibb.co/4wLzw2N7/CSMS.png"
+            "csms/csms.png"
         ],
         aiHint: "mobile app learning courseware"
     },
@@ -145,7 +144,7 @@ const projects = [
         live: "https://kreyt-crypto-site.vercel.app/",
         repo: "https://github.com/zxcoding123/Kreyt_Crypto_Site/tree/main/src",
         images: [
-            "https://i.ibb.co/TMRmQxrq/Screenshot-2025-08-04-162200.png"
+            "kreyt/kreyt.png",
         ],
         aiHint: "mobile app learning courseware"
     },
@@ -156,9 +155,9 @@ const projects = [
         live: "https://islam-site-github-io.vercel.app/",
         repo: "https://github.com/zxcoding123/islam_site.github.io",
         images: [
-            "https://i.ibb.co/4w0RnQdk/Screenshot-2025-05-06-140955.png",
-            "https://i.ibb.co/Zzy1qJmM/Screenshot-2025-05-06-141034.png",
-            "https://i.ibb.co/992kd7s7/Screenshot-2025-05-06-141058.png"
+            "muslim/muslim.png",
+             "muslim/muslim-1.png",
+              "muslim/muslim-2.png",
         ],
 
         aiHint: "mobile app learning courseware"
@@ -170,7 +169,7 @@ const projects = [
         live: "https://wind-energy-site-aquino-github-io.vercel.app/",
         repo: "https://github.com/zxcoding123/Wind_Energy_Site_Aquino.github.io",
         images: [
-            "https://i.ibb.co/cKRQp5Ky/Wind-Energy.png"
+            "windy/windy.png", "windy/windy (1).png",  "windy/windy (2).png"
         ],
 
 
@@ -185,41 +184,52 @@ export function Works() {
             <div className="space-y-6">
                 {projects.map(p => (
                     <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-4 rounded-md bg-secondary">
-                        <Carousel
-                            plugins={[
-                                Autoplay({
-                                    delay: 2000,
-                                }),
-                            ]}
-                            className="w-full md:w-1/3"
-                        >
-                            <CarouselContent>
-                                {p.images.map((image, index) => (
-                                    <CarouselItem key={index}>
-                                        <Dialog>
-                                            <DialogTrigger asChild>
-                                                <img
-                                                    src={image}
-                                                    alt={`${p.title} - Image ${index + 1}`}
-                                                    className="rounded-md object-cover w-full h-[200px] cursor-pointer"
-                                                />
-                                            </DialogTrigger>
-                                            <DialogContent className="max-w-screen-md">
-                                                <DialogHeader>
-                                                    <DialogTitle>{p.title} - Image {index + 1}</DialogTitle>
-                                                </DialogHeader>
-                                                <img
-                                                    src={image}
-                                                    alt={`${p.title} - Image ${index + 1}`}
-                                                    className="object-contain w-full max-h-[80vh]"
-                                                />
-
-                                            </DialogContent>
-                                        </Dialog>
-                                    </CarouselItem>
-                                ))}
-                            </CarouselContent>
-                        </Carousel>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <div className="w-full md:w-1/3 cursor-pointer">
+                                    <Carousel
+                                        plugins={[
+                                            Autoplay({
+                                                delay: 2000,
+                                            }),
+                                        ]}
+                                    >
+                                        <CarouselContent>
+                                            {p.images.map((image, index) => (
+                                                <CarouselItem key={index}>
+                                                    <img src={image} alt={`${p.title} - Image ${index + 1}`} className="rounded-md object-cover w-full h-full" />
+                                                </CarouselItem>
+                                            ))}
+                                        </CarouselContent>
+                                    </Carousel>
+                                </div>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-screen-md">
+                                <DialogHeader>
+                                    <DialogTitle>{p.title}</DialogTitle>
+                                </DialogHeader>
+                                <Carousel
+                                    plugins={[
+                                        Autoplay({
+                                            delay: 3000,
+                                        }),
+                                    ]}
+                                    opts={{
+                                        loop: true,
+                                    }}
+                                >
+                                    <CarouselContent>
+                                        {p.images.map((image, index) => (
+                                            <CarouselItem key={index}>
+                                                <img src={image} alt={`${p.title} - Image ${index + 1}`} className="object-contain w-full h-full rounded-md" />
+                                            </CarouselItem>
+                                        ))}
+                                    </CarouselContent>
+                                    <CarouselPrevious />
+                                    <CarouselNext />
+                                </Carousel>
+                            </DialogContent>
+                        </Dialog>
                         <div className="w-full md:w-2/3 flex flex-col">
                             <h3 className="font-bold text-lg text-primary">{p.title}</h3>
                             <p className="text-sm text-muted-foreground mb-2 flex-grow">{p.description}</p>
@@ -227,37 +237,9 @@ export function Works() {
                                 {p.tags.map(tag => <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">{tag}</span>)}
                             </div>
                             <div className="flex gap-4 text-sm">
-                                {p.repo ? (
-                                    <a
-                                        href={p.repo}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1 hover:text-accent transition-colors"
-                                    >
-                                        <Github size={16} /> Repository
-                                    </a>
-                                ) : (
-                                    <span className="flex items-center gap-1 text-muted-foreground cursor-not-allowed" title="Repository not available">
-                                        <Github size={16} /> No Repo
-                                    </span>
-                                )}
-
-                                {p.live ? (
-                                    <a
-                                        href={p.live}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1 hover:text-accent transition-colors"
-                                    >
-                                        <LinkIcon size={16} /> Live Demo
-                                    </a>
-                                ) : (
-                                    <span className="flex items-center gap-1 text-muted-foreground cursor-not-allowed" title="Live demo not available">
-                                        <LinkIcon size={16} /> No Demo
-                                    </span>
-                                )}
+                                <a href={p.repo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-accent transition-colors"><Github size={16} /> Repository</a>
+                                <a href={p.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-accent transition-colors"><LinkIcon size={16} /> Live Demo</a>
                             </div>
-
                         </div>
                     </div>
                 ))}

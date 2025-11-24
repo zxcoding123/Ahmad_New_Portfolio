@@ -4,8 +4,11 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
-  title: 'CLI Portfolio',
-  description: 'A portfolio that replicates a command prompt.',
+  title: 'AHMAD PORTFOLIO',
+  description: 'AHMAD AQUINO PORTFOLIO',
+  icons: {
+    icon: "/public/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -19,6 +22,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet" />
+          <link rel="icon" type="image/x-icon" href="/public/logo.png"></link>
       </head>
       <body className="font-code antialiased">
         <ThemeProvider
