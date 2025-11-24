@@ -11,7 +11,7 @@ export function About() {
             </div>
 
             <a 
-                href="https://drive.google.com/file/d/1N2JFbhILy2F1g_-0L_htKObLIf4TlznC/view?usp=sharing" 
+                href="https://drive.google.com/file/d/1AnidswAqLtImWga0wTc7zIhD_ttR7OWA/view?usp=sharing" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-block mb-6 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition"
