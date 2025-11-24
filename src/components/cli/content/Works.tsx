@@ -34,8 +34,7 @@ const projects = [
         live: "https://lexora-site.webflow.io/",
         repo: "",
         images: [
-            "lexora/lexora.png",
-
+            "lexora/lexora.png"
         ],
         aiHint: "client-focused legal guidance brand"
     },
