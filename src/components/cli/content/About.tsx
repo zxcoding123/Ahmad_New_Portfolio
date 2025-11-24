@@ -10,14 +10,15 @@ export function About() {
                 </p>
             </div>
 
-            <a 
-                href="https://drive.google.com/file/d/1AnidswAqLtImWga0wTc7zIhD_ttR7OWA/view?usp=sharing" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block mb-6 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition"
-            >
-                View My Resume
-            </a>
+          <a 
+  href="https://drive.google.com/file/d/1AnidswAqLtImWga0wTc7zIhD_ttR7OWA/view?usp=sharing" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="inline-block mb-6 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 dark:bg-primary-dark dark:text-black transition"
+>
+  View My Resume
+</a>
+
 
             <h3 className="text-lg font-bold text-accent mb-2">Skills</h3>
             <ul className="list-disc list-inside space-y-1">
