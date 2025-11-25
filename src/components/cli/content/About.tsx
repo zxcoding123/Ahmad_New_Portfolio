@@ -5,8 +5,9 @@ export function About() {
             
             <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 mb-4">
                 <p>
-                    I am a passionate software engineer with a knack for creating beautiful, performant, and accessible user experiences. 
+                    I am a passionate web developer with a knack for creating beautiful, performant, and accessible user experiences.
                     I love working with modern web technologies and building cool things on the internet.
+                    Apart from this, I also enjoy employing SEO best practices, as well as writing and content creation.
                 </p>
             </div>
 
@@ -25,7 +26,7 @@ export function About() {
                 <li><span className="font-bold text-primary">Languages:</span> HTML, CSS, JavaScript, jQuery, Python, TypeScript, Flutter, PHP, Laravel</li>
                 <li><span className="font-bold text-primary">Databases:</span> MySQL, SQLite, Firebase, PHP:PDO, Supabase </li>
                 <li><span className="font-bold text-primary">Frameworks:</span> Vite, Next.js, React, Bootstrap CSS, Tailwind CSS, Node.js, Webflow</li>
-                <li><span className="font-bold text-primary">Tools:</span> Git, Docker, Firebase, Vercel, Figma</li>
+                <li><span className="font-bold text-primary">Tools:</span> Git, Docker, Firebase, Vercel, Canvas</li>
                 <li><span className="font-bold text-primary">SEO:</span> Google Search Console, SurferSEO</li>
             </ul>
         </div>
