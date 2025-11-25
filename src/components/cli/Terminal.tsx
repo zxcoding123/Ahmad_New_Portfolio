@@ -18,7 +18,6 @@ export function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setTheme } = useTheme();
-  
 
   const COMMANDS = React.useMemo(
     () => ({
@@ -59,7 +58,10 @@ export function Terminal() {
           ...prev,
           <div key={prev.length} className="animate-fade-in">
             <div className="flex items-center gap-2">
-              <p><span className="text-accent font-bold">AHMAD@cli</span>:<span className="text-blue-500">~</span>$</p>
+              <p>
+                <span className="text-accent font-bold">AHMAD@cli</span>:
+                <span className="text-blue-500">~</span>$
+              </p>
               <p className="flex-1">{commandStr}</p>
             </div>
             <div className="leading-relaxed mt-1">{output}</div>
@@ -69,14 +71,16 @@ export function Terminal() {
       }
 
       const commandOutput =
-        COMMANDS[command as keyof typeof COMMANDS] ??
-        <NotFound command={commandStr} />;
+        COMMANDS[command as keyof typeof COMMANDS] ?? <NotFound command={commandStr} />;
 
       setHistory((prev) => [
         ...prev,
         <div key={prev.length} className="animate-fade-in">
           <div className="flex items-center gap-2">
-            <p><span className="text-accent font-bold">AHMAD@cli</span>:<span className="text-blue-500">~</span>$</p>
+            <p>
+              <span className="text-accent font-bold">AHMAD@cli</span>:
+              <span className="text-blue-500">~</span>$
+            </p>
             <p className="flex-1">{commandStr}</p>
           </div>
           <div className="leading-relaxed mt-1">{commandOutput}</div>
@@ -97,25 +101,24 @@ export function Terminal() {
         setHistory((prev) => [
           ...prev,
           <div key={prev.length} className="animate-fade-in">
-            <p><span className="text-accent font-bold">AHMAD@cli</span>:<span className="text-blue-500">~</span>$</p>
+            <p>
+              <span className="text-accent font-bold">AHMAD@cli</span>:
+              <span className="text-blue-500">~</span>$
+            </p>
           </div>,
         ]);
       }
 
       setInput("");
       setHistoryIndex(-1);
-    }
-
-    else if (e.key === "ArrowUp") {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (historyIndex < commandHistory.length - 1) {
         const newIndex = historyIndex + 1;
         setHistoryIndex(newIndex);
         setInput(commandHistory[newIndex]);
       }
-    }
-
-    else if (e.key === "ArrowDown") {
+    } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (historyIndex > 0) {
         const newIndex = historyIndex - 1;
@@ -143,8 +146,13 @@ export function Terminal() {
     ]);
   }, []);
 
+  const focusInput = () => inputRef.current?.focus();
+
+  // Focus input on any key pressed anywhere
   useEffect(() => {
-    inputRef.current?.focus();
+    const handleKey = () => focusInput();
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
   // Auto-scroll only when new history added
@@ -155,8 +163,6 @@ export function Terminal() {
     }
     prevLen.current = history.length;
   }, [history]);
-
-  const focusInput = () => inputRef.current?.focus();
 
   return (
     <div className="w-full h-[90vh] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base">
@@ -174,14 +180,7 @@ export function Terminal() {
       </div>
 
       {/* Terminal Body (scroll + inline input) */}
-      <div
-        className="p-4 overflow-y-auto h-[calc(90vh-52px)]"
-        onClick={(e) => {
-          if (window.getSelection()?.toString() === "") {
-            if (!(e.target as HTMLElement).closest("a")) focusInput();
-          }
-        }}
-      >
+      <div className="p-4 overflow-y-auto h-[calc(90vh-52px)]">
         {/* History */}
         <div className="flex flex-col gap-4">{history}</div>
 
@@ -208,8 +207,6 @@ export function Terminal() {
         </div>
 
         {/* Cursor OUTSIDE layout to prevent scroll jumps */}
-    
-
         <div ref={scrollRef} />
       </div>
     </div>

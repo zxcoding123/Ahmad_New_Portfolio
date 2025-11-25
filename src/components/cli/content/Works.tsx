@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import { Github, Link as LinkIcon } from 'lucide-react';
@@ -13,8 +11,26 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const filters = ["web", "fullstack", "design", "mobile", "ai"];
+
 
 const projects = [
+    {
+        title: "TRAC Thesis Repository System",
+        description: "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Argicultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
+        tags: ["PHP", "MySQL", "Bootstrap", "JavaScript", "PHP:PDO"],
+        live: "https://trac-repository-system.hstn.me/index.php",
+        repo: "",
+        images: [
+            "trac/trac_repo_system.png",
+
+        ],
+        aiHint: "web-based student thesis repository system",
+        category: ["web", "fullstack", "education"]
+    },
     {
         title: "Kanvas",
         description: "A visual dashboard builder that allows users to create interactive, customizable data dashboards without writing code. Kanvas empowers teams, students, and organizations to turn raw data into clear, insightful visuals through a drag-and-drop workspace.",
@@ -24,7 +40,8 @@ const projects = [
         images: [
             "kanvas/kanvas.png",
         ],
-        aiHint: "no-code dashboard builder for data visualization"
+        aiHint: "no-code dashboard builder for data visualization",
+        category: ["web", "fullstack", "design"]
     },
 
     {
@@ -36,7 +53,8 @@ const projects = [
         images: [
             "lexora/lexora.png"
         ],
-        aiHint: "client-focused legal guidance brand"
+        aiHint: "client-focused legal guidance brand",
+        category: ["web", "design"]
     },
     {
         title: "LearnMate",
@@ -47,7 +65,8 @@ const projects = [
         images: [
             "learnmate/learnmate.png"
         ],
-        aiHint: "mobile app learning courseware"
+        aiHint: "mobile app learning courseware",
+        category: ["mobile", "fullstack"]
     },
     {
         title: "BitCraft: A Desktop Courseware for e-Learning",
@@ -69,9 +88,10 @@ const projects = [
             "bitcraft/bitcraft (11).png",
             "bitcraft/bitcraft (12).png",
             "bitcraft/bitcraft (13).png",
-   
+
         ],
-        aiHint: "desktop courseware application"
+        aiHint: "desktop courseware application",
+        category: ["web", "fullstack"]
     },
     {
         title: "Korean – Innovative Quality Korean-pop Albums Web App",
@@ -119,15 +139,13 @@ const projects = [
             "kiqna/kiqna (37).png",
             "kiqna/kiqna (38).png",
             "kiqna/kiqna (39).png",
-            "kiqna/kiqna (40).png", 
+            "kiqna/kiqna (40).png",
             "kiqna/kiqna (41).png",
             "kiqna/kiqna (42).png",
-           
-
-           
         ],
 
-        aiHint: "e-commerce ecommerce project"
+        aiHint: "e-commerce ecommerce project",
+        category: ["web", "fullstack"]
     },
     {
         title: "Comprehensive Student Management System",
@@ -138,7 +156,8 @@ const projects = [
         images: [
             "csms/csms.png"
         ],
-        aiHint: "mobile app learning courseware"
+        aiHint: "mobile app learning courseware",
+        category: ["web", "fullstack"]
     },
     {
         title: "Kreyt Landing Page",
@@ -149,7 +168,8 @@ const projects = [
         images: [
             "kreyt/kreyt.png",
         ],
-        aiHint: "mobile app learning courseware"
+        aiHint: "mobile app learning courseware",
+        category: ["web", "design"]
     },
     {
         title: "DeenConnect Landing Page",
@@ -163,7 +183,8 @@ const projects = [
             "muslim/muslim-2.png",
         ],
 
-        aiHint: "mobile app learning courseware"
+        aiHint: "mobile app learning courseware",
+        category: ["web", "design"]
     },
     {
         title: "Windy Landing Page",
@@ -176,74 +197,137 @@ const projects = [
         ],
 
 
-        aiHint: "mobile app learning courseware"
+        aiHint: "mobile app learning courseware",
+        category: ["web", "design"]
     },
 ];
-
 export function Works() {
+
+    // ✅ State MUST be inside the component
+    const [activeFilters, setActiveFilters] = React.useState<string[]>([]);
+
+    const toggleFilter = (f: string) => {
+        setActiveFilters(prev =>
+            prev.includes(f)
+                ? prev.filter(x => x !== f)
+                : [...prev, f]
+        );
+    };
+
+    const filteredProjects =
+        activeFilters.length === 0
+            ? projects
+            : projects.filter(p =>
+                p.category.some(c => activeFilters.includes(c))
+            );
+
     return (
         <div className="px-4">
-            <h2 className="text-xl font-bold text-accent mb-4">My Works</h2>
+            <h2 className="text-xl font-bold text-accent">My Works</h2>
+            <h2 className="text-l font-bold mb-4 mt-2">Filters: </h2>
+            <div className="flex gap-2 mb-6 flex-wrap">
+
+                {filters.map(f => (
+                    <Button
+                        key={f}
+                        variant={activeFilters.includes(f) ? "default" : "outline"}
+                        onClick={() => toggleFilter(f)}
+                        className="text-xs px-3 py-1 rounded-full"
+                    >
+                        {f}
+                    </Button>
+                ))}
+            </div>
+
             <div className="space-y-6">
-                {projects.map(p => (
+                {filteredProjects.map(p => (
                     <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-4 rounded-md bg-secondary">
+
+                        {/* IMAGES */}
                         <Dialog>
                             <DialogTrigger asChild>
                                 <div className="w-full md:w-1/3 cursor-pointer">
                                     <Carousel
-                                        plugins={[
-                                            Autoplay({
-                                                delay: 2000,
-                                            }),
-                                        ]}
+                                        plugins={[Autoplay({ delay: 2000 })]}
                                     >
                                         <CarouselContent>
                                             {p.images.map((image, index) => (
                                                 <CarouselItem key={index}>
-                                                    <img src={image} alt={`${p.title} - Image ${index + 1}`} className="rounded-md object-cover w-full h-full" />
+                                                    <img
+                                                        src={image}
+                                                        alt={`${p.title} - ${index + 1}`}
+                                                        className="rounded-md object-cover w-full h-full"
+                                                    />
                                                 </CarouselItem>
                                             ))}
                                         </CarouselContent>
                                     </Carousel>
                                 </div>
                             </DialogTrigger>
+
                             <DialogContent className="max-w-screen-md">
                                 <DialogHeader>
                                     <DialogTitle>{p.title}</DialogTitle>
                                 </DialogHeader>
+
                                 <Carousel
-                                    plugins={[
-                                        Autoplay({
-                                            delay: 3000,
-                                        }),
-                                    ]}
-                                    opts={{
-                                        loop: true,
-                                    }}
+                                    plugins={[Autoplay({ delay: 3000 })]}
+                                    opts={{ loop: true }}
                                 >
                                     <CarouselContent>
                                         {p.images.map((image, index) => (
                                             <CarouselItem key={index}>
-                                                <img src={image} alt={`${p.title} - Image ${index + 1}`} className="object-contain w-full h-full rounded-md" />
+                                                <img
+                                                    src={image}
+                                                    alt={`${p.title} - ${index + 1}`}
+                                                    className="object-contain w-full h-full rounded-md"
+                                                />
                                             </CarouselItem>
                                         ))}
                                     </CarouselContent>
+
                                     <CarouselPrevious />
                                     <CarouselNext />
                                 </Carousel>
                             </DialogContent>
                         </Dialog>
+
+
+                        {/* DETAILS */}
                         <div className="w-full md:w-2/3 flex flex-col">
                             <h3 className="font-bold text-lg text-primary">{p.title}</h3>
-                            <p className="text-sm text-muted-foreground mb-2 flex-grow">{p.description}</p>
+
+                            <p className="text-sm text-muted-foreground mb-2 flex-grow">
+                                {p.description}
+                            </p>
+
                             <div className="flex gap-2 flex-wrap mb-3">
-                                {p.tags.map(tag => <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">{tag}</span>)}
+                                {p.tags.map(tag => (
+                                    <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
+                                        {tag}
+                                    </span>
+                                ))}
                             </div>
+
                             <div className="flex gap-4 text-sm">
-                                <a href={p.repo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-accent transition-colors"><Github size={16} /> Repository</a>
-                                <a href={p.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-accent transition-colors"><LinkIcon size={16} /> Live Demo</a>
+                                <a
+                                    href={p.repo}
+                                    target="_blank"
+                                    className="flex items-center gap-1 hover:text-accent transition-colors"
+                                >
+                                    <Github size={16} /> Repository
+                                </a>
+
+                                <a
+                                    href={p.live}
+                                    target="_blank"
+                                    className="flex items-center gap-1 hover:text-accent transition-colors"
+                                >
+                                    <LinkIcon size={16} /> Live Demo
+                                </a>
                             </div>
                         </div>
+
                     </div>
                 ))}
             </div>
