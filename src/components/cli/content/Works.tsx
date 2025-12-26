@@ -14,10 +14,38 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const filters = ["web", "fullstack", "design", "mobile", "ai"];
+const filters = ["web", "fullstack", "design", "mobile", "ai", "ongoing", "completed"];
+
 
 
 const projects = [
+    {
+  title: "Tarabasa",
+  description: "An ongoing mobile application built for Zamboanga City that helps users discover nearby cafés, review centers, and study hubs. Tarabasa leverages geolocation to surface relevant places based on proximity, enabling students and professionals to find suitable spaces for studying and work.",
+  tags: ["Flutter", "Supabase", "Geolocation", "Mobile App", "PostgreSQL"],
+  live: "",
+  repo: "",
+  images: [
+    "no-project-picture.png"
+  ],
+  aiHint: "mobile app for finding nearby study hubs and cafes using geolocation",
+  category: ["mobile", "fullstack"],
+  status: "ongoing"
+},
+    {
+  title: "rDMS (Records & Document Management System)",
+  description: "An enterprise-grade document management system that tracks, organizes, and monitors documents across departments. rDMS provides visibility into document status, ownership, and workflow progression within an organization.",
+  tags: ["PostgreSQL", "Express.js", "Tailwind CSS", "JavaScript", "Svelte", "ShadCDN", "Document Workflow"],
+  live: "",
+  repo: "",
+  images: [
+    "no-project-picture.png"
+  ],
+  aiHint: "enterprise document and records management system",
+  category: ["web", "fullstack"],
+  status: "ongoing"
+},
+
     {
         title: "TRAC Thesis Repository System",
         description: "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Argicultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
@@ -29,7 +57,8 @@ const projects = [
 
         ],
         aiHint: "web-based student thesis repository system",
-        category: ["web", "fullstack", "education"]
+        category: ["web", "fullstack", "education"],
+        status: "completed"
     },
     {
         title: "Kanvas",
@@ -41,7 +70,8 @@ const projects = [
             "kanvas/kanvas.png",
         ],
         aiHint: "no-code dashboard builder for data visualization",
-        category: ["web", "fullstack", "design"]
+        category: ["web", "fullstack", "design"],
+        status: "ongoing"
     },
 
     {
@@ -54,7 +84,8 @@ const projects = [
             "lexora/lexora.png"
         ],
         aiHint: "client-focused legal guidance brand",
-        category: ["web", "design"]
+        category: ["web", "design"],
+        status: "completed"
     },
     {
         title: "LearnMate",
@@ -66,7 +97,8 @@ const projects = [
             "learnmate/learnmate.png"
         ],
         aiHint: "mobile app learning courseware",
-        category: ["mobile", "fullstack"]
+        category: ["mobile", "fullstack"],
+        status: "completed"
     },
     {
         title: "BitCraft: A Desktop Courseware for e-Learning",
@@ -91,7 +123,8 @@ const projects = [
 
         ],
         aiHint: "desktop courseware application",
-        category: ["web", "fullstack"]
+        category: ["web", "fullstack"],
+        status: "completed"
     },
     {
         title: "Korean – Innovative Quality Korean-pop Albums Web App",
@@ -143,9 +176,9 @@ const projects = [
             "kiqna/kiqna (41).png",
             "kiqna/kiqna (42).png",
         ],
-
         aiHint: "e-commerce ecommerce project",
-        category: ["web", "fullstack"]
+        category: ["web", "fullstack"],
+        status: "completed"
     },
     {
         title: "Comprehensive Student Management System",
@@ -157,7 +190,8 @@ const projects = [
             "csms/csms.png"
         ],
         aiHint: "mobile app learning courseware",
-        category: ["web", "fullstack"]
+        category: ["web", "fullstack"], 
+        status: "ongoing"
     },
     {
         title: "Kreyt Landing Page",
@@ -169,7 +203,8 @@ const projects = [
             "kreyt/kreyt.png",
         ],
         aiHint: "mobile app learning courseware",
-        category: ["web", "design"]
+        category: ["web", "design"],
+           status: "completed"
     },
     {
         title: "DeenConnect Landing Page",
@@ -184,7 +219,8 @@ const projects = [
         ],
 
         aiHint: "mobile app learning courseware",
-        category: ["web", "design"]
+        category: ["web", "design"],
+           status: "completed"
     },
     {
         title: "Windy Landing Page",
@@ -198,7 +234,8 @@ const projects = [
 
 
         aiHint: "mobile app learning courseware",
-        category: ["web", "design"]
+        category: ["web", "design"],
+           status: "completed"
     },
 ];
 export function Works() {
@@ -214,12 +251,37 @@ export function Works() {
         );
     };
 
-    const filteredProjects =
-        activeFilters.length === 0
-            ? projects
-            : projects.filter(p =>
-                p.category.some(c => activeFilters.includes(c))
-            );
+ const filteredProjects =
+  activeFilters.length === 0
+    ? projects
+    : projects.filter(p => {
+        const matchesCategory = p.category.some(c =>
+          activeFilters.includes(c)
+        );
+
+        const matchesStatus =
+          activeFilters.includes("ongoing") && p.status === "ongoing" ||
+          activeFilters.includes("completed") && p.status === "completed";
+
+        // If user selected only status filters
+        if (
+          activeFilters.includes("ongoing") ||
+          activeFilters.includes("completed")
+        ) {
+          // Allow combination of category + status
+          return matchesStatus && (
+            activeFilters.some(f =>
+              ["web", "fullstack", "design", "mobile", "ai"].includes(f)
+            )
+              ? matchesCategory
+              : true
+          );
+        }
+
+        // Category-only filtering
+        return matchesCategory;
+      });
+
 
     return (
         <div className="px-4">
@@ -250,17 +312,20 @@ export function Works() {
                                     <Carousel
                                         plugins={[Autoplay({ delay: 2000 })]}
                                     >
-                                        <CarouselContent>
-                                            {p.images.map((image, index) => (
-                                                <CarouselItem key={index}>
-                                                    <img
-                                                        src={image}
-                                                        alt={`${p.title} - ${index + 1}`}
-                                                        className="rounded-md object-cover w-full h-full"
-                                                    />
-                                                </CarouselItem>
-                                            ))}
-                                        </CarouselContent>
+                                   <CarouselContent>
+  {p.images.map((image, index) => (
+    <CarouselItem key={index}>
+      <div className="relative w-full aspect-[16/9] overflow-hidden rounded-md">
+        <img
+          src={image}
+          alt={`${p.title} - ${index + 1}`}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+    </CarouselItem>
+  ))}
+</CarouselContent>
+
                                     </Carousel>
                                 </div>
                             </DialogTrigger>
@@ -295,7 +360,22 @@ export function Works() {
 
                         {/* DETAILS */}
                         <div className="w-full md:w-2/3 flex flex-col">
-                            <h3 className="font-bold text-lg text-primary">{p.title}</h3>
+                           <div className="flex items-center gap-2">
+  <h3 className="font-bold text-lg text-primary">{p.title}</h3>
+
+  {p.status === "ongoing" && (
+    <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-500 border border-yellow-500/30">
+      Ongoing
+    </span>
+  )}
+
+  {p.status === "completed" && (
+    <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30">
+      Completed
+    </span>
+  )}
+</div>
+
 
                             <p className="text-sm text-muted-foreground mb-2 flex-grow">
                                 {p.description}
@@ -309,23 +389,38 @@ export function Works() {
                                 ))}
                             </div>
 
-                            <div className="flex gap-4 text-sm">
-                                <a
-                                    href={p.repo}
-                                    target="_blank"
-                                    className="flex items-center gap-1 hover:text-accent transition-colors"
-                                >
-                                    <Github size={16} /> Repository
-                                </a>
+                     <div className="flex gap-4 text-sm">
+  {/* Repository */}
+  {p.repo ? (
+    <a
+      href={p.repo}
+      target="_blank"
+      className="flex items-center gap-1 hover:text-accent transition-colors"
+    >
+      <Github size={16} /> Repository
+    </a>
+  ) : (
+    <span className="flex items-center gap-1 text-muted-foreground cursor-not-allowed opacity-50">
+      <Github size={16} /> Repository
+    </span>
+  )}
 
-                                <a
-                                    href={p.live}
-                                    target="_blank"
-                                    className="flex items-center gap-1 hover:text-accent transition-colors"
-                                >
-                                    <LinkIcon size={16} /> Live Demo
-                                </a>
-                            </div>
+  {/* Live Demo */}
+  {p.live ? (
+    <a
+      href={p.live}
+      target="_blank"
+      className="flex items-center gap-1 hover:text-accent transition-colors"
+    >
+      <LinkIcon size={16} /> Live Demo
+    </a>
+  ) : (
+    <span className="flex items-center gap-1 text-muted-foreground cursor-not-allowed opacity-50">
+      <LinkIcon size={16} /> Live Demo
+    </span>
+  )}
+</div>
+
                         </div>
 
                     </div>
