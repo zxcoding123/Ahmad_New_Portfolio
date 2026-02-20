@@ -150,7 +150,14 @@ export function Terminal() {
 
   // Focus input on any key pressed anywhere
   useEffect(() => {
-    const handleKey = () => focusInput();
+    const handleKey = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement;
+      // Don't steal focus if the user is already in an input field (like the chatbot).
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+        return;
+      }
+      focusInput();
+    };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, []);

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
+import ChatBot from '@/components/ChatBot';
 
 export const metadata: Metadata = {
   title: 'AHMAD PORTFOLIO',
@@ -33,6 +34,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <ChatBot />
         </ThemeProvider>
       </body>
     </html>
