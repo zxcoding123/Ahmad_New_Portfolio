@@ -9,6 +9,7 @@ import { Works } from "./content/Works";
 import { Contact } from "./content/Contact";
 import { NotFound } from "./content/NotFound";
 import { Theme } from "./content/Theme";
+import { trackEvent } from "@/lib/analytics";
 
 export function Terminal() {
   const [input, setInput] = useState("");
@@ -39,12 +40,20 @@ export function Terminal() {
     (commandStr: string) => {
       const [command, ...args] = commandStr.trim().toLowerCase().split(" ");
 
+      trackEvent("command_executed", {
+        
+  command,
+  args: args.join(" ")
+});
+
       if (command === "clear") {
+          trackEvent("terminal_cleared");
         setHistory([]);
         return;
       }
 
       if (command === "theme") {
+        
         const themeArg = args[0];
         const valid = ["light", "dark", "system"];
 
@@ -53,7 +62,7 @@ export function Terminal() {
           : <Theme />;
 
         if (valid.includes(themeArg)) setTheme(themeArg);
-
+  trackEvent("theme_changed", { theme: themeArg });
         setHistory((prev) => [
           ...prev,
           <div key={prev.length} className="animate-fade-in">
@@ -73,6 +82,13 @@ export function Terminal() {
       const commandOutput =
         COMMANDS[command as keyof typeof COMMANDS] ?? <NotFound command={commandStr} />;
 
+        if (!COMMANDS[command as keyof typeof COMMANDS]) {
+  trackEvent("command_error", { command });
+}
+
+if (COMMANDS[command as keyof typeof COMMANDS]) {
+  trackEvent("section_viewed", { section: command });
+}
       setHistory((prev) => [
         ...prev,
         <div key={prev.length} className="animate-fade-in">
@@ -88,8 +104,10 @@ export function Terminal() {
       ]);
     },
     [COMMANDS, setTheme]
+    
   );
 
+  
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const currentInput = input.trim();
@@ -131,8 +149,15 @@ export function Terminal() {
     }
   };
 
+  const commandCount = useRef(0);
+commandCount.current += 1;
+if (commandCount.current === 3) {
+  trackEvent("engaged_user");
+}
+
   // Initial welcome
   useEffect(() => {
+    trackEvent("terminal_session_started");
     setHistory([
       <div key="home-initial" className="animate-fade-in">
         <Home />

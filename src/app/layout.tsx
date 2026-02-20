@@ -22,6 +22,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="8613acb8-0126-42fb-824f-7d4a0a11cd8d"></script>
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet" />
           <link rel="icon" type="image/x-icon" href="/public/logo.png"></link>
       </head>

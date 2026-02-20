@@ -3,6 +3,7 @@
 import { Github, Link as LinkIcon } from 'lucide-react';
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
+import { trackEvent } from "@/lib/analytics";
 import {
     Carousel,
     CarouselContent,
@@ -23,6 +24,7 @@ export function Works() {
     const [activeFilters, setActiveFilters] = React.useState<string[]>([]);
 
     const toggleFilter = (f: string) => {
+          trackEvent("project_filter_used", { filter: f });
         setActiveFilters(prev =>
             prev.includes(f)
                 ? prev.filter(x => x !== f)
@@ -87,7 +89,16 @@ export function Works() {
                         {/* IMAGES */}
                         <Dialog>
                             <DialogTrigger asChild>
-                                <div className="w-full md:w-1/3 cursor-pointer">
+                              <div
+    className="w-full md:w-1/3 cursor-pointer"
+    onClick={() =>
+      trackEvent("project_viewed", {
+        project: p.title,
+        status: p.status,
+        categories: p.category.join(",")
+      })
+    }
+  >
                                     <Carousel
                                         plugins={[Autoplay({ delay: 2000 })]}
                                     >
@@ -171,9 +182,15 @@ export function Works() {
                      <div className="flex gap-4 text-sm">
   {/* Repository */}
   {p.repo ? (
-    <a
-      href={p.repo}
-      target="_blank"
+   <a
+  href={p.repo}
+  target="_blank"
+  onClick={() =>
+    trackEvent("project_link_clicked", {
+      project: p.title,
+      type: "repo"
+    })
+  }
       className="flex items-center gap-1 hover:text-accent transition-colors"
     >
       <Github size={16} /> Repository
@@ -186,9 +203,15 @@ export function Works() {
 
   {/* Live Demo */}
   {p.live ? (
-    <a
-      href={p.live}
-      target="_blank"
+   <a
+  href={p.live}
+  target="_blank"
+  onClick={() =>
+    trackEvent("project_link_clicked", {
+      project: p.title,
+      type: "live"
+    })
+  }
       className="flex items-center gap-1 hover:text-accent transition-colors"
     >
       <LinkIcon size={16} /> Live Demo

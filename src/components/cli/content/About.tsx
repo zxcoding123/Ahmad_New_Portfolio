@@ -1,3 +1,5 @@
+import { trackEvent } from "@/lib/analytics";
+
 export function About() {
     return (
         <div>
@@ -12,9 +14,14 @@ export function About() {
             </div>
 
           <a 
-  href="https://drive.google.com/file/d/1AnidswAqLtImWga0wTc7zIhD_ttR7OWA/view?usp=sharing" 
+  href="https://drive.google.com/file/d/1LbGpHYgllL4SbQ3W_SkFMfdpWkeFa0tw/view?usp=sharing" 
   target="_blank" 
   rel="noopener noreferrer"
+    onClick={() =>
+    trackEvent("resume_viewed", {
+      source: "portfolio_button"
+    })
+  }
   className="inline-block mb-6 px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 dark:bg-primary-dark dark:text-black transition"
 >
   View My Resume
