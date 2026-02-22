@@ -16,8 +16,8 @@ export const projects: Project[] = [
   title: "FoCi",
   description: "A productivity-focused web application designed to enhance concentration through curated ambient soundscapes. FoCi provides users with a seamless, immersive environment to support deep work and study sessions, featuring a minimalist interface and high-quality audio streaming.",
   tags: ["Next.js", "Shadcn UI", "Vite", "Web Audio API", "Tailwind CSS"],
-  live: "", // Add your deployment link here
-  repo: "", // Add your GitHub link here
+  live: "https://foci-page.vercel.app/", // Add your deployment link here
+  repo: "https://github.com/zxcoding123/foci-page", // Add your GitHub link here
   images: [
       "foci/foci-preview.png"
   ],
