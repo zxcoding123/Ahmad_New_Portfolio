@@ -13,6 +13,19 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+    title: "Brainly Landing Page",
+    description: "A modern mental health landing page inspired by Brainly, focused on collaborative therapy and CBT session.",
+    tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "Framer Motion"],
+    live: "https://brainly-your-site.vercel.app/",
+    repo: "https://github.com/yourusername/brainly-project",
+    images: [
+        "brainly/brainly.png",
+    ],
+    aiHint: "education platform student collaboration",
+    category: ["web", "education"],
+    status: "completed"
+},
+    {
   title: "FoCi",
   description: "A productivity-focused web application designed to enhance concentration through curated ambient soundscapes. FoCi provides users with a seamless, immersive environment to support deep work and study sessions, featuring a minimalist interface and high-quality audio streaming.",
   tags: ["Next.js", "Shadcn UI", "Vite", "Web Audio API", "Tailwind CSS"],
@@ -237,8 +250,6 @@ export const projects: Project[] = [
         images: [
             "windy/windy.png", "windy/windy (1).png", "windy/windy (2).png"
         ],
-
-
         aiHint: "mobile app learning courseware",
         category: ["web", "design"],
            status: "completed"
