@@ -16,8 +16,8 @@ export const projects: Project[] = [
     title: "Brainly Landing Page",
     description: "A modern mental health landing page inspired by Brainly, focused on collaborative therapy and CBT session.",
     tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "Framer Motion"],
-    live: "https://brainly-your-site.vercel.app/",
-    repo: "https://github.com/yourusername/brainly-project",
+    live: "https://brainly-1mjr.vercel.app/",
+    repo: "https://github.com/zxcoding123/brainly",
     images: [
         "brainly/brainly.png",
     ],
