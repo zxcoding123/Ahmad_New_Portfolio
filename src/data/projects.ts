@@ -29,8 +29,8 @@ export const projects: Project[] = [
         title: "Comprehensive Student Management System",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
-        live: "",
-        repo: "",
+        live: "https://freelens.vercel.app",
+        repo: "https://github.com/zxcoding123/freelens",
         images: [
             "csms/csms.png"
         ],
