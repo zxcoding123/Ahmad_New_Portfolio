@@ -13,6 +13,32 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+    title: "Freelens",
+    description: "A web application to manage freelance projects, clients, tasks, and payments efficiently.",
+    tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PDO", "MySQL"],
+    live: "",
+    repo: "",
+    images: [
+        "freelens/freelens.png"
+    ],
+    aiHint: "freelance management dashboard",
+    category: ["web", "fullstack"],
+    status: "ongoing"
+},
+        {
+        title: "Comprehensive Student Management System",
+        description: "A web application for managing student records, including enrollment, grades, and attendance.",
+        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
+        live: "",
+        repo: "",
+        images: [
+            "csms/csms.png"
+        ],
+        aiHint: "mobile app learning courseware",
+        category: ["web", "fullstack"], 
+        status: "ongoing"
+    },
+    {
     title: "Brainly Landing Page",
     description: "A modern mental health landing page inspired by Brainly, focused on collaborative therapy and CBT session.",
     tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "Framer Motion"],
@@ -199,19 +225,7 @@ export const projects: Project[] = [
         category: ["web", "fullstack"],
         status: "completed"
     },
-    {
-        title: "Comprehensive Student Management System",
-        description: "A web application for managing student records, including enrollment, grades, and attendance.",
-        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
-        live: "",
-        repo: "",
-        images: [
-            "csms/csms.png"
-        ],
-        aiHint: "mobile app learning courseware",
-        category: ["web", "fullstack"], 
-        status: "ongoing"
-    },
+
     {
         title: "Kreyt Landing Page",
         description: "A Web3 Landing Page for a crypto company called Kreyt",
