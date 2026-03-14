@@ -15,7 +15,7 @@ export const projects: Project[] = [
     {
     title: "Freelens",
     description: "A web application to manage freelance projects, clients, tasks, and payments efficiently.",
-    tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PDO", "MySQL"],
+    tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "jQuery", "Express", "PostgreSQL", "Node"],
     live: "",
     repo: "",
     images: [
