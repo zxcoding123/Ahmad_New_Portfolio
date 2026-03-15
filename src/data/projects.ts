@@ -16,8 +16,8 @@ export const projects: Project[] = [
     title: "Freelens",
     description: "An offline web application to manage freelance projects, clients, tasks, and payments efficiently.",
     tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "jQuery", "Express", "PostgreSQL", "Node"],
-    live: "",
-    repo: "",
+    live: "https://freelens.vercel.app/",
+    repo: "https://github.com/zxcoding123/freelens",
     images: [
         "freelens/freelens.png"
     ],
