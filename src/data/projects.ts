@@ -12,7 +12,19 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-   
+    {
+    title: "Freelens",
+    description: "An offline web application to manage freelance projects, clients, tasks, and payments efficiently.",
+    tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "jQuery", "Express", "PostgreSQL", "Node"],
+    live: "https://freelens.vercel.app/",
+    repo: "https://github.com/zxcoding123/freelens",
+    images: [
+        "freelens/freelens.png"
+    ],
+    aiHint: "freelance management dashboard",
+    category: ["web", "fullstack"],
+    status: "ongoing"
+},
         {
         title: "Comprehensive Student Management System",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
