@@ -16,7 +16,6 @@ export default function ChatBot() {
     "What is Ahmad's tech stack?",
     "Show me Ahmad's projects",
     "How can I contact Ahmad?",
-    "Tell me more about Ahnad."
   ];
 
   useEffect(() => {
@@ -68,7 +67,7 @@ export default function ChatBot() {
     <>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 bg-black  p-3 rounded-full shadow-lg text-white z-50 transition-transform hover:scale-110"
+        className="fixed bottom-4 right-4 bg-white  p-3 rounded-full shadow-lg text-black z-50 transition-transform hover:scale-110"
       >
         {isOpen ? '✕' : '💬'}
       </button>

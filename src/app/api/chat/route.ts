@@ -10,8 +10,14 @@ Projects:
 - AI Portfolio: A Next.js site with a custom Gemini integration.
 - E-commerce App: Built with Stripe and Supabase.
 Work History: 2 years of freelancing.
-Education: BS in Computer Science.
+Education: BS in Information Technology.
 Country: Philippines
+
+Contact:
+Email: ahmadaquino.2002@gmail.com
+LinkedIn: https://www.linkedin.com/in/ahmad-aquino-34b318243
+Resume: https://drive.google.com/file/d/1X1Tl1tGQ-G1K9UD3htM02k42wMoK2nm7/view?usp=drive_link
+GitHub: https://github.com/zxcoding123
 `;
 
  const projectContext = projects
@@ -35,6 +41,7 @@ export async function POST(req: Request) {
            politely say: "I'm sorry, I'm only trained to answer questions about Ahmad's professional background."
         3. Keep answers under 3 sentences.
         4. Be professional and encouraging.
+        5. IF the user asks about contact, hiring, collaboration, or how to reach Ahmad, provide the Contact details clearly.
       `,
       prompt: prompt,
     });

@@ -14,7 +14,7 @@ export function About() {
             </div>
 
           <a 
-  href="https://drive.google.com/file/d/1LbGpHYgllL4SbQ3W_SkFMfdpWkeFa0tw/view?usp=sharing" 
+  href="https://drive.google.com/file/d/1X1Tl1tGQ-G1K9UD3htM02k42wMoK2nm7/view?usp=drive_link" 
   target="_blank" 
   rel="noopener noreferrer"
     onClick={() =>
