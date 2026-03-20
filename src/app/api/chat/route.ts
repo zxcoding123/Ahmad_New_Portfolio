@@ -16,7 +16,7 @@ Country: Philippines
 Contact:
 Email: ahmadaquino.2002@gmail.com
 LinkedIn: https://www.linkedin.com/in/ahmad-aquino-34b318243
-Resume: https://drive.google.com/file/d/1X1Tl1tGQ-G1K9UD3htM02k42wMoK2nm7/view?usp=drive_link
+Resume: https://drive.google.com/file/d/1X1Tl1tGQ-G1K9UD3htM02k42wMoK2nm7/view?usp=sharing
 GitHub: https://github.com/zxcoding123
 `;
 
