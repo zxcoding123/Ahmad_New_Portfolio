@@ -29,13 +29,32 @@ export function About() {
 
 
             <h3 className="text-lg font-bold text-accent mb-2">Skills</h3>
-            <ul className="list-disc list-inside space-y-1">
-                <li><span className="font-bold text-primary">Languages:</span> HTML, CSS, JavaScript, jQuery, Python, TypeScript, Flutter, PHP, Laravel</li>
-                <li><span className="font-bold text-primary">Databases:</span> MySQL, SQLite, Firebase, PHP:PDO, Supabase </li>
-                <li><span className="font-bold text-primary">Frameworks:</span> Vite, Next.js, React, Bootstrap CSS, Tailwind CSS, Node.js, Webflow</li>
-                <li><span className="font-bold text-primary">Tools:</span> Git, Docker, Firebase, Vercel, Canvas</li>
-                <li><span className="font-bold text-primary">SEO:</span> Google Search Console, SurferSEO</li>
-            </ul>
+<ul className="list-disc list-inside space-y-1">
+  <li>
+    <span className="font-bold text-primary">Languages: </span> 
+    JavaScript (ES6+), TypeScript, PHP, Python, HTML5, CSS3
+  </li>
+  <li>
+    <span className="font-bold text-primary">Frameworks & Libraries: </span> 
+    React, Next.js, Svelte, Laravel, Node.js, Vite, Tailwind CSS, Bootstrap
+  </li>
+  <li>
+    <span className="font-bold text-primary">Databases & Backend: </span> 
+    MySQL, SQLite, Firebase, Supabase, REST APIs, PHP (PDO)
+  </li>
+  <li>
+    <span className="font-bold text-primary">Tools & Platforms: </span> 
+    Git, Docker, Vercel, Firebase, Webflow
+  </li>
+  <li>
+    <span className="font-bold text-primary">Performance & Analytics: </span> 
+    Google Lighthouse, Umami, SEO (Google Search Console, SurferSEO)
+  </li>
+  <li>
+    <span className="font-bold text-primary">Other: </span> 
+    Responsive Design, AJAX
+  </li>
+</ul>
         </div>
     );
 }
