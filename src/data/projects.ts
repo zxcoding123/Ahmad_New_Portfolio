@@ -95,7 +95,7 @@ export const projects: Project[] = [
         title: "TRAC Thesis Repository System",
         description: "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Argicultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
         tags: ["PHP", "MySQL", "Bootstrap", "JavaScript", "PHP:PDO"],
-        live: "https://trac-repository-system.hstn.me/index.php",
+        live: "https://trac-thesis-repo.hstn.me",
         repo: "",
         images: [
             "trac/trac_repo_system.png",
