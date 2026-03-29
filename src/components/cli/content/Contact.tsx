@@ -1,10 +1,10 @@
-import { Mail, Github, Linkedin, PhoneCall } from "lucide-react";
+import { Mail, Github, Linkedin, PhoneCall, Calendar } from "lucide-react";
 
 const contacts = [
     { icon: Mail, label: 'Email', value: 'ahmadaquino.2002@gmail.com', href: 'mailto:ahmadaquino.2002@gmail.com' },
     { icon: Github, label: 'GitHub', value: 'zxcoding123', href: 'https://github.com/zxcoding123' },
     { icon: Linkedin, label: 'LinkedIn', value: 'Ahmad Aquino' , href: 'https://www.linkedin.com/in/ahmad-aquino-34b318243' },
-        { icon: PhoneCall, label: 'Phone', value: '+639976689768 | +639350771951 '}
+    { icon: PhoneCall, label: 'Phone', value: '+639536640199 | +639350771951 '}
 ];
 
 export function Contact() {
@@ -23,6 +23,20 @@ export function Contact() {
                     </li>
                 ))}
             </ul>
+
+            <div className="mt-6">
+                <a 
+                    href="https://calendly.com/ahmadaquino-2002/30min" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-accent text-black px-4 py-2 rounded-md hover:bg-accent/90 transition-all font-semibold"
+                >
+                    <Calendar size={18} />
+                    Schedule a Meeting
+                </a>
+            </div>
         </div>
     );
 }
+
+
