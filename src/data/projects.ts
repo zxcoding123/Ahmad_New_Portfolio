@@ -30,7 +30,7 @@ export const projects: Project[] = [
         "coffee_pos/1.png"
     ],
     "aiHint": "mobile barista queue and local network POS system",
-    "category": ["mobile", "frontend", "system-design"],
+    "category": ["mobile", "fullstack", "system-design"],
     "status": "ongoing"
 },
     {
