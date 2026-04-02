@@ -12,6 +12,27 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+{
+    "title": "Coffee POS",
+    "description": "A high-performance, offline-first mobile application for baristas to manage order queues, customize drinks, and sync data across devices in real-time.",
+    "tags": [
+        "Flutter",
+        "Dart",
+        "Riverpod",
+        "Bonsoir",
+        "Isar",
+        "WebSockets",
+        "GoRouter"
+    ],
+    "live": "",
+    "repo": "",
+    "images": [
+        "coffee_pos/1.png"
+    ],
+    "aiHint": "mobile barista queue and local network POS system",
+    "category": ["mobile", "frontend", "system-design"],
+    "status": "ongoing"
+},
     {
     title: "Freelens",
     description: "An offline web application to manage freelance projects, clients, tasks, and payments efficiently.",
@@ -29,8 +50,8 @@ export const projects: Project[] = [
         title: "Comprehensive Student Management System",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
-        live: "https://freelens.vercel.app",
-        repo: "https://github.com/zxcoding123/freelens",
+        live: "",
+        repo: "",
         images: [
             "csms/csms.png"
         ],

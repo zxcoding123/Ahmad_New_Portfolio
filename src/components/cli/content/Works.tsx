@@ -120,7 +120,7 @@ export function Works() {
                                 </div>
                             </DialogTrigger>
 
-                            <DialogContent className="max-w-screen-md">
+                            <DialogContent className="max-w-screen-lg">
                                 <DialogHeader>
                                     <DialogTitle>{p.title}</DialogTitle>
                                 </DialogHeader>
@@ -135,7 +135,7 @@ export function Works() {
                                                 <img
                                                     src={image}
                                                     alt={`${p.title} - ${index + 1}`}
-                                                    className="object-contain w-full h-full rounded-md"
+                                                    className="object-contain w-full h-full aspect-[16/9] rounded-md"
                                                 />
                                             </CarouselItem>
                                         ))}
