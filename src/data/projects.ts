@@ -47,11 +47,11 @@ export const projects: Project[] = [
     status: "ongoing"
 },
         {
-        title: "Comprehensive Student Management System",
+        title: "Ateneo de Davao University Comprehensive Student Management System",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
-        live: "",
-        repo: "",
+        live: "http://ateneo-davao-csms.hstn.me/?i=1",
+        repo: "https://github.com/zxcoding123/ADDU-CCS-SMS-SYSTEM",
         images: [
             "csms/csms.png"
         ],
@@ -111,7 +111,6 @@ export const projects: Project[] = [
   category: ["web", "fullstack"],
   status: "ongoing"
 },
-
     {
         title: "TRAC Thesis Repository System",
         description: "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Argicultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
