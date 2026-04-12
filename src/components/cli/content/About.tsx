@@ -55,6 +55,62 @@ export function About() {
     Responsive Design, AJAX
   </li>
 </ul>
+
+<h3 className="text-lg font-bold text-accent mt-6 mb-2">Certifications</h3>
+<ul className="space-y-2 list-disc list-inside space-y-1">
+  <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/1y60liDqfswf-MxQJx0Jw1fm7yIoo5BBj/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Programming for Intermediate Users using Python
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Issued by Department of Information Technology through the Modern Academics Convergence Hub</span>
+  </li>
+  <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/1FHjpJjFWRrdSX0MH-x6WjnJsWfa7RfUu/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Build Python Web Apps with Flask
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Issued by Department of Information Technology through the Modern Academics Convergence Hub</span>
+  </li>
+   <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/1yx2S2SwCY-sjOJxUoMoxWRDe1_zrpi-U/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Visualize Data with Python
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Issued by Department of Information Technology through the Modern Academics Convergence Hub</span>
+  </li>
+   <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/18606u7GqyeplITWNlTm-zgMtenkAD_zR/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Analyze Data with Python
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Issued by Department of Information Technology through the Modern Academics Convergence Hub</span>
+  </li>
+    <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/1-gPufhpjy9YoYlVbx1g-k6eH0LRua61w/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Programming for Beginners Data Using Python
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Department of Information Technology through the Modern Academics Convergence Hub</span>
+  </li>
+  
+</ul>
+
         </div>
     );
 }
