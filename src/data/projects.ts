@@ -13,8 +13,8 @@ export interface Project {
 
 export const projects: Project[] = [
 {
-    "title": "Coffee POS",
-    "description": "A high-performance, offline-first mobile application for baristas to manage order queues, customize drinks, and sync data across devices in real-time.",
+    "title": "Roastly",
+    "description": "The ultimate high-octane POS for baristas who don't have time for lag. Built to handle chaotic morning rushes with an offline-first heartbeat, custom brew logic, and seamless local-network synchronization that keeps the shots pulling even when the Wi-Fi dies.",
     "tags": [
         "Flutter",
         "Dart",
@@ -22,14 +22,21 @@ export const projects: Project[] = [
         "Bonsoir",
         "Isar",
         "WebSockets",
-        "GoRouter"
+        "GoRouter",
+        "SvelteKit"
     ],
-    "live": "",
+    "live": "https://roastly-pos-project.vercel.app/",
     "repo": "",
     "images": [
-        "coffee_pos/1.png"
+        "roastly/1.png",
+           "roastly/2.png",
+              "roastly/3.png",
+                 "roastly/4.png",
+                    "roastly/5.png",
+                       "roastly/6.png",
+                          "roastly/7.png",
     ],
-    "aiHint": "mobile barista queue and local network POS system",
+    "aiHint": "high-performance mobile barista queue and local-mesh POS system",
     "category": ["mobile", "fullstack", "system-design"],
     "status": "ongoing"
 },
