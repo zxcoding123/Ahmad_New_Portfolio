@@ -16,7 +16,7 @@ export const projects: Project[] = [
     "title": "SubBurn",
     "description": "A high-fidelity financial auditing engine designed to kill 'Subscription Blindness.' Built on the principle that friction is a feature, it trades passive automation for intentional manual entry—forcing a 15-second conscious audit of every recurring expense to visualize long-term burn and reclaim intent.",
     "tags": [
-        "Laravel 11",
+        "Laravel 13",
         "Svelte 5",
         "Runes",
         "Tailwind v4",
@@ -32,6 +32,33 @@ export const projects: Project[] = [
     ],
     "aiHint": "intentional financial auditing tool and multi-year subscription burn projection system",
     "category": ["web", "fullstack", "fintech"],
+    "status": "ongoing"
+},
+{
+    "title": "Roastly",
+    "description": "A high-performance, offline-first mobile POS system built specifically for cafes. Designed to handle the morning rush without an internet connection, it leverages local-network synchronization (mDNS) to keep multiple registers in sync, ensuring zero downtime and lightning-fast checkout workflows.",
+    "tags": [
+        "Flutter",
+        "Dart",
+        "Isar",
+        "Hive",
+        "Bonsoir",
+        "mDNS",
+        "Offline-First"
+    ],
+    "live": "https://roastly-pos-project.vercel.app/",
+    "repo": "#",
+    "images": [
+        "roastly/1.png",
+      "roastly/2.png",
+      "roastly/3.png",
+      "roastly/4.png",
+      "roastly/5.png",
+      "roastly/6.png",  
+      "roastly/7.png"
+    ],
+    "aiHint": "offline-first cafe POS system with local-network discovery and peer-to-peer sync",
+    "category": ["mobile", "fintech", "pos"],
     "status": "ongoing"
 },
     {
