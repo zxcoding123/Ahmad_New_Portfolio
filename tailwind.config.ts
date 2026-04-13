@@ -14,6 +14,7 @@ export default {
         headline: ['"Source Code Pro"', 'monospace'],
         code: ['"Source Code Pro"', 'monospace'],
       },
+      
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -72,6 +73,10 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
+         marquee: {
+          "0%":   { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -102,6 +107,7 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'blink': 'blink 1.2s step-end infinite',
         'fade-in': 'fade-in 0.5s ease-out',
+         marquee: "marquee 10s linear infinite",
       },
     },
   },
