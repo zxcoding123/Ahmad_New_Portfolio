@@ -58,7 +58,7 @@ export function Home() {
             </p>
 
             <div className="mt-3 sm:mt-4">
-                <p className="text-sm sm:text-base leading-relaxed text-white">
+                <p className="text-sm sm:text-base leading-relaxed">
                     I am a passionate web developer with a knack for creating beautiful, performant,
                     and accessible user experiences. I love working with modern web technologies and
                     building cool things on the internet. Apart from this, I also enjoy employing SEO
