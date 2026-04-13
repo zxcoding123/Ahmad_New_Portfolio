@@ -13,31 +13,25 @@ export interface Project {
 
 export const projects: Project[] = [
 {
-    "title": "Roastly",
-    "description": "The ultimate high-octane POS for baristas who don't have time for lag. Built to handle chaotic morning rushes with an offline-first heartbeat, custom brew logic, and seamless local-network synchronization that keeps the shots pulling even when the Wi-Fi dies.",
+    "title": "SubBurn",
+    "description": "A high-fidelity financial auditing engine designed to kill 'Subscription Blindness.' Built on the principle that friction is a feature, it trades passive automation for intentional manual entry—forcing a 15-second conscious audit of every recurring expense to visualize long-term burn and reclaim intent.",
     "tags": [
-        "Flutter",
-        "Dart",
-        "Riverpod",
-        "Bonsoir",
-        "Isar",
-        "WebSockets",
-        "GoRouter",
-        "SvelteKit"
+        "Laravel 11",
+        "Svelte 5",
+        "Runes",
+        "Tailwind v4",
+        "PostgreSQL",
+        "Lucide",
+        "Architecture-First"
     ],
-    "live": "https://roastly-pos-project.vercel.app/",
-    "repo": "",
+    "live": "https://subburn.vercel.app/",
+    "repo": "https://github.com/zxcoding123/subburn",
     "images": [
-        "roastly/1.png",
-           "roastly/2.png",
-              "roastly/3.png",
-                 "roastly/4.png",
-                    "roastly/5.png",
-                       "roastly/6.png",
-                          "roastly/7.png",
+        "subburn/1.png",
+
     ],
-    "aiHint": "high-performance mobile barista queue and local-mesh POS system",
-    "category": ["mobile", "fullstack", "system-design"],
+    "aiHint": "intentional financial auditing tool and multi-year subscription burn projection system",
+    "category": ["web", "fullstack", "fintech"],
     "status": "ongoing"
 },
     {
