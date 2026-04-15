@@ -108,7 +108,16 @@ export function About() {
     </a>
     <span className="text-gray-500 ml-2">— Issued by Department of Information Technology through the Modern Academics Convergence Hub</span>
   </li>
-  
+   <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/1gxq1hQraGoJyA4w2cXCNcqs4NuUkMDIn/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Claude 101
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Skilljar and Anthropic Education</span>
+  </li>
 </ul>
 
         </div>
