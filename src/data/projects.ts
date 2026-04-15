@@ -116,14 +116,27 @@ export const projects: Project[] = [
     category: ["web", "fullstack"],
     status: "ongoing"
 },
+   {
+        title: "Aurelius University Alumni Records and Management System",
+        description: "A web application for managing student alumni records.",
+        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
+        live: "#",
+        repo: "#",
+        images: [
+            "no-project-picture.png"
+        ],
+        aiHint: "mobile app learning courseware",
+        category: ["web", "fullstack"], 
+        status: "ongoing"
+    },
         {
-        title: "Ateneo de Davao University Comprehensive Student Management System",
+        title: "Lumina University Comprehensive Student Management System",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
-        live: "http://ateneo-davao-csms.hstn.me/?i=1",
-        repo: "https://github.com/zxcoding123/ADDU-CCS-SMS-SYSTEM",
-        images: [
-            "csms/csms.png"
+        live: "#",
+        repo: "#",
+         images: [
+            "no-project-picture.png"
         ],
         aiHint: "mobile app learning courseware",
         category: ["web", "fullstack"], 
