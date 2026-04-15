@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { projects } from "@/data/projects";
 
-const filters = ["web", "fullstack", "design", "mobile", "ai", "ongoing", "completed"];
+const filters = ["web", "fullstack", "design", "mobile", "ai", "ongoing", "automation", "completed"];
 
 export function Works() {
 
@@ -42,11 +42,13 @@ export function Works() {
 
         const matchesStatus =
           activeFilters.includes("ongoing") && p.status === "ongoing" ||
+           activeFilters.includes("ongoing") && p.status === "stable" ||
           activeFilters.includes("completed") && p.status === "completed";
 
         // If user selected only status filters
         if (
           activeFilters.includes("ongoing") ||
+            activeFilters.includes("stable") ||
           activeFilters.includes("completed")
         ) {
           // Allow combination of category + status
@@ -150,7 +152,7 @@ export function Works() {
 
                         {/* DETAILS */}
                         <div className="w-full md:w-2/3 flex flex-col">
-                           <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2">
   <h3 className="font-bold text-lg text-primary">{p.title}</h3>
 
   {p.status === "ongoing" && (
@@ -162,6 +164,12 @@ export function Works() {
   {p.status === "completed" && (
     <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30">
       Completed
+    </span>
+  )}
+
+  {p.status === "stable" && (
+    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-500 border border-blue-500/30">
+      Stable
     </span>
   )}
 </div>

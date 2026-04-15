@@ -8,10 +8,52 @@ export interface Project {
   images: string[];
   aiHint: string;
   category: string[];
-  status: "ongoing" | "completed";
+  status: "ongoing" | "completed" | "stable";
 }
 
 export const projects: Project[] = [
+    {
+    "title": "Seeker",
+    "description": "An autonomous lead generation engine built on n8n. It programmatically scrapes job boards for Web Developer roles, passing opportunities through a custom logic gate that filters for specific tech stack alignment—delivering high-signal career leads while eliminating manual search fatigue.",
+    "tags": [
+        "n8n",
+        "Automation",
+        "Web Scraping",
+        "Workflow Engineering",
+        "API Integration",
+        "JSON"
+    ],
+    "live": "#",
+    "repo": "#",
+    "images": [
+        "seeker/1.png",
+    ],
+    "aiHint": "autonomous job scraping and skills-based filtering workflow",
+    "category": ["automation", "productivity", "tools"],
+    "status": "ongoing"
+},
+{
+    "title": "Mote",
+    "description": "A minimalist, zero-config backup utility for XAMPP environments. It silently orchestrates scheduled MySQL exports and intelligent archival rotation, acting as a lightweight fail-safe to ensure local development data survives database corruption or environment resets.",
+    "tags": [
+        "MySQL",
+        "Shell Scripting",
+        "Automation",
+        "XAMPP",
+        "Data Integrity",
+        "DevOps"
+    ],
+    "live": "",
+    "repo": "https://github.com/zxcoding123/mote-xampp-mysql-backup",
+    "images": [
+        "mote/1.png",
+        "mote/2.png",
+        "mote/3.png"
+    ],
+    "aiHint": "lightweight automated mysql backup daemon and rotation manager",
+    "category": ["tools", "automation", "devops"],
+    "status": "stable",
+},
 {
     "title": "SubBurn",
     "description": "A high-fidelity financial auditing engine designed to kill 'Subscription Blindness.' Built on the principle that friction is a feature, it trades passive automation for intentional manual entry—forcing a 15-second conscious audit of every recurring expense to visualize long-term burn and reclaim intent.",
@@ -49,7 +91,7 @@ export const projects: Project[] = [
     "live": "https://roastly-pos-project.vercel.app/",
     "repo": "#",
     "images": [
-        "roastly/1.png",
+       "roastly/1.png",
       "roastly/2.png",
       "roastly/3.png",
       "roastly/4.png",
@@ -97,7 +139,7 @@ export const projects: Project[] = [
         "brainly/brainly.png",
     ],
     aiHint: "education platform student collaboration",
-    category: ["web", "education"],
+    category: ["web", "education", "design"],
     status: "completed"
 },
     {
@@ -110,7 +152,7 @@ export const projects: Project[] = [
       "foci/foci-preview.png"
   ],
   aiHint: "productivity web app providing focus-enhancing ambient sounds and a pleasant study environment",
-  category: ["web", "frontend"],
+  category: ["web", "frontend", "design"],
   status: "ongoing" // or "ongoing"
 },
    {
