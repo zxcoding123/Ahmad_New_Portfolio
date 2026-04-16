@@ -123,7 +123,8 @@ export const projects: Project[] = [
         live: "#",
         repo: "#",
         images: [
-            "no-project-picture.png"
+           "aurelius/1.png",
+            "aurelius/2.png",
         ],
         aiHint: "mobile app learning courseware",
         category: ["web", "fullstack"], 
@@ -345,7 +346,7 @@ export const projects: Project[] = [
     {
         title: "DeenConnect Landing Page",
         description: "A simple landing page for an Islamic organization called DeenConnect",
-        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
+        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap" ],
         live: "https://islam-site-github-io.vercel.app/",
         repo: "https://github.com/zxcoding123/islam_site.github.io",
         images: [
@@ -360,8 +361,8 @@ export const projects: Project[] = [
     },
     {
         title: "Windy Landing Page",
-        description: "A simple landing page for an Islamic organization called DeenConnect",
-        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
+        description: "A simple landing page for an Wind Energy Company called Windy",
+        tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap"],
         live: "https://wind-energy-site-aquino-github-io.vercel.app/",
         repo: "https://github.com/zxcoding123/Wind_Energy_Site_Aquino.github.io",
         images: [
