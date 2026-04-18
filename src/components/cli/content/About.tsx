@@ -118,6 +118,16 @@ export function About() {
     </a>
     <span className="text-gray-500 ml-2">— Issued by Skilljar and Anthropic Education</span>
   </li>
+   <li className="text-sm">
+    <a 
+      href="https://drive.google.com/file/d/1zOqLSQN_pdAmObNjXo-CZ3kjqGqnvh9u/view?usp=sharing" 
+      target="_blank" 
+      className="text-primary hover:underline font-semibold"
+    >
+      Claude Code 101
+    </a>
+    <span className="text-gray-500 ml-2">— Issued by Skilljar and Anthropic Education</span>
+  </li>
 </ul>
 
         </div>
