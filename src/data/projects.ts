@@ -13,6 +13,17 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        "title": 'QUINAS',
+            "description": 'The architectural digital presence and portfolio engine for Quinas Studio. Built on Svelte 5 and Tailwind CSS, featuring an organic warm minimalist design system, sequential capabilities matrices, and an automated system creed architecture.',
+            "tags": ['Svelte 5', 'Tailwind CSS', 'Vite', 'UI/UX Architecture', 'Web Systems'],
+            "live": 'https://kinas-official.vercel.app/',
+            "repo": '',
+            "images": ['quinas/1.png'],
+            "aiHint": 'high fidelity minimalist engineering studio landing page and system ledger',
+            "status": 'completed',
+            "category": ['web', 'design', 'architecture']
+    },
+    {
     "title": "Seeker",
     "description": "An autonomous lead generation engine built on n8n. It programmatically scrapes job boards for Web Developer roles, passing opportunities through a custom logic gate that filters for specific tech stack alignment—delivering high-signal career leads while eliminating manual search fatigue.",
     "tags": [
@@ -23,8 +34,8 @@ export const projects: Project[] = [
         "API Integration",
         "JSON"
     ],
-    "live": "#",
-    "repo": "#",
+    "live": "",
+    "repo": "",
     "images": [
         "seeker/1.png",
     ],
