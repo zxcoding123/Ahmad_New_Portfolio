@@ -16,7 +16,7 @@ export const projects: Project[] = [
         "title": 'QUINAS',
             "description": 'The architectural digital presence and portfolio engine for Quinas Studio. Built on Svelte 5 and Tailwind CSS, featuring an organic warm minimalist design system, sequential capabilities matrices, and an automated system creed architecture.',
             "tags": ['Svelte 5', 'Tailwind CSS', 'Vite', 'UI/UX Architecture', 'Web Systems'],
-            "live": 'https://kinas-official.vercel.app/',
+            "live": 'https://quinas-official.vercel.app/',
             "repo": '',
             "images": ['quinas/1.png'],
             "aiHint": 'high fidelity minimalist engineering studio landing page and system ledger',
