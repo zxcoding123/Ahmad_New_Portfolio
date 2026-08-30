@@ -1,5 +1,8 @@
 {
-  "/favicon.ico/route": "/favicon.ico",
   "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/api/chat/route": "/api/chat",
+  "/opengraph-image/route": "/opengraph-image",
+  "/api/github-activity/route": "/api/github-activity",
   "/page": "/"
 }

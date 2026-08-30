@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { LatestProject } from "./LatestProject";
 
 const ASCII_ART = `        _                         _                       _    __       _ _        
    __ _| |__  _ __ ___   __ _  __| |     _ __   ___  _ __| |_ / _| ___ | (_) ___   
@@ -52,6 +53,9 @@ export function Home() {
                     Available for work
                 </Badge>
             </div>
+
+            {/* Most recently touched project */}
+            <LatestProject />
 
             <p className="text-center font-bold mt-4 text-sm sm:text-base">
                 Welcome to my interactive CLI portfolio.

@@ -9,26 +9,46 @@ import { Works } from "./content/Works";
 import { Contact } from "./content/Contact";
 import { NotFound } from "./content/NotFound";
 import { Theme } from "./content/Theme";
+import { Now } from "./content/Now";
+import { Stack } from "./content/Stack";
+import { Resume } from "./content/Resume";
 import { trackEvent } from "@/lib/analytics";
+import { COMMAND_LIST, THEME_ARGS, PROJECT_COMMANDS } from "@/data/commands";
+import { onCliCommand } from "@/lib/cli-events";
+import { projects, projectSlug } from "@/data/projects";
 
-const COMMAND_LIST = [
-  { cmd: "home", desc: "Go to the home page." },
-  { cmd: "about", desc: "Learn more about me." },
-  { cmd: "works", desc: "View my projects." },
-  { cmd: "contact", desc: "Get my contact information." },
-  { cmd: "help", desc: "Display the help message." },
-  { cmd: "clear", desc: "Clear the terminal screen." },
-  { cmd: "whoami", desc: "Alias for about." },
-  { cmd: "projects", desc: "Alias for works." },
-  { cmd: "socials", desc: "Alias for contact." },
-  { cmd: "theme", desc: "Change the color theme." },
-];
+/** `works <slug>` completions, one per project. */
+const PROJECT_ARGS = PROJECT_COMMANDS.flatMap((base) =>
+  projects.map((p) => ({
+    cmd: `${base} ${projectSlug(p.title)}`,
+    desc: p.title,
+  }))
+);
 
-const THEME_ARGS = [
-  { cmd: "theme light", desc: "Switch to the light theme." },
-  { cmd: "theme dark", desc: "Switch to the dark theme." },
-  { cmd: "theme system", desc: "Follow the system theme." },
-];
+/** URL query parameter that runs a command on load, e.g. `?cmd=works+kanvas`. */
+const DEEP_LINK_PARAM = "cmd";
+
+/** Mirror the current command into the address bar so the page is linkable.
+ *  `replaceState` rather than `pushState` — the terminal keeps its own history
+ *  and hijacking the browser Back button on every command would be hostile. */
+function syncUrl(command: string) {
+  if (typeof window === "undefined") return;
+
+  const url = new URL(window.location.href);
+  if (command && command !== "home") {
+    url.searchParams.set(DEEP_LINK_PARAM, command);
+  } else {
+    url.searchParams.delete(DEEP_LINK_PARAM);
+  }
+  window.history.replaceState(null, "", url);
+}
+
+/** The command to run on first load, or null. Read once, before any state. */
+function readDeepLink(): string | null {
+  if (typeof window === "undefined") return null;
+  const raw = new URLSearchParams(window.location.search).get(DEEP_LINK_PARAM);
+  return raw?.trim() ? raw.trim() : null;
+}
 
 export function Terminal() {
   const [input, setInput] = useState("");
@@ -42,18 +62,29 @@ export function Terminal() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setTheme } = useTheme();
 
-  const COMMANDS = React.useMemo(
+  // Each command is a function of its arguments so `works <slug>` can render a
+  // single project. `clear` and `theme` return early in processCommand.
+  // The `| undefined` is load-bearing: without it TS treats every index lookup
+  // as defined and the unknown-command branch below becomes unreachable.
+  const COMMANDS = React.useMemo<
+    Record<string, ((args: string[]) => React.ReactNode) | undefined>
+  >(
     () => ({
-      help: <Help />,
-      home: <Home />,
-      about: <About />,
-      works: <Works />,
-      projects: <Works />,
-      contact: <Contact />,
-      socials: <Contact />,
-      whoami: <About />,
-      clear: null,
-      theme: <Theme />,
+      help: () => <Help />,
+      home: () => <Home />,
+      about: () => <About />,
+      whoami: () => <About />,
+      works: (args) => <Works query={args.join(" ")} />,
+      projects: (args) => <Works query={args.join(" ")} />,
+      stack: () => <Stack />,
+      uses: () => <Stack />,
+      resume: () => <Resume />,
+      cv: () => <Resume />,
+      now: () => <Now />,
+      latest: () => <Now />,
+      contact: () => <Contact />,
+      socials: () => <Contact />,
+      theme: () => <Theme />,
     }),
     []
   );
@@ -69,6 +100,13 @@ export function Terminal() {
       return THEME_ARGS.filter(
         (t) => t.cmd.startsWith(`theme ${arg}`) && t.cmd !== value
       );
+    }
+
+    // "works <slug>" completes against the project list.
+    if (new RegExp(`^(${PROJECT_COMMANDS.join("|")})\\s+\\S*$`).test(value)) {
+      return PROJECT_ARGS.filter(
+        (p) => p.cmd.startsWith(value) && p.cmd !== value
+      ).slice(0, 8);
     }
 
     if (value.includes(" ")) return [];
@@ -96,12 +134,14 @@ export function Terminal() {
       if (command === "clear") {
         trackEvent("terminal_cleared");
         setHistory([]);
+        syncUrl("");
         return;
       }
 
       if (command === "theme") {
         const themeArg = args[0];
         const valid = ["light", "dark", "system"];
+        syncUrl(commandStr.trim());
 
         const output = valid.includes(themeArg)
           ? `Theme changed to ${themeArg}.`
@@ -125,16 +165,18 @@ export function Terminal() {
         return;
       }
 
-      const commandOutput =
-        COMMANDS[command as keyof typeof COMMANDS] ?? <NotFound command={commandStr} />;
+      const render = COMMANDS[command];
 
-      if (!COMMANDS[command as keyof typeof COMMANDS]) {
+      if (render) {
+        trackEvent("section_viewed", { section: command });
+        // Keep the address bar shareable: the URL always reflects the last
+        // command, so copying it reproduces what is on screen.
+        syncUrl(commandStr.trim());
+      } else {
         trackEvent("command_error", { command });
       }
 
-      if (COMMANDS[command as keyof typeof COMMANDS]) {
-        trackEvent("section_viewed", { section: command });
-      }
+      const commandOutput = render ? render(args) : <NotFound command={commandStr} />;
 
       setHistory((prev) => [
         ...prev,
@@ -261,7 +303,7 @@ export function Terminal() {
     trackEvent("engaged_user");
   }
 
-  // Initial welcome
+  // Initial welcome, plus any `?cmd=` deep link.
   useEffect(() => {
     trackEvent("terminal_session_started");
     setHistory([
@@ -275,7 +317,18 @@ export function Terminal() {
         </div>
       </div>,
     ]);
+
+    const deepLink = readDeepLink();
+    if (deepLink) {
+      trackEvent("deep_link_opened", { command: deepLink });
+      processCommand(deepLink);
+    }
+    // Mount only: processCommand is stable and re-running would replay the link.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Let content inside the history (project titles, help entries) run commands.
+  useEffect(() => onCliCommand(runCommand), [runCommand]);
 
   const focusInput = () => inputRef.current?.focus();
 

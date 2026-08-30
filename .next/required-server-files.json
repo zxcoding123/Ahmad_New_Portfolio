@@ -103,7 +103,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\AHMAD\\Documents\\GitHub\\studio",
+    "outputFileTracingRoot": "E:\\projects\\Ahmad_New_Portfolio-main\\Ahmad_New_Portfolio",
     "experimental": {
       "nodeMiddleware": false,
       "cacheLife": {
@@ -286,10 +286,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "C:\\Users\\AHMAD\\Documents\\GitHub\\studio"
+      "root": "E:\\projects\\Ahmad_New_Portfolio-main\\Ahmad_New_Portfolio"
     }
   },
-  "appDir": "C:\\Users\\AHMAD\\Documents\\GitHub\\studio",
+  "appDir": "E:\\projects\\Ahmad_New_Portfolio-main\\Ahmad_New_Portfolio",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

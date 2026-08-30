@@ -1,6 +1,35 @@
 {
   "version": 4,
   "routes": {
+    "/opengraph-image": {
+      "initialHeaders": {
+        "cache-control": "public, immutable, no-transform, max-age=31536000",
+        "content-type": "image/png",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/opengraph-image/layout,_N_T_/opengraph-image/route,_N_T_/opengraph-image"
+      },
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/opengraph-image",
+      "dataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/favicon.ico": {
       "initialHeaders": {
         "cache-control": "public, max-age=0, must-revalidate",
@@ -53,13 +82,42 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/api/github-activity": {
+      "initialHeaders": {
+        "content-type": "application/json",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/api/layout,_N_T_/api/github-activity/layout,_N_T_/api/github-activity/route,_N_T_/api/github-activity"
+      },
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": 3600,
+      "initialExpireSeconds": 31536000,
+      "srcRoute": "/api/github-activity",
+      "dataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "d9fb677b8cdac5d27a8199750e99c6a7",
-    "previewModeSigningKey": "8f1cf323df97008a744ba1d9c87b7c55dde701c591b0b5e266f9d028b36cd040",
-    "previewModeEncryptionKey": "3a1c45a199c09f26f54edce3438434e8f4f85df5cf922c6b626b363eb8049dd3"
+    "previewModeId": "b1488c6ed8d41b85967f848cbd37f92f",
+    "previewModeSigningKey": "f501db78b8e60bbfc037721ff7979d768e4d1f2eb368f2c6afe45f0ed249fcf1",
+    "previewModeEncryptionKey": "b53af7e24d42a782fa0b54a865884ae23e93baf73d79d79d92ffac5e6a619d53"
   }
 }

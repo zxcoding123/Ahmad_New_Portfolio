@@ -9,11 +9,51 @@ export interface Project {
   aiHint: string;
   category: string[];
   status: "ongoing" | "completed" | "stable";
+  /** ISO date (YYYY-MM-DD) you last touched this project. Drives ordering
+   *  and the "currently building" banner. A live GitHub push date overrides
+   *  this at runtime when one is found and is newer. */
+  updatedAt: string;
+  /** Optional `owner/repo` used ONLY to read live push dates from GitHub.
+   *  Use it when the code lives somewhere you do not want linked publicly, or
+   *  under a different account than `repo`. Never rendered in the UI. */
+  activityRepo?: string;
+  /** Optional bullets shown only on the `works <slug>` detail page — the place
+   *  to put what you actually built, decided or measured. Left off a project,
+   *  the detail page simply falls back to `description`. */
+  highlights?: string[];
+}
+
+/** URL/command-safe id for a project, e.g. "Coffee POS" -> "coffee-pos".
+ *  Derived rather than stored so titles stay the single source of truth. */
+export function projectSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Look a project up by slug, then by a loose title match, so both
+ *  `works coffee-pos` and `works coffee` land on the same project. */
+export function findProject<T extends Project>(
+  query: string,
+  source: T[]
+): T | undefined {
+  const needle = query.trim().toLowerCase();
+  if (!needle) return undefined;
+
+  const asSlug = projectSlug(needle);
+
+  return (
+    source.find((p) => projectSlug(p.title) === asSlug) ??
+    source.find((p) => p.title.toLowerCase().includes(needle))
+  );
 }
 
 export const projects: Project[] = [
     {
         "title": 'QUINAS',
+        updatedAt: "2026-08-28",
+        activityRepo: "kinas-official/quinas_official",
             "description": 'The architectural digital presence and portfolio engine for Quinas Studio. Built on Svelte 5 and Tailwind CSS, featuring an organic warm minimalist design system, sequential capabilities matrices, and an automated system creed architecture.',
             "tags": ['Svelte 5', 'Tailwind CSS', 'Vite', 'UI/UX Architecture', 'Web Systems'],
             "live": 'https://quinas-official.vercel.app/',
@@ -25,6 +65,7 @@ export const projects: Project[] = [
     },
     {
     "title": "Seeker",
+    updatedAt: "2026-08-22",
     "description": "An autonomous lead generation engine built on n8n. It programmatically scrapes job boards for Web Developer roles, passing opportunities through a custom logic gate that filters for specific tech stack alignment—delivering high-signal career leads while eliminating manual search fatigue.",
     "tags": [
         "n8n",
@@ -45,6 +86,7 @@ export const projects: Project[] = [
 },
 {
     "title": "Mote",
+    updatedAt: "2026-08-14",
     "description": "A minimalist, zero-config backup utility for XAMPP environments. It silently orchestrates scheduled MySQL exports and intelligent archival rotation, acting as a lightweight fail-safe to ensure local development data survives database corruption or environment resets.",
     "tags": [
         "MySQL",
@@ -67,6 +109,7 @@ export const projects: Project[] = [
 },
 {
     "title": "SubBurn",
+    updatedAt: "2026-08-05",
     "description": "A high-fidelity financial auditing engine designed to kill 'Subscription Blindness.' Built on the principle that friction is a feature, it trades passive automation for intentional manual entry—forcing a 15-second conscious audit of every recurring expense to visualize long-term burn and reclaim intent.",
     "tags": [
         "Laravel 13",
@@ -89,6 +132,7 @@ export const projects: Project[] = [
 },
 {
     "title": "Roastly",
+    updatedAt: "2026-07-24",
     "description": "A high-performance, offline-first mobile POS system built specifically for cafes. Designed to handle the morning rush without an internet connection, it leverages local-network synchronization (mDNS) to keep multiple registers in sync, ensuring zero downtime and lightning-fast checkout workflows.",
     "tags": [
         "Flutter",
@@ -116,6 +160,7 @@ export const projects: Project[] = [
 },
     {
     title: "Freelens",
+    updatedAt: "2026-07-10",
     description: "An offline web application to manage freelance projects, clients, tasks, and payments efficiently.",
     tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "jQuery", "Express", "PostgreSQL", "Node"],
     live: "https://freelens.vercel.app/",
@@ -129,6 +174,7 @@ export const projects: Project[] = [
 },
    {
         title: "Aurelius University Alumni Records and Management System",
+        updatedAt: "2026-06-26",
         description: "A web application for managing student alumni records.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
         live: "#",
@@ -143,6 +189,7 @@ export const projects: Project[] = [
     },
         {
         title: "Lumina University Comprehensive Student Management System",
+        updatedAt: "2026-06-12",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
         live: "#",
@@ -156,6 +203,7 @@ export const projects: Project[] = [
     },
     {
     title: "Brainly Landing Page",
+    updatedAt: "2026-05-29",
     description: "A modern mental health landing page inspired by Brainly, focused on collaborative therapy and CBT session.",
     tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "Framer Motion"],
     live: "https://brainly-1mjr.vercel.app/",
@@ -169,6 +217,7 @@ export const projects: Project[] = [
 },
     {
   title: "FoCi",
+  updatedAt: "2026-05-15",
   description: "A productivity-focused web application designed to enhance concentration through curated ambient soundscapes. FoCi provides users with a seamless, immersive environment to support deep work and study sessions, featuring a minimalist interface and high-quality audio streaming.",
   tags: ["Next.js", "Shadcn UI", "Vite", "Web Audio API", "Tailwind CSS"],
   live: "https://foci-page.vercel.app/", // Add your deployment link here
@@ -182,6 +231,7 @@ export const projects: Project[] = [
 },
    {
   title: "Tarabasa",
+  updatedAt: "2026-04-30",
   description: "An ongoing mobile application built for Zamboanga City that helps users discover nearby cafés, review centers, and study hubs. Tarabasa leverages geolocation to surface relevant places based on proximity, enabling students and professionals to find suitable spaces for studying and work.",
   tags: ["Flutter", "Supabase", "Geolocation", "Mobile App", "PostgreSQL"],
   live: "",
@@ -195,6 +245,7 @@ export const projects: Project[] = [
 },
     {
   title: "rDMS (Records & Document Management System)",
+  updatedAt: "2026-04-16",
   description: "An enterprise-grade document management system that tracks, organizes, and monitors documents across departments. rDMS provides visibility into document status, ownership, and workflow progression within an organization.",
   tags: ["PostgreSQL", "Express.js", "Tailwind CSS", "JavaScript", "Svelte", "ShadCDN", "Document Workflow"],
   live: "",
@@ -208,6 +259,7 @@ export const projects: Project[] = [
 },
     {
         title: "TRAC Thesis Repository System",
+        updatedAt: "2026-03-28",
         description: "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Argicultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
         tags: ["PHP", "MySQL", "Bootstrap", "JavaScript", "PHP:PDO"],
         live: "https://trac-thesis-repo.hstn.me",
@@ -222,6 +274,7 @@ export const projects: Project[] = [
     },
     {
         title: "Kanvas",
+        updatedAt: "2026-03-10",
         description: "A visual dashboard builder that allows users to create interactive, customizable data dashboards without writing code. Kanvas empowers teams, students, and organizations to turn raw data into clear, insightful visuals through a drag-and-drop workspace.",
         tags: ["React", "Tailwind", "Node.js"],
         live: "https://kanvas-landing-page.vercel.app/",
@@ -236,6 +289,7 @@ export const projects: Project[] = [
 
     {
         title: "Lexora",
+        updatedAt: "2026-02-20",
         description: "A legal support service platform designed to provide client-focused guidance for businesses and individuals. Lexora simplifies legal processes, clarifies complex requirements, and helps clients make confident and informed decisions.",
         tags: ["Webflow", "Webflow CMS"],
         live: "https://lexora-site.webflow.io/",
@@ -249,6 +303,7 @@ export const projects: Project[] = [
     },
     {
         title: "LearnMate",
+        updatedAt: "2026-01-28",
         description: "A mobile app built for freelance teachers and elementary pupils to book video conferencing sessions and engage in e-learning style lessons.",
         tags: ["Flutter", "Firebase", "Agora"],
         live: "",
@@ -262,6 +317,7 @@ export const projects: Project[] = [
     },
     {
         title: "BitCraft: A Desktop Courseware for e-Learning",
+        updatedAt: "2025-12-15",
         description: "A desktop courseware built for learners and teachers to learn specific courses made by professional teachers.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "PHP", "PHP:PDO", "MySQL", "SQLite", "Data-AOS", "Plyr", "DataTables"],
         live: "",
@@ -288,6 +344,7 @@ export const projects: Project[] = [
     },
     {
         title: "Korean – Innovative Quality Korean-pop Albums Web App",
+        updatedAt: "2025-11-20",
         description: "An e-commerce web application catering towards buying and selling Korean-pop albums ranging from admin side to client side.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "PHP", "PHP:PDO", "MySQL", "DataTables", "PayPal API",],
         live: "",
@@ -343,6 +400,7 @@ export const projects: Project[] = [
 
     {
         title: "Kreyt Landing Page",
+        updatedAt: "2025-10-18",
         description: "A Web3 Landing Page for a crypto company called Kreyt",
         tags: ["React", "Vite", "TypeScript", "Framer", "Tailwind CSS", "React Bits", "ShadCDN"],
         live: "https://kreyt-crypto-site.vercel.app/",
@@ -356,6 +414,7 @@ export const projects: Project[] = [
     },
     {
         title: "DeenConnect Landing Page",
+        updatedAt: "2025-09-12",
         description: "A simple landing page for an Islamic organization called DeenConnect",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap" ],
         live: "https://islam-site-github-io.vercel.app/",
@@ -372,6 +431,7 @@ export const projects: Project[] = [
     },
     {
         title: "Windy Landing Page",
+        updatedAt: "2025-08-05",
         description: "A simple landing page for an Wind Energy Company called Windy",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap"],
         live: "https://wind-energy-site-aquino-github-io.vercel.app/",
