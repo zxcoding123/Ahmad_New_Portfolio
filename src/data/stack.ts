@@ -32,14 +32,36 @@ export const stack: StackGroup[] = [
         items: ["MySQL", "SQLite", "Firebase", "Supabase", "REST APIs", "PHP (PDO)"],
     },
     {
-        label: "Tools & Platforms",
-        items: ["Git", "Docker", "Vercel", "Firebase", "Webflow", "n8n"],
+        label: "Hosting & Domains",
+        items: [
+            "Cloudways",
+            "Dynadot",
+            "Vercel",
+            "Firebase Hosting",
+            "Domain & DNS Management",
+        ],
     },
     {
-        label: "Performance & Analytics",
+        label: "DevOps & Automation",
         items: [
-            "Google Lighthouse",
+            "GitHub Actions",
+            "CI/CD & Deployment",
+            "Site Maintenance",
+            "n8n",
+        ],
+    },
+    {
+        label: "Tools & Platforms",
+        items: ["Git", "Docker", "Webflow"],
+    },
+    {
+        label: "Tracking & Analytics",
+        items: [
+            "Meta Pixel",
+            "TikTok Pixel",
             "Umami",
+            "Automated Reporting",
+            "Google Lighthouse",
             "Google Search Console",
             "SurferSEO",
         ],

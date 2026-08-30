@@ -1,6 +1,6 @@
 'use client';
 
-import { Github, Link as LinkIcon, LayoutGrid, List, Rows3, ChevronDown, ArrowLeft } from 'lucide-react';
+import { Github, Link as LinkIcon, LayoutGrid, List, Rows3, ChevronDown, ChevronsUpDown, ChevronsDownUp, ArrowLeft } from 'lucide-react';
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import { trackEvent } from "@/lib/analytics";
@@ -193,6 +193,64 @@ function ProjectLinks({ project }: { project: Project }) {
     );
 }
 
+/** Show more / show less control. Shared by all three views so the affordance
+ *  reads the same wherever a project appears. */
+function ExpandToggle({
+    expanded,
+    onToggle,
+    collapsedLabel = "Show more",
+    className,
+}: {
+    expanded: boolean;
+    onToggle: () => void;
+    collapsedLabel?: string;
+    className?: string;
+}) {
+    return (
+        <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded={expanded}
+            className={cn(
+                "self-start flex items-center gap-1 text-xs text-muted-foreground hover:text-accent transition-colors",
+                className
+            )}
+        >
+            {expanded ? "Show less" : collapsedLabel}
+            <ChevronDown
+                size={14}
+                className={cn("transition-transform", expanded && "rotate-180")}
+            />
+        </button>
+    );
+}
+
+/** The part of a project revealed on expand: highlights, then the full tag
+ *  list. Collapsed cards show neither. */
+function ProjectExtras({ project }: { project: Project }) {
+    return (
+        <div className="animate-fade-in">
+            {project.highlights?.length ? (
+                <ul className="mb-3 space-y-1.5 list-disc list-inside">
+                    {project.highlights.map(point => (
+                        <li key={point} className="text-sm text-muted-foreground">
+                            {point}
+                        </li>
+                    ))}
+                </ul>
+            ) : null}
+
+            <div className="flex gap-2 flex-wrap mb-3">
+                {project.tags.map(tag => (
+                    <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
+                        {tag}
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 /** Project title that opens the detail view by re-running `works <slug>`
  *  through the Terminal, so the deep link and the click share one code path. */
 function ProjectTitle({
@@ -288,7 +346,8 @@ export function Works({ query = "" }: { query?: string } = {}) {
     const [activeFilters, setActiveFilters] = React.useState<string[]>([]);
     const [view, setView] = React.useState<ViewMode>("cards");
 
-    // Grid cards collapse by default so rows stay even; expansion is per card.
+    // Projects collapse by default in every view — it keeps grid rows even and
+    // makes a 20-project list scannable. Expansion is per card, keyed by title.
     const [expandedCards, setExpandedCards] = React.useState<Set<string>>(
         () => new Set()
     );
@@ -372,6 +431,26 @@ export function Works({ query = "" }: { query?: string } = {}) {
         return matchesCategory;
       });
 
+    // "All expanded" is judged against what is currently on screen, so the
+    // button still reads correctly when a filter is narrowing the list.
+    const allExpanded =
+        filteredProjects.length > 0 &&
+        filteredProjects.every(p => expandedCards.has(p.title));
+
+    const toggleAll = () => {
+        trackEvent("project_cards_toggled_all", { expanded: !allExpanded });
+        setExpandedCards(prev => {
+            if (allExpanded) {
+                // Collapse only the visible ones; anything hidden by a filter
+                // keeps whatever state the visitor left it in.
+                const next = new Set(prev);
+                filteredProjects.forEach(p => next.delete(p.title));
+                return next;
+            }
+            return new Set([...prev, ...filteredProjects.map(p => p.title)]);
+        });
+    };
+
     // `works <slug>` — one project, in full. Every hook above has already run,
     // so returning here is safe.
     const requested = query.trim();
@@ -416,7 +495,26 @@ export function Works({ query = "" }: { query?: string } = {}) {
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-2 mb-4 mt-2">
-                <h2 className="text-l font-bold">Filters: </h2>
+                <div className="flex items-center gap-3">
+                    <h2 className="text-l font-bold">Filters: </h2>
+
+                    <button
+                        type="button"
+                        onClick={toggleAll}
+                        aria-pressed={allExpanded}
+                        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-accent transition-colors"
+                    >
+                        {allExpanded ? (
+                            <>
+                                <ChevronsDownUp size={14} /> Collapse all
+                            </>
+                        ) : (
+                            <>
+                                <ChevronsUpDown size={14} /> Expand all
+                            </>
+                        )}
+                    </button>
+                </div>
 
                 {/* VIEW TOGGLE */}
                 <div className="flex items-center gap-1 border border-border rounded-full p-1 bg-secondary">
@@ -455,26 +553,39 @@ export function Works({ query = "" }: { query?: string } = {}) {
             {view === "list" ? (
                 /* LIST VIEW — no cards, no images */
                 <div className="divide-y divide-border border-t border-border">
-                    {filteredProjects.map(p => (
-                        <div key={p.title} className="py-4">
-                            <div className="flex flex-wrap items-center gap-2">
-                                <ProjectTitle project={p} className="text-base" />
-                                <StatusBadge status={p.status} />
-                                <UpdatedStamp project={p} mounted={mounted} />
-                            </div>
+                    {filteredProjects.map(p => {
+                        const isExpanded = expandedCards.has(p.title);
 
-                            <p className="text-sm text-muted-foreground mt-1 mb-2">
-                                {p.description}
-                            </p>
+                        return (
+                            <div key={p.title} className="py-4 flex flex-col">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <ProjectTitle project={p} className="text-base" />
+                                    <StatusBadge status={p.status} />
+                                    <UpdatedStamp project={p} mounted={mounted} />
+                                </div>
 
-                            <div className="flex items-center justify-between flex-wrap gap-2">
-                                <span className="text-xs text-muted-foreground">
-                                    {p.tags.join(" · ")}
-                                </span>
-                                <ProjectLinks project={p} />
+                                <p
+                                    className={cn(
+                                        "text-sm text-muted-foreground mt-1 mb-2",
+                                        !isExpanded && "line-clamp-2"
+                                    )}
+                                >
+                                    {p.description}
+                                </p>
+
+                                {isExpanded && <ProjectExtras project={p} />}
+
+                                <div className="flex items-center justify-between flex-wrap gap-2">
+                                    <ExpandToggle
+                                        expanded={isExpanded}
+                                        onToggle={() => toggleCard(p.title)}
+                                        collapsedLabel={`Show more (${p.tags.length} tags)`}
+                                    />
+                                    <ProjectLinks project={p} />
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             ) : view === "grid" ? (
                 /* GRID VIEW — compact cards, image on top */
@@ -504,31 +615,14 @@ export function Works({ query = "" }: { query?: string } = {}) {
                                     {p.description}
                                 </p>
 
-                                {isExpanded && (
-                                    <div className="flex gap-2 flex-wrap mb-3 animate-fade-in">
-                                        {p.tags.map(tag => (
-                                            <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
+                                {isExpanded && <ProjectExtras project={p} />}
 
-                                <button
-                                    type="button"
-                                    onClick={() => toggleCard(p.title)}
-                                    aria-expanded={isExpanded}
-                                    className="self-start flex items-center gap-1 text-xs text-muted-foreground hover:text-accent transition-colors mb-3"
-                                >
-                                    {isExpanded ? "Show less" : `Show more (${p.tags.length} tags)`}
-                                    <ChevronDown
-                                        size={14}
-                                        className={cn(
-                                            "transition-transform",
-                                            isExpanded && "rotate-180"
-                                        )}
-                                    />
-                                </button>
+                                <ExpandToggle
+                                    expanded={isExpanded}
+                                    onToggle={() => toggleCard(p.title)}
+                                    collapsedLabel={`Show more (${p.tags.length} tags)`}
+                                    className="mb-3"
+                                />
 
                                 <ProjectLinks project={p} />
 
@@ -539,39 +633,48 @@ export function Works({ query = "" }: { query?: string } = {}) {
             ) : (
                 /* CARD VIEW — full-width rows, image beside the details */
                 <div className="space-y-6">
-                    {filteredProjects.map(p => (
-                        <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-4 rounded-md bg-secondary">
+                    {filteredProjects.map(p => {
+                        const isExpanded = expandedCards.has(p.title);
 
-                            {/* IMAGES */}
-                            <ProjectMedia project={p} className="w-full md:w-1/3" />
+                        return (
+                            <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-4 rounded-md bg-secondary">
 
-                            {/* DETAILS */}
-                            <div className="w-full md:w-2/3 flex flex-col">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <ProjectTitle project={p} className="text-lg" />
-                                    <StatusBadge status={p.status} />
-                                    <UpdatedStamp project={p} mounted={mounted} />
+                                {/* IMAGES */}
+                                <ProjectMedia project={p} className="w-full md:w-1/3" />
+
+                                {/* DETAILS */}
+                                <div className="w-full md:w-2/3 flex flex-col">
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <ProjectTitle project={p} className="text-lg" />
+                                        <StatusBadge status={p.status} />
+                                        <UpdatedStamp project={p} mounted={mounted} />
+                                    </div>
+
+                                    <p
+                                        className={cn(
+                                            "text-sm text-muted-foreground mt-1 mb-2",
+                                            isExpanded ? "" : "line-clamp-3 flex-grow"
+                                        )}
+                                    >
+                                        {p.description}
+                                    </p>
+
+                                    {isExpanded && <ProjectExtras project={p} />}
+
+                                    <ExpandToggle
+                                        expanded={isExpanded}
+                                        onToggle={() => toggleCard(p.title)}
+                                        collapsedLabel={`Show more (${p.tags.length} tags)`}
+                                        className="mb-3"
+                                    />
+
+                                    <ProjectLinks project={p} />
+
                                 </div>
-
-
-                                <p className="text-sm text-muted-foreground mb-2 flex-grow">
-                                    {p.description}
-                                </p>
-
-                                <div className="flex gap-2 flex-wrap mb-3">
-                                    {p.tags.map(tag => (
-                                        <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <ProjectLinks project={p} />
 
                             </div>
-
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </div>
