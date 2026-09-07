@@ -116,7 +116,7 @@ function ProjectMedia({
                 </div>
             </DialogTrigger>
 
-            <DialogContent className="max-w-screen-lg">
+            <DialogContent className="w-[95vw] max-w-screen-lg">
                 <DialogHeader>
                     <DialogTitle>{project.title}</DialogTitle>
                 </DialogHeader>
@@ -147,7 +147,7 @@ function ProjectMedia({
 
 function ProjectLinks({ project }: { project: Project }) {
     return (
-        <div className="flex gap-4 text-sm">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
             {/* Repository */}
             {project.repo ? (
                 <a
@@ -266,7 +266,7 @@ function ProjectTitle({
             onClick={() => runCliCommand(`works ${projectSlug(project.title)}`)}
             title={`Open ${project.title}`}
             className={cn(
-                "font-bold text-primary text-left hover:underline decoration-dotted underline-offset-4 hover:text-accent transition-colors",
+                "font-bold text-primary text-left break-words min-w-0 hover:underline decoration-dotted underline-offset-4 hover:text-accent transition-colors",
                 className
             )}
         >
@@ -284,7 +284,7 @@ function ProjectDetail({
     mounted: boolean;
 }) {
     return (
-        <div className="px-4">
+        <div className="px-0 sm:px-4">
             <button
                 type="button"
                 onClick={() => runCliCommand("works")}
@@ -462,7 +462,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
         }
 
         return (
-            <div className="px-4">
+            <div className="px-0 sm:px-4">
                 <p className="text-sm">
                     No project matches{" "}
                     <span className="text-accent-foreground bg-accent px-1 rounded">
@@ -488,7 +488,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
     }
 
     return (
-        <div className="px-4">
+        <div className="px-0 sm:px-4">
             <h2 className="text-xl font-bold text-accent">My Works</h2>
             <p className="text-xs text-muted-foreground mt-1">
                 Sorted by most recently worked on.
@@ -517,7 +517,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                 </div>
 
                 {/* VIEW TOGGLE */}
-                <div className="flex items-center gap-1 border border-border rounded-full p-1 bg-secondary">
+                <div className="flex flex-wrap items-center gap-1 border border-border rounded-full p-1 bg-secondary">
                     {([
                         { mode: "cards", label: "Cards", Icon: Rows3 },
                         { mode: "grid", label: "Grid", Icon: LayoutGrid },
@@ -528,7 +528,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                             variant={view === mode ? "default" : "ghost"}
                             onClick={() => changeView(mode)}
                             aria-pressed={view === mode}
-                            className="text-xs px-3 py-1 h-auto rounded-full flex items-center gap-1"
+                            className="text-xs px-2 sm:px-3 py-1 h-auto rounded-full flex items-center gap-1"
                         >
                             <Icon size={14} /> {label}
                         </Button>
@@ -589,12 +589,12 @@ export function Works({ query = "" }: { query?: string } = {}) {
                 </div>
             ) : view === "grid" ? (
                 /* GRID VIEW — compact cards, image on top */
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 items-start">
+                <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-start">
                     {filteredProjects.map(p => {
                         const isExpanded = expandedCards.has(p.title);
 
                         return (
-                            <div key={p.title} className="flex flex-col border border-border p-4 rounded-md bg-secondary">
+                            <div key={p.title} className="flex flex-col min-w-0 border border-border p-3 sm:p-4 rounded-md bg-secondary">
 
                                 <ProjectMedia project={p} className="w-full mb-3" />
 
@@ -637,13 +637,13 @@ export function Works({ query = "" }: { query?: string } = {}) {
                         const isExpanded = expandedCards.has(p.title);
 
                         return (
-                            <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-4 rounded-md bg-secondary">
+                            <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-3 sm:p-4 rounded-md bg-secondary">
 
                                 {/* IMAGES */}
                                 <ProjectMedia project={p} className="w-full md:w-1/3" />
 
                                 {/* DETAILS */}
-                                <div className="w-full md:w-2/3 flex flex-col">
+                                <div className="w-full md:w-2/3 min-w-0 flex flex-col">
                                     <div className="flex flex-wrap items-center gap-2">
                                         <ProjectTitle project={p} className="text-lg" />
                                         <StatusBadge status={p.status} />

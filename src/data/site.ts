@@ -32,12 +32,13 @@ export const SITE = {
         "Svelte",
         "Laravel",
         "portfolio",
+        "php fullstack developer"
     ],
     locale: "en_US",
 } as const;
 
 /** Google Drive file id for the resume PDF. */
-const RESUME_FILE_ID = "15lHYJr3AeYEst2u0xhIXrLxtiXTX4F6M";
+const RESUME_FILE_ID = "1ba2N3pcip8jCKjeqH3nWbSQSmd0Xl2U_";
 
 export const RESUME = {
     viewUrl: `https://drive.google.com/file/d/${RESUME_FILE_ID}/view?usp=sharing`,

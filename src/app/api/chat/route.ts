@@ -1,11 +1,19 @@
 import { google } from '@ai-sdk/google';
 import { generateText } from 'ai';
 import { projects } from "@/data/projects";
+import { stack } from "@/data/stack";
+
+// Skills come straight from the stack data so the assistant can never quote a
+// list that has drifted from the `stack` command and the About section.
+const SKILLS = stack
+    .map(group => `- ${group.label}: ${group.items.join(", ")}`)
+    .join("\n");
 
 const AHMAD_BIO = `
 Name: Ahmad Pandaog Aquino
 Role: Full-stack Developer | Mobile Application Developer
-Skills: HTML, CSS, Javascript, Python, PHP, Laravel, Flutter, Next.js, React, Node.js, Typescript, Docker, Firebase, Vercel, Canvas, Git, Svelte, ShadCDN
+Skills:
+${SKILLS}
 Projects: 
 - AI Portfolio: A Next.js site with a custom Gemini integration.
 - E-commerce App: Built with Stripe and Supabase.
