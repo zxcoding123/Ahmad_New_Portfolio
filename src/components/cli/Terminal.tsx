@@ -356,7 +356,7 @@ export function Terminal() {
   }, [history]);
 
   return (
-    <div className="w-full h-[90vh] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base flex flex-col">
+    <div className="w-full h-[75vh] max-h-[700px] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base flex flex-col">
 
       {/* Header */}
       <div className="relative bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary rounded-t-md shrink-0">
