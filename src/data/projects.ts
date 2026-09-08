@@ -51,6 +51,18 @@ export function findProject<T extends Project>(
 
 export const projects: Project[] = [
     {
+        "title": 'Belladonna',
+        updatedAt: "2026-09-08",
+        "description": 'A luxury landing page for Belladonna, a Vancouver-based beauty apothecary offering personalized skincare, facials, and body rituals compounded from botanical actives. Built with Svelte and React Bits, pairing atmospheric imagery with an unhurried, artisanal tone across a full treatment menu and booking flow.',
+        "tags": ['Svelte', 'React Bits', 'Tailwind CSS', 'UI/UX Design'],
+        "live": 'https://project-beauty-skin-care.vercel.app/',
+        "repo": '',
+        "images": ['belladonna/1.png'],
+        "aiHint": 'luxurious botanical beauty apothecary landing page with treatment menu and booking',
+        "status": 'completed',
+        "category": ['web', 'design']
+    },
+    {
         "title": 'QUINAS',
         updatedAt: "2026-08-28",
         activityRepo: "kinas-official/quinas_official",
