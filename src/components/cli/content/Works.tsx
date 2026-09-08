@@ -39,7 +39,7 @@ function StatusBadge({ status }: { status: Project["status"] }) {
 
     if (status === "completed") {
         return (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/15 text-green-500 border border-green-500/30">
+            <span className="text-xs px-2 py-0.5 mb-1 rounded-full bg-green-500/15 text-green-500 border border-green-500/30">
                 Completed
             </span>
         );
@@ -81,9 +81,13 @@ function UpdatedStamp({
 function ProjectMedia({
     project,
     className,
+    mediaClassName = "aspect-[16/9]",
 }: {
     project: Project;
     className?: string;
+    /** Classes for the inner image box. Defaults to a fixed 16:9 aspect ratio;
+     *  pass "h-full" (or similar) to have it stretch to match a sibling instead. */
+    mediaClassName?: string;
 }) {
     return (
         <Dialog>
@@ -102,7 +106,7 @@ function ProjectMedia({
                         <CarouselContent>
                             {project.images.map((image, index) => (
                                 <CarouselItem key={index}>
-                                    <div className="relative w-full aspect-[16/9] overflow-hidden rounded-md">
+                                    <div className={cn("relative w-full overflow-hidden rounded-md", mediaClassName)}>
                                         <img
                                             src={image}
                                             alt={`${project.title} - ${index + 1}`}
@@ -145,9 +149,9 @@ function ProjectMedia({
     );
 }
 
-function ProjectLinks({ project }: { project: Project }) {
+function ProjectLinks({ project, className }: { project: Project; className?: string }) {
     return (
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        <div className={cn("flex flex-wrap items-center gap-x-4 gap-y-2 text-sm", className)}>
             {/* Repository */}
             {project.repo ? (
                 <a
@@ -557,7 +561,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                         const isExpanded = expandedCards.has(p.title);
 
                         return (
-                            <div key={p.title} className="py-4 flex flex-col">
+                            <div key={p.title} className="py-4 px-2 -mx-2 flex flex-col rounded-md transition-colors hover:bg-secondary/50">
                                 <div className="flex flex-wrap items-center gap-2">
                                     <ProjectTitle project={p} className="text-base" />
                                     <StatusBadge status={p.status} />
@@ -589,12 +593,12 @@ export function Works({ query = "" }: { query?: string } = {}) {
                 </div>
             ) : view === "grid" ? (
                 /* GRID VIEW — compact cards, image on top */
-                <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-start">
+                <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
                     {filteredProjects.map(p => {
                         const isExpanded = expandedCards.has(p.title);
 
                         return (
-                            <div key={p.title} className="flex flex-col min-w-0 border border-border p-3 sm:p-4 rounded-md bg-secondary">
+                            <div key={p.title} className="h-full flex flex-col min-w-0 border border-border p-3 sm:p-4 rounded-md bg-secondary transition-colors hover:bg-secondary/70">
 
                                 <ProjectMedia project={p} className="w-full mb-3" />
 
@@ -624,7 +628,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                                     className="mb-3"
                                 />
 
-                                <ProjectLinks project={p} />
+                                <ProjectLinks project={p} className="mt-auto" />
 
                             </div>
                         );
@@ -637,10 +641,14 @@ export function Works({ query = "" }: { query?: string } = {}) {
                         const isExpanded = expandedCards.has(p.title);
 
                         return (
-                            <div key={p.title} className="flex flex-col md:flex-row gap-4 border border-border p-3 sm:p-4 rounded-md bg-secondary">
+                            <div key={p.title} className="flex flex-col md:flex-row items-stretch gap-4 border border-border p-3 sm:p-4 rounded-md bg-secondary transition-colors hover:bg-secondary/70">
 
-                                {/* IMAGES */}
-                                <ProjectMedia project={p} className="w-full md:w-1/3" />
+                                {/* IMAGES — matches the details column's height on md+ */}
+                                <ProjectMedia
+                                    project={p}
+                                    className="w-full md:w-1/3"
+                                    mediaClassName="aspect-[16/9] md:aspect-auto md:h-full"
+                                />
 
                                 {/* DETAILS */}
                                 <div className="w-full md:w-2/3 min-w-0 flex flex-col">
