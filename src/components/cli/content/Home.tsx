@@ -1,6 +1,8 @@
 import { Badge } from "@/components/ui/badge";
 import { ShinyText } from "@/components/ShinyText";
+import { SITE } from "@/data/site";
 import { LatestProject } from "./LatestProject";
+import { VentureLinks } from "./Ventures";
 
 // Muted base with a primary-colored sweep, so the shine reads in both themes
 const SHINE_PROPS = {
@@ -59,6 +61,10 @@ export function Home() {
                 </ShinyText>
             </div>
 
+            <p className="text-center font-bold mt-2 text-sm sm:text-base">
+                {SITE.role}
+            </p>
+
             {/* Live Status Badge */}
             <div className="flex justify-center items-center mt-3 sm:mt-4">
                 <Badge variant="secondary" className="flex items-center gap-2 px-3 py-1 text-xs sm:text-sm">
@@ -77,16 +83,18 @@ export function Home() {
                 Welcome to my interactive CLI portfolio.
             </p>
 
+            <p className="text-center mt-1 text-sm sm:text-base text-muted-foreground">
+                Founder of <VentureLinks />.
+            </p>
+
             <div className="mt-3 sm:mt-4">
-                <p className="text-sm sm:text-base leading-relaxed">
-                    I am a passionate web developer with a knack for creating beautiful, performant,
-                    and accessible user experiences. I love working with modern web technologies and
-                    building cool things on the internet. Apart from this, I also enjoy employing SEO
-                    best practices, as well as writing and content creation.
-                </p>
+                <p className="text-center max-w-3xl mx-auto text-sm sm:text-base leading-relaxed">{SITE.bio}</p>
             </div>
 
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base">
+            {/* Divider between the intro and the prompt hints below it */}
+            <div className="mt-5 sm:mt-6 border-t border-dashed border-border" />
+
+            <p className="mt-4 text-sm sm:text-base">
                 Type{" "}
                 <span className="text-accent-foreground bg-accent px-1 rounded font-mono text-xs sm:text-sm">
                     help

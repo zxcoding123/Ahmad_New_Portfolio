@@ -56,6 +56,16 @@ function StatusBadge({ status }: { status: Project["status"] }) {
     return null;
 }
 
+function RoleBadge({ role }: { role: Project["role"] }) {
+    if (!role) return null;
+
+    return (
+        <span className="text-xs px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-500 border border-purple-500/30">
+            {role}
+        </span>
+    );
+}
+
 /**
  * "updated 3 days ago" stamp. `mounted` gates it because relative time differs
  * between the server render and the client, which would trip hydration.
@@ -300,6 +310,7 @@ function ProjectDetail({
             <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-xl font-bold text-accent">{project.title}</h2>
                 <StatusBadge status={project.status} />
+                <RoleBadge role={project.role} />
                 <UpdatedStamp project={project} mounted={mounted} />
             </div>
 
@@ -565,6 +576,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                                 <div className="flex flex-wrap items-center gap-2">
                                     <ProjectTitle project={p} className="text-base" />
                                     <StatusBadge status={p.status} />
+                                    <RoleBadge role={p.role} />
                                     <UpdatedStamp project={p} mounted={mounted} />
                                 </div>
 
@@ -605,6 +617,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                                 <div className="flex flex-wrap items-center gap-2">
                                     <ProjectTitle project={p} className="text-base" />
                                     <StatusBadge status={p.status} />
+                                    <RoleBadge role={p.role} />
                                 </div>
 
                                 <UpdatedStamp project={p} mounted={mounted} />
@@ -655,6 +668,7 @@ export function Works({ query = "" }: { query?: string } = {}) {
                                     <div className="flex flex-wrap items-center gap-2">
                                         <ProjectTitle project={p} className="text-lg" />
                                         <StatusBadge status={p.status} />
+                                    <RoleBadge role={p.role} />
                                         <UpdatedStamp project={p} mounted={mounted} />
                                     </div>
 

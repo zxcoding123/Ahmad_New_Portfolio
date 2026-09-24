@@ -2,7 +2,9 @@
 
 import { trackEvent } from "@/lib/analytics";
 import { stack } from "@/data/stack";
-import { RESUME } from "@/data/site";
+import { RESUME, SITE } from "@/data/site";
+import { projectSlug } from "@/data/projects";
+import { VentureLinks, ventures } from "./Ventures";
 import { runCliCommand } from "@/lib/cli-events";
 
 const MACH =
@@ -54,9 +56,7 @@ export function About() {
 
             <div className="flex flex-col sm:flex-row items-center sm:items-start sm:space-x-6 mb-4">
                 <p>
-                    I am a passionate web developer with a knack for creating beautiful, performant, and accessible user experiences.
-                    I love working with modern web technologies and building cool things on the internet.
-                    Apart from this, I also enjoy employing SEO best practices, as well as writing and content creation.
+                    {SITE.bio} I&apos;m also the founder of <VentureLinks />.
                 </p>
             </div>
 
@@ -69,6 +69,22 @@ export function About() {
             >
                 View My Resume
             </a>
+
+            <h3 className="text-lg font-bold text-accent mb-2">Founder</h3>
+            <ul className="list-disc list-inside space-y-1 mb-6">
+                {ventures.map(venture => (
+                    <li key={venture.title}>
+                        <button
+                            type="button"
+                            onClick={() => runCliCommand(`works ${projectSlug(venture.title)}`)}
+                            className="font-bold text-primary hover:underline"
+                        >
+                            {venture.title}
+                        </button>
+                        <span className="text-muted-foreground"> — Founder</span>
+                    </li>
+                ))}
+            </ul>
 
             <h3 className="text-lg font-bold text-accent mb-2">Skills</h3>
             <ul className="list-disc list-inside space-y-1">

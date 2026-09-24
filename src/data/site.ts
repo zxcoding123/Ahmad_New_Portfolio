@@ -16,15 +16,21 @@ export const SITE_URL = (
 
 export const SITE = {
     name: "Ahmad Aquino",
-    role: "Web Developer",
+    role: "Fullstack Web and Mobile Application Developer",
     /** Browser tab + og:title. */
-    title: "Ahmad Aquino — Web Developer",
+    title: "Ahmad Aquino — Fullstack Web and Mobile Application Developer",
     /** Shown in search results and link previews. Keep under ~160 characters. */
     description:
-        "Interactive CLI portfolio of Ahmad Aquino — web developer building fast, accessible experiences with React, Next.js, Svelte and Laravel.",
+        "Interactive CLI portfolio of Ahmad Aquino — fullstack web and mobile developer and founder of Quinas, Freelens and Roastly.",
+    /** Intro paragraph shared by the home screen and the `about` command. */
+    bio:
+        "I build web and mobile applications end to end — from database and API design to fast, accessible interfaces people enjoy using. I care about clean architecture and performance, and I bring SEO and content writing to every launch, so what I ship doesn't just work, it gets found.",
     keywords: [
         "Ahmad Aquino",
+        "fullstack developer",
         "web developer",
+        "mobile app developer",
+        "Flutter",
         "frontend developer",
         "full stack developer",
         "React",

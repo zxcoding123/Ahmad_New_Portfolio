@@ -21,6 +21,9 @@ export interface Project {
    *  to put what you actually built, decided or measured. Left off a project,
    *  the detail page simply falls back to `description`. */
   highlights?: string[];
+  /** Optional role on the project, e.g. "Founder". Shown as a badge in the
+   *  works views, and "Founder" entries are also listed under `about`. */
+  role?: string;
 }
 
 /** URL/command-safe id for a project, e.g. "Coffee POS" -> "coffee-pos".
@@ -66,6 +69,7 @@ export const projects: Project[] = [
         "title": 'QUINAS',
         updatedAt: "2026-08-28",
         activityRepo: "kinas-official/quinas_official",
+        role: "Founder",
             "description": 'The architectural digital presence and portfolio engine for Quinas Studio. Built on Svelte 5 and Tailwind CSS, featuring an organic warm minimalist design system, sequential capabilities matrices, and an automated system creed architecture.',
             "tags": ['Svelte 5', 'Tailwind CSS', 'Vite', 'UI/UX Architecture', 'Web Systems'],
             "live": 'https://quinas-official.vercel.app/',
@@ -145,6 +149,7 @@ export const projects: Project[] = [
 {
     "title": "Roastly",
     updatedAt: "2026-07-24",
+    role: "Founder",
     "description": "A high-performance, offline-first mobile POS system built specifically for cafes. Designed to handle the morning rush without an internet connection, it leverages local-network synchronization (mDNS) to keep multiple registers in sync, ensuring zero downtime and lightning-fast checkout workflows.",
     "tags": [
         "Flutter",
@@ -173,6 +178,7 @@ export const projects: Project[] = [
     {
     title: "Freelens",
     updatedAt: "2026-07-10",
+    role: "Founder",
     description: "An offline web application to manage freelance projects, clients, tasks, and payments efficiently.",
     tags: ["SvelteKit", "Vite", "TypeScript", "Tailwind CSS", "ShadCN", "Lucide", "jQuery", "Express", "PostgreSQL", "Node"],
     live: "https://freelens.vercel.app/",
