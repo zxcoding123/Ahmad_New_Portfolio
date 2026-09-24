@@ -10,5 +10,13 @@
     "files": [
       "static/chunks/341.056900400c7cb71c.js"
     ]
+  },
+  "components\\Background.tsx -> @/components/ShapeWaves": {
+    "id": 9193,
+    "files": [
+      "static/css/940922e7c6820fc5.css",
+      "static/chunks/206.996ee3cfc945155b.js",
+      "static/chunks/193.f7b01661a14b97a9.js"
+    ]
   }
 }

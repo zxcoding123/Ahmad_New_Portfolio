@@ -103,7 +103,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "E:\\projects\\Ahmad_New_Portfolio-main\\Ahmad_New_Portfolio",
+    "outputFileTracingRoot": "C:\\Users\\AHMAD\\Desktop\\Projects\\Ahmad_New_Portfolio",
     "experimental": {
       "nodeMiddleware": false,
       "cacheLife": {
@@ -161,7 +161,7 @@
       "middlewarePrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 11,
+      "cpus": 15,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -286,10 +286,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "E:\\projects\\Ahmad_New_Portfolio-main\\Ahmad_New_Portfolio"
+      "root": "C:\\Users\\AHMAD\\Desktop\\Projects\\Ahmad_New_Portfolio"
     }
   },
-  "appDir": "E:\\projects\\Ahmad_New_Portfolio-main\\Ahmad_New_Portfolio",
+  "appDir": "C:\\Users\\AHMAD\\Desktop\\Projects\\Ahmad_New_Portfolio",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",
