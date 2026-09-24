@@ -37,6 +37,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Google Search Console ownership check.
+  verification: {
+    google: 'df_7qhueJnRF-idt2eRGIm4CVz8nY-ktfQDBDcpbTH8',
+  },
   // `public/` is served from the root — the path must NOT include "public".
   icons: {
     icon: '/logo.png',
