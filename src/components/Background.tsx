@@ -59,7 +59,10 @@ export function Background() {
       splashStrength={0.4}
       intro
       introDuration={1.6}
-      onError={() => setSupported(false)}
+      onError={(error: Error) => {
+        console.warn("ShapeWaves failed, falling back to DotField:", error);
+        setSupported(false);
+      }}
     />
   );
 }
