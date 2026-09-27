@@ -1,51 +1,9 @@
 {
   "pages": {
-    "/_not-found/page": [
-      "static/chunks/webpack-8123a55735c66adb.js",
-      "static/chunks/4bd1b696-2966a7d1e27dad18.js",
-      "static/chunks/684-7863214a2643a125.js",
-      "static/chunks/main-app-637aa90e6b0c9406.js",
-      "static/chunks/app/_not-found/page-743f83a4794fe1eb.js"
-    ],
-    "/layout": [
-      "static/chunks/webpack-8123a55735c66adb.js",
-      "static/chunks/4bd1b696-2966a7d1e27dad18.js",
-      "static/chunks/684-7863214a2643a125.js",
-      "static/chunks/main-app-637aa90e6b0c9406.js",
-      "static/css/f39888b3b6b93a9e.css",
-      "static/chunks/65-a12df0ab13990ee9.js",
-      "static/chunks/app/layout-fc7284815337283f.js"
-    ],
-    "/api/chat/route": [
-      "static/chunks/webpack-8123a55735c66adb.js",
-      "static/chunks/4bd1b696-2966a7d1e27dad18.js",
-      "static/chunks/684-7863214a2643a125.js",
-      "static/chunks/main-app-637aa90e6b0c9406.js",
-      "static/chunks/app/api/chat/route-df0942deabf77070.js"
-    ],
-    "/opengraph-image/route": [
-      "static/chunks/webpack-8123a55735c66adb.js",
-      "static/chunks/4bd1b696-2966a7d1e27dad18.js",
-      "static/chunks/684-7863214a2643a125.js",
-      "static/chunks/main-app-637aa90e6b0c9406.js",
-      "static/chunks/app/opengraph-image/route-b78a0e9e736cd9aa.js"
-    ],
     "/api/github-activity/route": [
-      "static/chunks/webpack-8123a55735c66adb.js",
-      "static/chunks/4bd1b696-2966a7d1e27dad18.js",
-      "static/chunks/684-7863214a2643a125.js",
-      "static/chunks/main-app-637aa90e6b0c9406.js",
-      "static/chunks/app/api/github-activity/route-7016c1cc949318e9.js"
-    ],
-    "/page": [
-      "static/chunks/webpack-8123a55735c66adb.js",
-      "static/chunks/4bd1b696-2966a7d1e27dad18.js",
-      "static/chunks/684-7863214a2643a125.js",
-      "static/chunks/main-app-637aa90e6b0c9406.js",
-      "static/css/2cf29d2433da4473.css",
-      "static/chunks/65-a12df0ab13990ee9.js",
-      "static/chunks/143-ef8c83e4db43f460.js",
-      "static/chunks/app/page-8f04372103a7ff5f.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/github-activity/route.js"
     ]
   }
 }

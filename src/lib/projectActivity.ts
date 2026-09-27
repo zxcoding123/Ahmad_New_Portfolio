@@ -35,6 +35,29 @@ export function repoSlugFromUrl(url?: string): string | null {
   return bare ? `${bare[1]}/${bare[2]}`.toLowerCase() : null;
 }
 
+/** Every `owner/repo` a project's activity is read from: all `activityRepo`
+ *  entries when set, otherwise the public `repo` link. */
+export function trackedRepos(project: Project): string[] {
+  const explicit = [project.activityRepo ?? []]
+    .flat()
+    .map((repo) => repoSlugFromUrl(repo))
+    .filter((slug): slug is string => !!slug);
+  if (explicit.length) return explicit;
+
+  const fromRepo = repoSlugFromUrl(project.repo);
+  return fromRepo ? [fromRepo] : [];
+}
+
+/** Every GitHub account or org that owns a tracked repo, so the API route
+ *  knows whose repo lists to read. Always includes GITHUB_USERNAME. */
+export function trackedOwners(source: Project[] = projects): string[] {
+  const owners = new Set([GITHUB_USERNAME.toLowerCase()]);
+  for (const project of source) {
+    for (const slug of trackedRepos(project)) owners.add(slug.split("/")[0]);
+  }
+  return [...owners];
+}
+
 function toDate(value: string): Date | null {
   const parsed = parseISO(value);
   return isValid(parsed) ? parsed : null;
@@ -61,14 +84,19 @@ export function resolveProjects(
 ): ActiveProject[] {
   return source
     .map((project) => {
-      // `activityRepo` wins: it exists precisely to track repos that `repo`
-      // does not point at (private-ish, or under another account).
-      const slug =
-        repoSlugFromUrl(project.activityRepo) ?? repoSlugFromUrl(project.repo);
-      const pushed = slug ? pushes[slug] : undefined;
+      // A project spanning several repos (app + admin, say) takes the most
+      // recent push across all of them.
+      let pushed: string | undefined;
+      let pushedDate: Date | null = null;
+      for (const slug of trackedRepos(project)) {
+        const date = pushes[slug] ? toDate(pushes[slug]) : null;
+        if (date && (!pushedDate || date > pushedDate)) {
+          pushed = pushes[slug];
+          pushedDate = date;
+        }
+      }
 
       const manualDate = toDate(project.updatedAt);
-      const pushedDate = pushed ? toDate(pushed) : null;
 
       const useLive =
         !!pushedDate && (!manualDate || pushedDate.getTime() > manualDate.getTime());

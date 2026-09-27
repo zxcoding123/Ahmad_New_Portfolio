@@ -13,10 +13,11 @@ export interface Project {
    *  and the "currently building" banner. A live GitHub push date overrides
    *  this at runtime when one is found and is newer. */
   updatedAt: string;
-  /** Optional `owner/repo` used ONLY to read live push dates from GitHub.
-   *  Use it when the code lives somewhere you do not want linked publicly, or
-   *  under a different account than `repo`. Never rendered in the UI. */
-  activityRepo?: string;
+  /** Optional `owner/repo` (or several) used ONLY to read live push dates from
+   *  GitHub. Use it when the code lives somewhere you do not want linked
+   *  publicly, under a different account than `repo`, or across more than one
+   *  repo — the newest push of the set wins. Never rendered in the UI. */
+  activityRepo?: string | string[];
   /** Optional bullets shown only on the `works <slug>` detail page — the place
    *  to put what you actually built, decided or measured. Left off a project,
    *  the detail page simply falls back to `description`. */
@@ -56,6 +57,7 @@ export const projects: Project[] = [
     {
         "title": 'Belladonna',
         updatedAt: "2026-09-08",
+        activityRepo: "zxcoding123/project-beauty-skin-care",
         "description": 'A luxury landing page for Belladonna, a Vancouver-based beauty apothecary offering personalized skincare, facials, and body rituals compounded from botanical actives. Built with Svelte and React Bits, pairing atmospheric imagery with an unhurried, artisanal tone across a full treatment menu and booking flow.',
         "tags": ['Svelte', 'React Bits', 'Tailwind CSS', 'UI/UX Design'],
         "live": 'https://project-beauty-skin-care.vercel.app/',
@@ -68,7 +70,7 @@ export const projects: Project[] = [
     {
         "title": 'QUINAS',
         updatedAt: "2026-08-28",
-        activityRepo: "kinas-official/quinas_official",
+        activityRepo: "quinas-official/quinas_official",
         role: "Founder",
             "description": 'The architectural digital presence and portfolio engine for Quinas Studio. Built on Svelte 5 and Tailwind CSS, featuring an organic warm minimalist design system, sequential capabilities matrices, and an automated system creed architecture.',
             "tags": ['Svelte 5', 'Tailwind CSS', 'Vite', 'UI/UX Architecture', 'Web Systems'],
@@ -149,6 +151,7 @@ export const projects: Project[] = [
 {
     "title": "Roastly",
     updatedAt: "2026-07-24",
+    activityRepo: ["zxcoding123/roastly_pos_project", "zxcoding123/roastly_admin"],
     role: "Founder",
     "description": "A high-performance, offline-first mobile POS system built specifically for cafes. Designed to handle the morning rush without an internet connection, it leverages local-network synchronization (mDNS) to keep multiple registers in sync, ensuring zero downtime and lightning-fast checkout workflows.",
     "tags": [
@@ -208,6 +211,7 @@ export const projects: Project[] = [
         {
         title: "Lumina University Comprehensive Student Management System",
         updatedAt: "2026-06-12",
+        activityRepo: "zxcoding123/ADDU-CCS-SMS-SYSTEM",
         description: "A web application for managing student records, including enrollment, grades, and attendance.",
         tags: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "PHP", "PHP:PDO", "MySQL"],
         live: "#",
@@ -264,6 +268,7 @@ export const projects: Project[] = [
     {
   title: "rDMS (Records & Document Management System)",
   updatedAt: "2026-04-16",
+  activityRepo: "quinas-official/eDMS",
   description: "An enterprise-grade document management system that tracks, organizes, and monitors documents across departments. rDMS provides visibility into document status, ownership, and workflow progression within an organization.",
   tags: ["PostgreSQL", "Express.js", "Tailwind CSS", "JavaScript", "Svelte", "ShadCDN", "Document Workflow"],
   live: "",
@@ -293,6 +298,7 @@ export const projects: Project[] = [
     {
         title: "Kanvas",
         updatedAt: "2026-03-10",
+        activityRepo: ["zxcoding123/Kanvas", "zxcoding123/kanvas-landing-page"],
         description: "A visual dashboard builder that allows users to create interactive, customizable data dashboards without writing code. Kanvas empowers teams, students, and organizations to turn raw data into clear, insightful visuals through a drag-and-drop workspace.",
         tags: ["React", "Tailwind", "Node.js"],
         live: "https://kanvas-landing-page.vercel.app/",
