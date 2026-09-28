@@ -55,6 +55,18 @@ export function findProject<T extends Project>(
 
 export const projects: Project[] = [
     {
+        title: "eDMS Landing Page",
+        updatedAt: "2026-09-28",
+        description: "The marketing site for eDMS, a records and document management system by Quinas. It introduces the product's version-tracked document storage, in-browser DOCX previews and side-by-side version comparisons, and walks departments through how eDMS keeps document status, ownership and workflow visible across an organization.",
+        tags: ["SvelteKit 2", "Svelte 5", "Tailwind CSS 4", "TypeScript", "Vite", "Lucide", "UI/UX Design"],
+        live: "https://edmslandingpage.vercel.app/",
+        repo: "https://github.com/quinas-official/eDMS_landing_page",
+        images: ["edms_landing_page/1.png, edms_landing_page/2.png, edms_landing_page/3.png, edms_landing_page/4.png, edms_landing_page/5.png, edms_landing_page/6.png, edms_landing_page/7.png, edms_landing_page/8.png, edms_landing_page/9.png, edms_landing_page/10.png"],
+        aiHint: "product landing page for a document management system",
+        category: ["web", "design"],
+        status: "ongoing"
+    },
+    {
         "title": 'Belladonna',
         updatedAt: "2026-09-08",
         activityRepo: "zxcoding123/project-beauty-skin-care",
