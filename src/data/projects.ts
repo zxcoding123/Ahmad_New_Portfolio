@@ -84,7 +84,7 @@ export const projects: Project[] = [
     ],
     aiHint: "product landing page for a document management system",
     category: ["web", "design"],
-    status: "ongoing",
+    status: "completed",
   },
   {
     title: "Belladonna",
@@ -339,7 +339,7 @@ export const projects: Project[] = [
     status: "ongoing",
   },
   {
-    title: "rDMS (Records & Document Management System)",
+    title: "eDMS (Electronic Records & Document Management System)",
     updatedAt: "2026-04-16",
     activityRepo: "quinas-official/eDMS",
     description:
@@ -364,7 +364,7 @@ export const projects: Project[] = [
     ],
     live: "",
     repo: "",
-    images: ["no-project-picture.png"],
+    images: ["edms/1.png", "edms/2.png", "edms/3.png", "edms/4.png", "edms/5.png", "edms/6.png", "edms/7.png"],
     aiHint: "enterprise document and records management system",
     category: ["web", "fullstack"],
     status: "ongoing",
