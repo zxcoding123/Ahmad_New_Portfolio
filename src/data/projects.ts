@@ -55,7 +55,7 @@ export function findProject<T extends Project>(
 
 export const projects: Project[] = [
   {
-    title: "eDMS Landing Page",
+    title: "eDMS (Electronic Records & Document Management System) Landing Page",
     updatedAt: "2026-09-28",
     description:
       "The marketing site for eDMS, a records and document management system by Quinas. It introduces the product's version-tracked document storage, in-browser DOCX previews and side-by-side version comparisons, and walks departments through how eDMS keeps document status, ownership and workflow visible across an organization.",
