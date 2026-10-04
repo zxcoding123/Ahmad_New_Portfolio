@@ -4,6 +4,7 @@ import * as React from "react";
 import { trackEvent } from "@/lib/analytics";
 import { stack } from "@/data/stack";
 import { Button } from "@/components/ui/button";
+import { TechBadge } from "@/components/TechBadge";
 
 /** Output of the `stack` command (alias `uses`). The same data backs the
  *  Skills section of `about`, so the two cannot drift. */
@@ -61,12 +62,11 @@ export function Stack() {
                         </h3>
                         <div className="flex gap-2 flex-wrap">
                             {group.items.map(item => (
-                                <span
+                                <TechBadge
                                     key={item}
+                                    name={item}
                                     className="text-xs bg-secondary border border-border px-2 py-1 rounded"
-                                >
-                                    {item}
-                                </span>
+                                />
                             ))}
                         </div>
                     </div>

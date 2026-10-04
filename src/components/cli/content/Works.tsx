@@ -18,6 +18,7 @@ import { findProject, projectSlug, type Project } from "@/data/projects";
 import { useProjectActivity } from "@/hooks/use-project-activity";
 import { formatRelative, type ActiveProject } from "@/lib/projectActivity";
 import { runCliCommand } from "@/lib/cli-events";
+import { TechBadge } from "@/components/TechBadge";
 
 const filters = ["web", "fullstack", "design", "mobile", "ai", "ongoing", "automation", "completed"];
 
@@ -256,9 +257,7 @@ function ProjectExtras({ project }: { project: Project }) {
 
             <div className="flex gap-2 flex-wrap mb-3">
                 {project.tags.map(tag => (
-                    <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
-                        {tag}
-                    </span>
+                    <TechBadge key={tag} name={tag} className="text-xs bg-background/50 px-2 py-1 rounded" />
                 ))}
             </div>
         </div>
@@ -337,9 +336,7 @@ function ProjectDetail({
                     </h3>
                     <div className="flex gap-2 flex-wrap">
                         {project.tags.map(tag => (
-                            <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
-                                {tag}
-                            </span>
+                            <TechBadge key={tag} name={tag} className="text-xs bg-background/50 px-2 py-1 rounded" />
                         ))}
                     </div>
                 </div>

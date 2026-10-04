@@ -3,6 +3,7 @@
 import { Github, Link as LinkIcon } from "lucide-react";
 import { useProjectActivity } from "@/hooks/use-project-activity";
 import { formatRelative } from "@/lib/projectActivity";
+import { TechBadge } from "@/components/TechBadge";
 
 const RECENT_COUNT = 5;
 
@@ -52,9 +53,7 @@ export function Now() {
 
         <div className="flex gap-2 flex-wrap mt-3">
           {current.tags.map((tag) => (
-            <span key={tag} className="text-xs bg-background/50 px-2 py-1 rounded">
-              {tag}
-            </span>
+            <TechBadge key={tag} name={tag} className="text-xs bg-background/50 px-2 py-1 rounded" />
           ))}
         </div>
 
