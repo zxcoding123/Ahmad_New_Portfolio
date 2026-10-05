@@ -68,8 +68,8 @@ export const projects: Project[] = [
       "Lucide",
       "UI/UX Design",
     ],
-    live: "https://edmslandingpage.vercel.app/",
-    repo: "https://github.com/quinas-official/eDMS_landing_page",
+    live: "https://e-dms-landing-page.vercel.app/",
+    repo: "#",
     images: [
       "edms_landing_page/1.png",
       "edms_landing_page/2.png",
