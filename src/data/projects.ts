@@ -284,7 +284,7 @@ export const projects: Project[] = [
     ],
     live: "#",
     repo: "#",
-    images: ["no-project-picture.png"],
+    images: ["csms/1.png", "csms/2.png", "csms/3.png", "csms/4.png", "csms/5.png"],
     aiHint: "mobile app learning courseware",
     category: ["web", "fullstack"],
     status: "ongoing",
