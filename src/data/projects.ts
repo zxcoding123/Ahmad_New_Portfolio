@@ -267,7 +267,7 @@ export const projects: Project[] = [
     status: "ongoing",
   },
   {
-    title: "Lumina University Comprehensive Student Management System",
+    title: "Don Pablo Lorenzo Memorial High School - StandAlone Senior High School Comprehensive Student Management System",
     updatedAt: "2026-06-12",
     activityRepo: "zxcoding123/ADDU-CCS-SMS-SYSTEM",
     description:
