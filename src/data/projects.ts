@@ -55,6 +55,38 @@ export function findProject<T extends Project>(
 
 export const projects: Project[] = [
   {
+    title: "Full Page Capture: Desktop & Mobile",
+    updatedAt: "2026-10-18",
+    description:
+      "A Chrome extension that screenshots an entire web page, top to bottom, in both its desktop and real phone layouts in one click. Captures open in a preview window first, so nothing is saved until you choose — as one tall image or split into screen-sized shots.",
+    tags: [
+      "Chrome Extension",
+      "Manifest V3",
+      "JavaScript",
+      "Chrome DevTools Protocol",
+      "HTML",
+      "CSS",
+      "Claude Code",
+    ],
+    live: "",
+    repo: "",
+    images: [
+      "fullpage-capture/1.png",
+      "fullpage-capture/2.png",
+      "fullpage-capture/3.png",
+    ],
+    aiHint: "chrome extension for full page desktop and mobile screenshots",
+    category: ["tools", "productivity", "web"],
+    status: "ongoing",
+    highlights: [
+      "Captures desktop and mobile layouts side by side, emulating real devices (iPhone 15/16, 16 Pro Max, SE, Pixel 8, Galaxy S24) with their screen size, pixel density, touch and user agent through the Chrome DevTools Protocol.",
+      "Loads lazy images before capturing, then saves the page as one long image or splits it into screen-sized shots, as PNG, JPG or to the clipboard.",
+      "Detects emails, phone numbers, card numbers (Luhn-checked), passwords, ID numbers and API keys on the page so they can be blacked out before saving.",
+      "Fully local and private: no accounts, no analytics and no network requests. Screenshots are cleared when the preview closes.",
+      "Built with Claude Code as an AI pair programmer.",
+    ],
+  },
+  {
     title: "eDMS (Electronic Records & Document Management System) Landing Page",
     updatedAt: "2026-09-28",
     description:
@@ -69,7 +101,7 @@ export const projects: Project[] = [
       "UI/UX Design",
     ],
     live: "https://e-dms-landing-page.vercel.app/",
-    repo: "#",
+    repo: "",
     images: [
       "edms_landing_page/1.png",
       "edms_landing_page/2.png",
@@ -205,7 +237,7 @@ export const projects: Project[] = [
       "Offline-First",
     ],
     live: "https://roastly-pos-project.vercel.app/",
-    repo: "#",
+    repo: "",
     images: [
       "roastly/1.png",
       "roastly/2.png",
@@ -259,8 +291,8 @@ export const projects: Project[] = [
       "PHP:PDO",
       "MySQL",
     ],
-    live: "#",
-    repo: "#",
+    live: "",
+    repo: "",
     images: ["aurelius/1.png", "aurelius/2.png"],
     aiHint: "mobile app learning courseware",
     category: ["web", "fullstack"],
@@ -269,7 +301,7 @@ export const projects: Project[] = [
   {
     title: "Don Pablo Lorenzo Memorial High School - StandAlone Senior High School Comprehensive Student Management System",
     updatedAt: "2026-06-12",
-    activityRepo: "zxcoding123/ADDU-CCS-SMS-SYSTEM",
+    activityRepo: "zxcoding123/dplmhs_shs-ccs-system",
     description:
       "A web application for managing student records, including enrollment, grades, and attendance.",
     tags: [
@@ -282,8 +314,8 @@ export const projects: Project[] = [
       "PHP:PDO",
       "MySQL",
     ],
-    live: "#",
-    repo: "#",
+    live: "",
+    repo: "",
     images: ["csms/1.png", "csms/2.png", "csms/3.png", "csms/4.png", "csms/5.png"],
     aiHint: "mobile app learning courseware",
     category: ["web", "fullstack"],
@@ -373,7 +405,7 @@ export const projects: Project[] = [
     title: "TRAC Thesis Repository System",
     updatedAt: "2026-03-28",
     description:
-      "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Argicultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
+      "A web-based repository system for managing and archiving student theses for Tawi-Tawi Regional Agricultural College. The system allows users to submit, browse, and search theses efficiently, while providing administrators tools for review, approval, and organization of research works.",
     tags: ["PHP", "MySQL", "Bootstrap", "JavaScript", "PHP:PDO"],
     live: "https://trac-thesis-repo.hstn.me",
     repo: "https://github.com/zxcoding123/TRAC-THESIS-REPO-SYSTEM",

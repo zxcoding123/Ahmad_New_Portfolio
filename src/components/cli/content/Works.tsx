@@ -57,6 +57,9 @@ function StatusBadge({ status }: { status: Project["status"] }) {
     return null;
 }
 
+/** True for a real URL. Empty strings and "#" placeholders render as disabled. */
+const isLink = (url: string) => Boolean(url) && url !== "#";
+
 function RoleBadge({ role }: { role: Project["role"] }) {
     if (!role) return null;
 
@@ -121,6 +124,8 @@ function ProjectMedia({
                                         <img
                                             src={image}
                                             alt={`${project.title} - ${index + 1}`}
+                                            loading="lazy"
+                                            decoding="async"
                                             className="absolute inset-0 w-full h-full object-cover"
                                         />
                                     </div>
@@ -146,6 +151,8 @@ function ProjectMedia({
                                 <img
                                     src={image}
                                     alt={`${project.title} - ${index + 1}`}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="object-contain w-full h-full aspect-[16/9] rounded-md"
                                 />
                             </CarouselItem>
@@ -164,10 +171,11 @@ function ProjectLinks({ project, className }: { project: Project; className?: st
     return (
         <div className={cn("flex flex-wrap items-center gap-x-4 gap-y-2 text-sm", className)}>
             {/* Repository */}
-            {project.repo ? (
+            {isLink(project.repo) ? (
                 <a
                     href={project.repo}
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() =>
                         trackEvent("project_link_clicked", {
                             project: project.title,
@@ -185,10 +193,11 @@ function ProjectLinks({ project, className }: { project: Project; className?: st
             )}
 
             {/* Live Demo */}
-            {project.live ? (
+            {isLink(project.live) ? (
                 <a
                     href={project.live}
                     target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() =>
                         trackEvent("project_link_clicked", {
                             project: project.title,

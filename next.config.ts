@@ -2,9 +2,8 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // Type errors now fail the build. ESLint is still skipped because it is not
+  // installed in this project; add eslint + eslint-config-next to enable it.
   eslint: {
     ignoreDuringBuilds: true,
   },

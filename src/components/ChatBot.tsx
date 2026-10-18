@@ -46,9 +46,13 @@ export default function ChatBot() {
         body: JSON.stringify({ prompt: text }), // Matches 'prompt' in the backend
       });
 
-      if (!res.ok) throw new Error('Network response was not ok');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        // The route returns a friendly `error` for rate limits and bad input.
+        setMessages((prev) => [...prev, { role: 'ai', content: data.error ?? "Sorry, I'm having trouble connecting right now." }]);
+        return;
+      }
 
-      const data = await res.json();
       setMessages((prev) => [...prev, { role: 'ai', content: data.text }]);
     } catch (error) {
       console.error("Frontend Error:", error);
@@ -67,23 +71,27 @@ export default function ChatBot() {
     <>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 bg-white  p-3 rounded-full shadow-lg text-black z-50 transition-transform hover:scale-110"
+        aria-label={isOpen ? "Close chat assistant" : "Open chat assistant"}
+        aria-expanded={isOpen}
+        aria-controls="chatbot-panel"
+        className="fixed bottom-4 right-4 bg-white dark:bg-zinc-800 dark:text-white border dark:border-zinc-700 p-3 rounded-full shadow-lg text-black z-50 transition-transform hover:scale-110"
       >
         {isOpen ? '✕' : '💬'}
       </button>
 
-      <div className={`fixed bottom-20 right-4 w-80 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-2xl flex flex-col h-[450px] z-50 transition-all duration-300 ease-in-out transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'}`}>
+      <div id="chatbot-panel" role="dialog" aria-label="Ahmad's AI assistant" aria-hidden={!isOpen} className={`fixed bottom-20 right-4 w-80 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-2xl flex flex-col h-[450px] z-50 transition-all duration-300 ease-in-out transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none invisible'}`}>
           <div className="bg-black dark:bg-zinc-950 p-4 text-white font-bold rounded-t-lg flex justify-between items-center">
             <span>Ahmad's AI</span>
             <button 
               onClick={() => setIsOpen(false)}
+              aria-label="Close chat assistant"
               className="text-white hover:text-gray-300 focus:outline-none"
             >
               ✕
             </button>
           </div>
           
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3" aria-live="polite">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`p-2 rounded-lg text-sm max-w-[80%] ${m.role === 'user' ? 'bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100' : 'bg-gray-100 text-black dark:bg-zinc-800 dark:text-zinc-100'}`}>
@@ -117,6 +125,8 @@ export default function ChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask me something..."
+              aria-label="Message Ahmad's AI assistant"
+              maxLength={500}
             />
           </form>
         </div>
