@@ -16,6 +16,8 @@ export const COMMAND_LIST: CommandInfo[] = [
     { cmd: "resume", desc: "View or download my resume." },
     { cmd: "now", desc: "See what I am working on right now." },
     { cmd: "contact", desc: "Get my contact information." },
+    { cmd: "neofetch", desc: "Print my system info, neofetch style." },
+    { cmd: "reboot", desc: "Replay the boot sequence." },
     { cmd: "help", desc: "Display this help message." },
     { cmd: "clear", desc: "Clear the terminal screen." },
     { cmd: "whoami", desc: "Alias for about." },
@@ -24,7 +26,7 @@ export const COMMAND_LIST: CommandInfo[] = [
     { cmd: "cv", desc: "Alias for resume." },
     { cmd: "socials", desc: "Alias for contact." },
     { cmd: "latest", desc: "Alias for now." },
-    { cmd: "theme", desc: "Change the color theme. Usage: theme <light|dark|system>" },
+    { cmd: "theme", desc: "Change the color theme. Usage: theme <light|dark|system|crt>" },
 ];
 
 /** Argument completions for `theme`. */
@@ -32,6 +34,7 @@ export const THEME_ARGS: CommandInfo[] = [
     { cmd: "theme light", desc: "Switch to the light theme." },
     { cmd: "theme dark", desc: "Switch to the dark theme." },
     { cmd: "theme system", desc: "Follow the system theme." },
+    { cmd: "theme crt", desc: "Toggle the retro CRT screen effect." },
 ];
 
 /** Commands that take a project slug as an argument. */

@@ -12,7 +12,10 @@ import { Theme } from "./content/Theme";
 import { Now } from "./content/Now";
 import { Stack } from "./content/Stack";
 import { Resume } from "./content/Resume";
+import { Neofetch } from "./content/Neofetch";
+import { Boot } from "./content/Boot";
 import { trackEvent } from "@/lib/analytics";
+import { isCrt, restoreCrt, setCrt } from "@/lib/crt";
 import { COMMAND_LIST, THEME_ARGS, PROJECT_COMMANDS } from "@/data/commands";
 import { onCliCommand } from "@/lib/cli-events";
 import { projects, projectSlug } from "@/data/projects";
@@ -50,6 +53,41 @@ function readDeepLink(): string | null {
   return raw?.trim() ? raw.trim() : null;
 }
 
+/** Set once the boot sequence has played, so returning visitors skip it. */
+const BOOTED_KEY = "booted";
+
+/** Boot on a visitor's first plain visit only: not on deep links or with reduced motion. */
+function shouldBoot(): boolean {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  try {
+    return localStorage.getItem(BOOTED_KEY) !== "1";
+  } catch {
+    return false;
+  }
+}
+
+function markBooted() {
+  try {
+    localStorage.setItem(BOOTED_KEY, "1");
+  } catch {
+    // Storage blocked: the boot replays next visit, which is harmless.
+  }
+}
+
+function welcome(): React.ReactNode {
+  return (
+    <div key="home-initial" className="animate-fade-in">
+      <Home />
+      <div className="mt-4">
+        <p>
+          <span className="font-bold text-primary">Languages:</span> HTML, CSS,
+          JavaScript, jQuery, Python, TypeScript, Flutter, PHP
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function Terminal() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<React.ReactNode[]>([]);
@@ -58,6 +96,7 @@ export function Terminal() {
   const [suggestionIndex, setSuggestionIndex] = useState(-1);
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [booting, setBooting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setTheme } = useTheme();
@@ -85,9 +124,26 @@ export function Terminal() {
       contact: () => <Contact />,
       socials: () => <Contact />,
       theme: () => <Theme />,
+      neofetch: () => <Neofetch />,
     }),
     []
   );
+
+  // Plays the boot log, then swaps it for the welcome screen.
+  const boot = useCallback(() => {
+    setBooting(true);
+    setHistory([
+      <Boot
+        key={`boot-${Date.now()}`}
+        onDone={() => {
+          markBooted();
+          setBooting(false);
+          setHistory([welcome()]);
+          inputRef.current?.focus();
+        }}
+      />,
+    ]);
+  }, []);
 
   // Commands matching what has been typed so far.
   const suggestions = useMemo(() => {
@@ -138,16 +194,29 @@ export function Terminal() {
         return;
       }
 
+      if (command === "reboot") {
+        trackEvent("terminal_rebooted");
+        syncUrl("");
+        boot();
+        return;
+      }
+
       if (command === "theme") {
         const themeArg = args[0];
         const valid = ["light", "dark", "system"];
         syncUrl(commandStr.trim());
 
-        const output = valid.includes(themeArg)
-          ? `Theme changed to ${themeArg}.`
-          : <Theme />;
-
-        if (valid.includes(themeArg)) setTheme(themeArg);
+        let output: React.ReactNode = <Theme />;
+        if (valid.includes(themeArg)) {
+          setTheme(themeArg);
+          output = `Theme changed to ${themeArg}.`;
+        } else if (themeArg === "crt") {
+          const on = !isCrt();
+          setCrt(on);
+          output = on
+            ? "CRT mode on. Best enjoyed with `theme dark`. Run `theme crt` again to turn it off."
+            : "CRT mode off.";
+        }
         trackEvent("theme_changed", { theme: themeArg });
         setHistory((prev) => [
           ...prev,
@@ -192,7 +261,7 @@ export function Terminal() {
         </div>,
       ]);
     },
-    [COMMANDS, setTheme]
+    [COMMANDS, setTheme, boot]
   );
 
   const runCommand = useCallback(
@@ -306,19 +375,15 @@ export function Terminal() {
   // Initial welcome, plus any `?cmd=` deep link.
   useEffect(() => {
     trackEvent("terminal_session_started");
-    setHistory([
-      <div key="home-initial" className="animate-fade-in">
-        <Home />
-        <div className="mt-4">
-          <p>
-            <span className="font-bold text-primary">Languages:</span> HTML, CSS,
-            JavaScript, jQuery, Python, TypeScript, Flutter, PHP
-          </p>
-        </div>
-      </div>,
-    ]);
+    restoreCrt();
 
     const deepLink = readDeepLink();
+    if (!deepLink && shouldBoot()) {
+      boot();
+      return;
+    }
+    setHistory([welcome()]);
+
     if (deepLink) {
       trackEvent("deep_link_opened", { command: deepLink });
       processCommand(deepLink);
@@ -356,7 +421,7 @@ export function Terminal() {
   }, [history]);
 
   return (
-    <div className="w-full h-[75vh] max-h-[700px] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base flex flex-col">
+    <div className="crt-screen relative overflow-hidden w-full h-[75vh] max-h-[700px] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base flex flex-col">
 
       {/* Header */}
       <div className="relative bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary rounded-t-md shrink-0">
@@ -412,8 +477,8 @@ export function Terminal() {
         {/* History */}
         <div className="flex flex-col gap-4">{history}</div>
 
-        {/* Input line (inside scroll area) */}
-        <div className="flex items-center gap-2 mt-4 relative">
+        {/* Input line (inside scroll area), hidden while the boot log plays */}
+        <div className={`flex items-center gap-2 mt-4 relative ${booting ? "hidden" : ""}`}>
           <p>
             <span className="text-accent font-bold">AHMAD@cli</span>:
             <span className="text-blue-500">~</span>$

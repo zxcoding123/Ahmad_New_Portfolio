@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/AHMAD/Desktop/Projects/agenter_project/landing_page/**)",
+      "Read(//c/Users/AHMAD/Desktop/Projects/agenter_project/app/**)"
+    ]
+  }
+}

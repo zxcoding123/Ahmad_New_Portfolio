@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "count-loc": "node scripts/count-loc.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.30",

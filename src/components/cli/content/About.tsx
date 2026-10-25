@@ -6,6 +6,7 @@ import { RESUME, SITE } from "@/data/site";
 import { projectSlug } from "@/data/projects";
 import { VentureLinks, ventures } from "./Ventures";
 import { runCliCommand } from "@/lib/cli-events";
+import { GithubContributions } from "@/components/GithubContributions";
 
 const MACH =
     "Issued by the Department of Information Technology through the Modern Academics Convergence Hub";
@@ -69,6 +70,11 @@ export function About() {
             >
                 View My Resume
             </a>
+
+            <h3 className="text-lg font-bold text-accent mb-2">GitHub Activity</h3>
+            <div className="mb-6">
+                <GithubContributions />
+            </div>
 
             <h3 className="text-lg font-bold text-accent mb-2">Founder</h3>
             <ul className="list-disc list-inside space-y-1 mb-6">

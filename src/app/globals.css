@@ -60,3 +60,113 @@
     @apply bg-primary text-primary-foreground;
   }
 }
+
+/* ── GitHub calendar: cells pop in diagonally, today's cell breathes ───── */
+
+@keyframes contrib-pop {
+  from { opacity: 0; transform: scale(0.3); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes contrib-pulse {
+  50% { opacity: 0.4; }
+}
+
+.contrib-cell,
+.contrib-today {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.contrib-cell {
+  animation: contrib-pop 0.35s ease-out backwards;
+}
+
+.contrib-today {
+  animation:
+    contrib-pop 0.35s ease-out backwards,
+    contrib-pulse 2s ease-in-out infinite;
+}
+
+/* ── CRT mode (`theme crt`): scanlines, vignette, glow and a rolling band ─ */
+
+html.crt .crt-screen {
+  color: hsl(var(--foreground));
+  text-shadow: 0 0 6px hsl(var(--primary) / 0.35);
+  box-shadow:
+    0 0 40px hsl(var(--primary) / 0.15),
+    inset 0 0 60px rgb(0 0 0 / 0.35);
+  animation: crt-flicker 8s infinite;
+}
+
+/* Green phosphor on dark, scoped to the terminal so the chat widget is untouched. */
+html.crt.dark .crt-screen {
+  --foreground: 130 100% 72%;
+  --primary: 130 100% 62%;
+  --accent: 130 100% 62%;
+  --accent-foreground: 130 60% 6%;
+  --muted-foreground: 130 35% 52%;
+  --border: 130 40% 18%;
+  --secondary: 130 30% 8%;
+  --background: 130 30% 4%;
+}
+
+html.crt .crt-screen::before,
+html.crt .crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 20;
+}
+
+html.crt .crt-screen::before {
+  background:
+    radial-gradient(ellipse at center, transparent 60%, rgb(0 0 0 / 0.35) 100%),
+    repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.14) 0 1px, transparent 1px 3px);
+}
+
+html.crt .crt-screen::after {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    hsl(var(--primary) / 0.06) 50%,
+    transparent
+  );
+  height: 18%;
+  animation: crt-roll 7s linear infinite;
+}
+
+@keyframes crt-roll {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(560%); }
+}
+
+@keyframes crt-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.96; }
+  98% { opacity: 1; }
+  99% { opacity: 0.97; }
+}
+
+/* ── Boot sequence ─────────────────────────────────────────────────────── */
+
+@keyframes boot-line {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.boot-line {
+  animation: boot-line 0.15s ease-out backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contrib-cell,
+  .contrib-today,
+  .boot-line,
+  html.crt .crt-screen,
+  html.crt .crt-screen::after {
+    animation: none;
+  }
+}

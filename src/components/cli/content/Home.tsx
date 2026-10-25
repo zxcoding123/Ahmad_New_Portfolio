@@ -3,6 +3,8 @@ import { ShinyText } from "@/components/ShinyText";
 import { SITE } from "@/data/site";
 import { LatestProject } from "./LatestProject";
 import { VentureLinks } from "./Ventures";
+import { GithubContributions } from "@/components/GithubContributions";
+import { HomeStats } from "@/components/HomeStats";
 
 // Muted base with a primary-colored sweep, so the shine reads in both themes
 const SHINE_PROPS = {
@@ -89,6 +91,12 @@ export function Home() {
 
             <div className="mt-3 sm:mt-4">
                 <p className="text-center max-w-3xl mx-auto text-sm sm:text-base leading-relaxed">{SITE.bio}</p>
+            </div>
+
+            {/* GitHub activity, then headline numbers */}
+            <div className="mt-5 sm:mt-6 max-w-3xl mx-auto space-y-3">
+                <GithubContributions />
+                <HomeStats />
             </div>
 
             {/* Divider between the intro and the prompt hints below it */}

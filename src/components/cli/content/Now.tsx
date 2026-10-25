@@ -4,6 +4,7 @@ import { Github, Link as LinkIcon } from "lucide-react";
 import { useProjectActivity } from "@/hooks/use-project-activity";
 import { formatRelative } from "@/lib/projectActivity";
 import { TechBadge } from "@/components/TechBadge";
+import { GithubContributions } from "@/components/GithubContributions";
 
 const RECENT_COUNT = 5;
 
@@ -80,6 +81,9 @@ export function Now() {
           )}
         </div>
       </div>
+
+      <h3 className="text-lg font-bold text-accent mt-6 mb-2">GitHub contributions</h3>
+      <GithubContributions />
 
       {rest.length > 0 && (
         <>
