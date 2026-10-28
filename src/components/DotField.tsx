@@ -91,6 +91,22 @@ const DotField = memo(function DotField({
     if (!ctx) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let resizeTimer: ReturnType<typeof setTimeout>;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let visible = true;
+    let dirty = true;
+
+    function wake() {
+      if (!rafRef.current && visible && !document.hidden) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    }
+
+    function syncVisibility() {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = 0;
+      dirty = true;
+      wake();
+    }
 
     function resize() {
       clearTimeout(resizeTimer);
@@ -118,6 +134,8 @@ const DotField = memo(function DotField({
       };
 
       buildDots(w, h);
+      dirty = true;
+      wake();
     }
 
     function buildDots(w: number, h: number) {
@@ -141,9 +159,11 @@ const DotField = memo(function DotField({
     }
 
     function onMouseMove(e: MouseEvent) {
+      if (motionQuery.matches) return;
       const s = sizeRef.current;
       mouseRef.current.x = e.pageX - s.offsetX;
       mouseRef.current.y = e.pageY - s.offsetY;
+      wake();
     }
 
     function updateMouseSpeed() {
@@ -157,11 +177,13 @@ const DotField = memo(function DotField({
       m.prevY = m.y;
     }
 
-    const speedInterval = setInterval(updateMouseSpeed, 20);
 
     let frameCount = 0;
 
     function tick() {
+      rafRef.current = 0;
+      if (document.hidden || !visible) return;
+      updateMouseSpeed();
       frameCount++;
       const dots = dotsRef.current;
       const m = mouseRef.current;
@@ -170,7 +192,7 @@ const DotField = memo(function DotField({
       const len = dots.length;
       const t = frameCount * 0.02;
 
-      const targetEngagement = Math.min(m.speed / 5, 1);
+      const targetEngagement = motionQuery.matches ? 0 : Math.min(m.speed / 5, 1);
       engagement.current += (targetEngagement - engagement.current) * 0.06;
       if (engagement.current < 0.001) engagement.current = 0;
       const eng = engagement.current;
@@ -183,6 +205,13 @@ const DotField = memo(function DotField({
         glowEl.style.opacity = String(glowOpacity.current);
       }
 
+      const moving = dots.some((dot) =>
+        Math.abs(dot.sx - dot.ax) > 0.01 || Math.abs(dot.sy - dot.ay) > 0.01 ||
+        Math.abs(dot.vx) > 0.01 || Math.abs(dot.vy) > 0.01
+      );
+      const continuous = !motionQuery.matches && (p.sparkle || p.waveAmplitude > 0);
+      if (!dirty && !moving && !continuous && eng === 0 && glowOpacity.current < 0.001) return;
+      dirty = false;
       ctx!.clearRect(0, 0, w, h);
 
       const grad = ctx!.createLinearGradient(0, 0, w, h);
@@ -213,7 +242,7 @@ const DotField = memo(function DotField({
             d.sy += (d.ay - Math.sin(angle) * push - d.sy) * 0.15;
           } else {
             const angle = Math.atan2(dy, dx);
-            const move = (500 / dist) * (m.speed * p.cursorForce);
+            const move = (500 / Math.max(dist, 1)) * (m.speed * p.cursorForce);
             d.vx += Math.cos(angle) * -move;
             d.vy += Math.sin(angle) * -move;
           }
@@ -261,16 +290,28 @@ const DotField = memo(function DotField({
     doResize();
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouseMove, { passive: true });
-    rafRef.current = requestAnimationFrame(tick);
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      syncVisibility();
+    });
+    observer.observe(canvas);
+    document.addEventListener("visibilitychange", syncVisibility);
+    motionQuery.addEventListener("change", syncVisibility);
 
     rebuildRef.current = () => {
       const { w, h } = sizeRef.current;
       if (w > 0 && h > 0) buildDots(w, h);
+      dirty = true;
+      wake();
     };
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      clearInterval(speedInterval);
+      rafRef.current = 0;
+      rebuildRef.current = null;
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncVisibility);
+      motionQuery.removeEventListener("change", syncVisibility);
       clearTimeout(resizeTimer);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
@@ -280,7 +321,7 @@ const DotField = memo(function DotField({
 
   useEffect(() => {
     rebuildRef.current?.();
-  }, [dotRadius, dotSpacing]);
+  }, [dotRadius, dotSpacing, gradientFrom, gradientTo, sparkle, waveAmplitude]);
 
   return (
     <div className="dot-field-container" {...rest}>

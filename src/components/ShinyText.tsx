@@ -45,7 +45,7 @@ export function ShinyText({
     const el = ref.current;
     if (!el) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const dir = direction === "left" ? 1 : -1;
     const duration = speed * 1000;
     const hold = delay * 1000;
@@ -57,13 +57,19 @@ export function ShinyText({
     };
 
     apply(0);
-    if (disabled || reduceMotion) return;
+    if (disabled) return;
 
     let elapsed = 0;
     let last: number | null = null;
     let raf = 0;
 
+    let visible = false;
     const tick = (time: number) => {
+      raf = 0;
+      if (!visible || document.hidden || motionQuery.matches) {
+        last = null;
+        return;
+      }
       raf = requestAnimationFrame(tick);
       if (pausedRef.current) {
         last = null;
@@ -89,8 +95,28 @@ export function ShinyText({
       }
     };
 
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    const syncAnimation = () => {
+      if (visible && !document.hidden && !motionQuery.matches) {
+        if (!raf) raf = requestAnimationFrame(tick);
+      } else {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        last = null;
+      }
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      syncAnimation();
+    });
+    observer.observe(el);
+    document.addEventListener("visibilitychange", syncAnimation);
+    motionQuery.addEventListener("change", syncAnimation);
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncAnimation);
+      motionQuery.removeEventListener("change", syncAnimation);
+    };
   }, [disabled, speed, delay, yoyo, direction]);
 
   return (

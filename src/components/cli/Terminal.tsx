@@ -1,18 +1,37 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { Home } from "./content/Home";
-import { Help } from "./content/Help";
-import { About } from "./content/About";
-import { Works } from "./content/Works";
-import { Contact } from "./content/Contact";
+const Help = dynamic(() => import("./content/Help").then((module) => module.Help), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const About = dynamic(() => import("./content/About").then((module) => module.About), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const Works = dynamic(() => import("./content/Works").then((module) => module.Works), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const Contact = dynamic(() => import("./content/Contact").then((module) => module.Contact), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
 import { NotFound } from "./content/NotFound";
-import { Theme } from "./content/Theme";
-import { Now } from "./content/Now";
-import { Stack } from "./content/Stack";
-import { Resume } from "./content/Resume";
-import { Neofetch } from "./content/Neofetch";
+const Theme = dynamic(() => import("./content/Theme").then((module) => module.Theme), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const Now = dynamic(() => import("./content/Now").then((module) => module.Now), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const Stack = dynamic(() => import("./content/Stack").then((module) => module.Stack), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const Resume = dynamic(() => import("./content/Resume").then((module) => module.Resume), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
+const Neofetch = dynamic(() => import("./content/Neofetch").then((module) => module.Neofetch), {
+  loading: () => <p role="status" className="text-muted-foreground">Loading command?</p>,
+});
 import { Boot } from "./content/Boot";
 import { trackEvent } from "@/lib/analytics";
 import { isCrt, restoreCrt, setCrt } from "@/lib/crt";
