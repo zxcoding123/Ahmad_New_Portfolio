@@ -117,7 +117,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Calisthenics Training App",
+    title: "Ascend",
     updatedAt: "2026-10-25",
     description:
       "A mobile app for structured calisthenics training. It guides athletes through skill trees from the basics to advanced moves like the planche, front lever and human flag, building workouts around training blocks, joint preparation and fatigue tracking so progress stays steady and safe.",

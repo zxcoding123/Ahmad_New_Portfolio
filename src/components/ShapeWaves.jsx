@@ -7,7 +7,10 @@ import { effect, frame, init, sampler, storage, surface, target, uniforms } from
 import './ShapeWaves.css';
 
 const SHAPE_MODES = { mixed: 0, squares: 1, circles: 2, triangles: 3 };
-const MAX_DPR = 2;
+// A background reads fine at 1.5x; 2x would mean ~78% more pixels for no visible gain.
+const MAX_DPR = 1.5;
+// The ambient drift is slow, so it only needs 30fps. Ripples and the intro run at full rate.
+const AMBIENT_FRAME_MS = 1000 / 30;
 const MAX_MASK_SIZE = 1024;
 const NOISE_CELLS = 32;
 const TIME_RATE = 0.1;
@@ -110,7 +113,7 @@ fn fbm(p: vec3f) -> f32 {
 }
 `;
 
-const SCENE_SHADER = `
+const PARAMS_WGSL = `
 struct Params {
   resolution: vec4f,
   placement: vec4f,
@@ -122,13 +125,39 @@ struct Params {
   background: vec4f,
 }
 @group(0) @binding(0) var<uniform> params: Params;
+const SEED = vec2f(12.9898, 78.233);
+`;
+
+// Noise only varies per cell, so it is computed once per cell into a
+// cols x rows texture instead of once per screen pixel (~150-500x less work).
+// r = tone, g = intro warp remapped to 0..1.
+const TONE_SHADER = `
+${PARAMS_WGSL}
+${NOISE_WGSL}
+
+@fragment fn fs_main(@location(0) uv: vec2f) -> @location(0) vec4f {
+  let cell = floor(uv * vec2f(params.grid.w, params.placement.z));
+  let center = params.placement.xy + (cell + 0.5) * params.grid.x;
+  let noise = fbm(vec3f((center + params.motion.xy) / params.field.x + SEED, params.field.w));
+  let tone = clamp((noise * 0.5 + 0.5 - params.field.y) * params.field.z + 0.5, 0.0, 1.0);
+  var warp = 0.0;
+  if (params.placement.w < ${INTRO_END.toFixed(2)}) {
+    let cellUv = center / params.resolution.xy;
+    warp = clamp(cnoise(vec3f(cellUv * vec2f(3.2, 2.4) + SEED, 4.7)), -1.0, 1.0);
+  }
+  return vec4f(tone, warp * 0.5 + 0.5, 0.0, 1.0);
+}
+`;
+
+const SCENE_SHADER = `
+${PARAMS_WGSL}
 @group(0) @binding(1) var maskTexture: texture_2d<f32>;
 @group(0) @binding(2) var maskSampler: sampler;
 @group(0) @binding(3) var<storage, read> charges: array<f32>;
+@group(0) @binding(4) var toneTexture: texture_2d<f32>;
+@group(0) @binding(5) var toneSampler: sampler;
 
-const SEED = vec2f(12.9898, 78.233);
 const GLOW_THRESHOLD = 0.6;
-${NOISE_WGSL}
 
 fn sdIsoscelesTriangle(point: vec2f, q: vec2f) -> f32 {
   let p = vec2f(abs(point.x), point.y);
@@ -180,8 +209,8 @@ fn hash21(p: vec2f) -> f32 {
     let radius = pow(pow(q.x, 2.5) + pow(q.y, 2.5), 1.0 / 2.5) / pow(2.0, 1.0 / 2.5);
     level = 1.0 - smoothstep(max(0.0, 1.0 - fade * 2.2), 1.0, radius);
   }
-  let noise = fbm(vec3f((center + params.motion.xy) / params.field.x + SEED, params.field.w));
-  let tone = clamp((noise * 0.5 + 0.5 - params.field.y) * params.field.z + 0.5, 0.0, 1.0);
+  let toneSample = textureSampleLevel(toneTexture, toneSampler, (cell + 0.5) / vec2f(f32(cols), f32(rows)), 0.0);
+  let tone = toneSample.r;
   let band = i32(min(tone, 0.999999) * 3.0);
 
   var charge = 0.0;
@@ -199,7 +228,7 @@ fn hash21(p: vec2f) -> f32 {
   var front = 0.0;
   if (introProgress < ${INTRO_END.toFixed(2)}) {
     let radial = length((center - resolution * 0.5) / (resolution * 0.5)) * 0.70710678;
-    let warp = cnoise(vec3f(cellUv * vec2f(3.2, 2.4) + SEED, 4.7)) * ${INTRO_WARP.toFixed(2)};
+    let warp = (toneSample.g * 2.0 - 1.0) * ${INTRO_WARP.toFixed(2)};
     let jitter = hash21(cell) * ${INTRO_JITTER.toFixed(2)};
     let spread = radial + warp + jitter + ${INTRO_WARP.toFixed(2)};
     let band = ${INTRO_BAND.toFixed(2)} * (0.6 + 0.8 * hash21(cell + vec2f(17.0, 9.0)));
@@ -438,6 +467,11 @@ export default function ShapeWaves({
 
     const handlePointerMove = event => {
       if (!settingsRef.current.interactive) return;
+      // Ripples under an opaque window are invisible but would still force full-rate frames.
+      if (event.target instanceof Element && event.target.closest('[data-occludes-background]')) {
+        pointer.inside = false;
+        return;
+      }
       if (!bounds) bounds = root.getBoundingClientRect();
       const now = performance.now();
       const x = event.clientX - bounds.left;
@@ -516,9 +550,24 @@ export default function ShapeWaves({
         chargeBuffer = storage(gpu, 4, 'read');
         chargeBuffer.write(charges);
 
+        const nearestSampler = sampler(gpu, {
+          minFilter: 'nearest',
+          magFilter: 'nearest',
+          addressModeU: 'clamp-to-edge',
+          addressModeV: 'clamp-to-edge'
+        });
+        const toneTarget = target(gpu, { size: [1, 1], format: 'rgba8unorm', label: 'shape-waves-tone' });
+        const tone = effect(gpu, TONE_SHADER, { label: 'shape-waves-tone', set: { params } });
         const scene = effect(gpu, SCENE_SHADER, {
           label: 'shape-waves-scene',
-          set: { params, maskTexture, maskSampler: linearSampler, charges: chargeBuffer }
+          set: {
+            params,
+            maskTexture,
+            maskSampler: linearSampler,
+            charges: chargeBuffer,
+            toneTexture: toneTarget,
+            toneSampler: nearestSampler
+          }
         });
         const sceneTarget = target(gpu, { size: initialSize, format: 'rgba8unorm', label: 'shape-waves-scene' });
         const glowSize = size => [Math.max(1, Math.ceil(size[0] / 2)), Math.max(1, Math.ceil(size[1] / 2))];
@@ -540,6 +589,7 @@ export default function ShapeWaves({
           set: { composite: compositeParams, sceneTexture: sceneTarget, glowTexture: glowB, linearSampler }
         });
         await Promise.all([
+          tone.compile(toneTarget),
           scene.compile({ colors: [outputFormat] }),
           scene.compile(sceneTarget),
           blurX.compile(glowA),
@@ -550,6 +600,8 @@ export default function ShapeWaves({
 
         const glowEnabled = () => settingsRef.current.glow > 0;
         let lastIntro = false;
+        let hoverRgb = [1, 1, 1];
+        let glowPasses = false;
 
         const configureGrid = () => {
           const settings = settingsRef.current;
@@ -561,6 +613,7 @@ export default function ShapeWaves({
           if (nextCols === cols && nextRows === rows && charges.length === cols * rows) return;
           cols = nextCols;
           rows = nextRows;
+          toneTarget.resize([cols, rows]);
           charges = new Float32Array(cols * rows);
           heights = new Float32Array(cols * rows);
           previousHeights = new Float32Array(cols * rows);
@@ -626,6 +679,11 @@ export default function ShapeWaves({
         const render = now => {
           frameId = 0;
           if (disposed || failed) return;
+          const ambientOnly = !chargesActive && !introArmed && introProgress >= INTRO_END;
+          if (ambientOnly && lastFrameTime && now - lastFrameTime < AMBIENT_FRAME_MS) {
+            frameId = requestAnimationFrame(render);
+            return;
+          }
           const settings = settingsRef.current;
           const deltaSeconds = lastFrameTime ? Math.min(0.1, (now - lastFrameTime) / 1000) : 0;
           lastFrameTime = now;
@@ -656,9 +714,17 @@ export default function ShapeWaves({
             ]
           });
           params.set({ motion: [drift[0], drift[1], settings.text.trim() ? 1 : 0, settings.fade] });
+          // Only ripples and the intro front reach the glow threshold, so an idle
+          // background skips the blur passes and draws straight to the canvas.
+          const nextGlowPasses = glowEnabled() && (hovering || introPlaying);
+          if (nextGlowPasses !== glowPasses) {
+            glowPasses = nextGlowPasses;
+            params.set({ hover: [...hoverRgb, glowPasses ? 1 : 0] });
+          }
           try {
             frame(gpu, currentFrame => {
-              if (!glowEnabled()) {
+              currentFrame.pass(toneTarget, tone);
+              if (!glowPasses) {
                 currentFrame.pass(output, scene);
                 return;
               }
@@ -727,11 +793,12 @@ export default function ShapeWaves({
           if (disposed || failed) return;
           const settings = settingsRef.current;
           configureGrid();
+          hoverRgb = parseColor(settings.hoverColor, '#ffffff');
           params.set({
             placement: [gridOrigin[0], gridOrigin[1], rows, introProgress],
             grid: [cellPx, Math.min(1, Math.max(0.1, settings.dotSize)), SHAPE_MODES[settings.shapes] ?? 0, cols],
             color: [...parseColor(settings.color, '#929292'), 1],
-            hover: [...parseColor(settings.hoverColor, '#ffffff'), glowEnabled() ? 1 : 0],
+            hover: [...hoverRgb, glowPasses ? 1 : 0],
             background: [...parseColor(settings.backgroundColor, '#000000'), 1]
           });
           compositeParams.set({ strength: [2 * settings.glow, 0, 0, 0] });

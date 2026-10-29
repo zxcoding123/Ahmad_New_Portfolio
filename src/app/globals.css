@@ -150,6 +150,45 @@ html.crt .crt-screen::after {
   99% { opacity: 0.97; }
 }
 
+/* ── AhmadOS window manager ────────────────────────────────────────────── */
+
+:root {
+  /* Room a maximized window leaves for the dock. */
+  --dock-space: 4.75rem;
+}
+
+@keyframes os-window-open {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.os-window {
+  animation: os-window-open 0.2s ease-out;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease-in,
+    visibility 0s,
+    left 0.2s ease-out,
+    top 0.2s ease-out,
+    width 0.2s ease-out,
+    height 0.2s ease-out;
+}
+
+/* Box changes must track the pointer 1:1 while dragging or resizing. */
+.os-window[data-gesturing] {
+  transition: none;
+}
+
+.os-window[data-state="minimized"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease-in,
+    visibility 0s 0.35s;
+}
+
 /* ── Boot sequence ─────────────────────────────────────────────────────── */
 
 @keyframes boot-line {
@@ -165,8 +204,14 @@ html.crt .crt-screen::after {
   .contrib-cell,
   .contrib-today,
   .boot-line,
+  .os-window,
   html.crt .crt-screen,
   html.crt .crt-screen::after {
     animation: none;
+  }
+
+  .os-window,
+  .os-window[data-state="minimized"] {
+    transition: none;
   }
 }

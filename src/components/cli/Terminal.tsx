@@ -107,7 +107,26 @@ function welcome(): React.ReactNode {
   );
 }
 
-export function Terminal() {
+/** Hooks the title bar into the desktop's window manager. */
+export interface WindowControls {
+  onClose: () => void;
+  onMinimize: () => void;
+  onToggleMaximize: () => void;
+  maximized: boolean;
+  /** Starts a window drag; ignores presses that land on a title-bar button. */
+  onTitleBarPointerDown: (e: React.PointerEvent<HTMLElement>) => void;
+}
+
+interface TerminalProps {
+  controls?: WindowControls;
+  /** Play the boot log even for returning visitors (e.g. after "power on"). */
+  bootOnMount?: boolean;
+}
+
+const TRAFFIC_LIGHT =
+  "group/light h-4 w-4 rounded-full flex items-center justify-center text-[10px] leading-none font-bold text-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+
+export function Terminal({ controls, bootOnMount = false }: TerminalProps) {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<React.ReactNode[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -397,7 +416,7 @@ export function Terminal() {
     restoreCrt();
 
     const deepLink = readDeepLink();
-    if (!deepLink && shouldBoot()) {
+    if (!deepLink && (bootOnMount || shouldBoot())) {
       boot();
       return;
     }
@@ -440,14 +459,51 @@ export function Terminal() {
   }, [history]);
 
   return (
-    <div className="crt-screen relative overflow-hidden w-full h-[75vh] max-h-[700px] max-w-5xl bg-background rounded-lg border-2 border-border shadow-2xl backdrop-blur-sm font-code text-base flex flex-col">
+    <div
+      className={`crt-screen relative overflow-hidden w-full h-full bg-background border-2 border-border shadow-2xl font-code text-base flex flex-col ${
+        controls?.maximized ? "rounded-none" : "rounded-lg"
+      }`}
+    >
 
-      {/* Header */}
-      <div className="relative bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary rounded-t-md shrink-0">
+      {/* Header — doubles as the window's drag handle */}
+      <div
+        onPointerDown={controls?.onTitleBarPointerDown}
+        onDoubleClick={(e) => {
+          if ((e.target as HTMLElement).closest("button")) return;
+          controls?.onToggleMaximize();
+        }}
+        className={`relative bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary shrink-0 select-none ${
+          controls?.maximized ? "" : "rounded-t-md sm:cursor-grab sm:active:cursor-grabbing"
+        }`}
+      >
         <div className="flex gap-2">
-          <span className="h-4 w-4 rounded-full bg-red-500" />
-          <span className="h-4 w-4 rounded-full bg-yellow-500" />
-          <span className="h-4 w-4 rounded-full bg-green-500" />
+          <button
+            type="button"
+            aria-label="Close ahmad.bat"
+            title="Close"
+            onClick={controls?.onClose}
+            className={`${TRAFFIC_LIGHT} bg-red-500`}
+          >
+            <span className="opacity-0 group-hover/light:opacity-100 group-focus-visible/light:opacity-100">×</span>
+          </button>
+          <button
+            type="button"
+            aria-label="Minimize ahmad.bat"
+            title="Minimize"
+            onClick={controls?.onMinimize}
+            className={`${TRAFFIC_LIGHT} bg-yellow-500`}
+          >
+            <span className="opacity-0 group-hover/light:opacity-100 group-focus-visible/light:opacity-100">−</span>
+          </button>
+          <button
+            type="button"
+            aria-label={controls?.maximized ? "Restore ahmad.bat" : "Maximize ahmad.bat"}
+            title={controls?.maximized ? "Restore" : "Maximize"}
+            onClick={controls?.onToggleMaximize}
+            className={`${TRAFFIC_LIGHT} bg-green-500`}
+          >
+            <span className="opacity-0 group-hover/light:opacity-100 group-focus-visible/light:opacity-100">+</span>
+          </button>
         </div>
         <div className="text-center flex-grow text-sm text-muted-foreground">
           ahmad.bat
