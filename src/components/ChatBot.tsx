@@ -74,12 +74,12 @@ export default function ChatBot() {
         aria-label={isOpen ? "Close chat assistant" : "Open chat assistant"}
         aria-expanded={isOpen}
         aria-controls="chatbot-panel"
-        className="fixed bottom-4 right-4 bg-white dark:bg-zinc-800 dark:text-white border dark:border-zinc-700 p-3 rounded-full shadow-lg text-black z-50 transition-transform hover:scale-110"
+        className="fixed bottom-4 max-sm:bottom-[calc(var(--home-bar)+7rem)] right-4 bg-white dark:bg-zinc-800 dark:text-white border dark:border-zinc-700 p-3 rounded-full shadow-lg text-black z-50 transition-transform hover:scale-110"
       >
         {isOpen ? '✕' : '💬'}
       </button>
 
-      <div id="chatbot-panel" role="dialog" aria-label="Ahmad's AI assistant" aria-hidden={!isOpen} className={`fixed bottom-20 right-4 w-80 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-2xl flex flex-col h-[450px] z-50 transition-all duration-300 ease-in-out transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none invisible'}`}>
+      <div id="chatbot-panel" role="dialog" aria-label="Ahmad's AI assistant" aria-hidden={!isOpen} className={`fixed bottom-20 max-sm:bottom-[calc(var(--home-bar)+10.5rem)] right-4 w-80 bg-white dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg shadow-2xl flex flex-col h-[450px] z-50 transition-all duration-300 ease-in-out transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none invisible'}`}>
           <div className="bg-black dark:bg-zinc-950 p-4 text-white font-bold rounded-t-lg flex justify-between items-center">
             <span>Ahmad's AI</span>
             <button 

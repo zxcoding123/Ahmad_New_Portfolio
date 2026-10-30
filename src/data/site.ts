@@ -48,6 +48,8 @@ const RESUME_FILE_ID = "1ba2N3pcip8jCKjeqH3nWbSQSmd0Xl2U_";
 
 export const RESUME = {
     viewUrl: `https://drive.google.com/file/d/${RESUME_FILE_ID}/view?usp=sharing`,
+    /** Drive's embeddable viewer, for the desktop's resume window. */
+    previewUrl: `https://drive.google.com/file/d/${RESUME_FILE_ID}/preview`,
     /** Forces a download rather than opening the Drive viewer. */
     downloadUrl: `https://drive.google.com/uc?export=download&id=${RESUME_FILE_ID}`,
 } as const;

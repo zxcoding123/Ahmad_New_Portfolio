@@ -1,7 +1,8 @@
 "use client";
 
-import { Download, ExternalLink, Mail, Calendar } from "lucide-react";
+import { Download, FileText, Mail, Calendar } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
+import { openApp } from "@/lib/os-events";
 import { RESUME, SOCIALS, SITE } from "@/data/site";
 
 /** Output of the `resume` command. */
@@ -14,15 +15,16 @@ export function Resume() {
             </p>
 
             <div className="flex flex-wrap gap-3">
-                <a
-                    href={RESUME.viewUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("resume_viewed", { source: "resume_command" })}
+                <button
+                    type="button"
+                    onClick={() => {
+                        trackEvent("resume_viewed", { source: "resume_command" });
+                        openApp("resume");
+                    }}
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-semibold text-sm"
                 >
-                    <ExternalLink size={16} /> View resume
-                </a>
+                    <FileText size={16} /> View resume
+                </button>
 
                 <a
                     href={RESUME.downloadUrl}

@@ -1,49 +1,36 @@
 "use client";
 
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Moon, Power, RotateCcw, Sun, TerminalSquare } from "lucide-react";
+import { Moon, Power, RotateCcw, Sun } from "lucide-react";
+import { APPS, type AppId } from "./apps";
+import { Clock } from "./clock";
 
 export type AppState = "open" | "minimized" | "closed";
 
 interface DockProps {
-  app: AppState;
-  onAppClick: () => void;
+  apps: Record<AppId, AppState>;
+  /** The window in front, which gets the highlighted icon. */
+  activeApp: AppId | null;
+  onAppClick: (id: AppId) => void;
+  /** Dock icons, so minimized windows know where to shrink to. */
+  iconRefs: React.MutableRefObject<Partial<Record<AppId, HTMLButtonElement | null>>>;
   onRestart: () => void;
   onShutDown: () => void;
-}
-
-function Clock() {
-  const [now, setNow] = useState<Date | null>(null);
-
-  useEffect(() => {
-    setNow(new Date());
-    const id = window.setInterval(() => setNow(new Date()), 15_000);
-    return () => window.clearInterval(id);
-  }, []);
-
-  // Rendered client-side only: the server's clock is not the visitor's.
-  if (!now) return <span className="w-16" />;
-  return (
-    <time
-      dateTime={now.toISOString()}
-      title={now.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}
-      className="px-2 text-xs tabular-nums text-muted-foreground whitespace-nowrap"
-    >
-      {now.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
-    </time>
-  );
 }
 
 const MENU_ITEM =
   "w-full flex items-center gap-2 px-3 py-2 text-sm text-left rounded hover:bg-accent hover:text-accent-foreground transition-colors";
 
-/** The taskbar. Forwards a ref to the app icon so minimized windows know where to shrink to. */
-export const Dock = forwardRef<HTMLButtonElement, DockProps>(function Dock(
-  { app, onAppClick, onRestart, onShutDown },
-  appIconRef
-) {
+function verb(state: AppState, active: boolean) {
+  if (state === "closed") return "Open";
+  if (state === "minimized") return "Restore";
+  return active ? "Minimize" : "Show";
+}
+
+/** The taskbar: start menu, one icon per running app (the terminal is pinned), and a clock. */
+export function Dock({ apps, activeApp, onAppClick, iconRefs, onRestart, onShutDown }: DockProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme, setTheme } = useTheme();
@@ -67,14 +54,13 @@ export const Dock = forwardRef<HTMLButtonElement, DockProps>(function Dock(
     action();
   };
 
-  const running = app !== "closed";
-  const label =
-    app === "open" ? "Minimize ahmad.bat" : app === "minimized" ? "Restore ahmad.bat" : "Open ahmad.bat";
+  const ids = Object.keys(APPS) as AppId[];
+  const docked = ids.filter((id) => id === "terminal" || apps[id] !== "closed");
 
   return (
     <nav
       aria-label="Taskbar"
-      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1 rounded-2xl border border-border bg-background/70 backdrop-blur-md shadow-xl px-2 py-1.5 font-code"
+      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 hidden sm:flex items-center gap-1 rounded-2xl border border-border bg-background/70 backdrop-blur-md shadow-xl px-2 py-1.5 font-code"
     >
       <div ref={menuRef} className="relative">
         <button
@@ -90,14 +76,23 @@ export const Dock = forwardRef<HTMLButtonElement, DockProps>(function Dock(
         {menuOpen && (
           <div
             role="menu"
-            className="absolute bottom-full left-0 mb-3 w-56 rounded-xl border border-border bg-background/95 backdrop-blur-md shadow-2xl p-2 animate-fade-in"
+            className="absolute bottom-full left-0 mb-3 w-64 rounded-xl border border-border bg-background/95 backdrop-blur-md shadow-2xl p-2 animate-fade-in"
           >
             <p className="px-3 pt-1 pb-2 text-xs text-muted-foreground border-b border-border mb-1">
-              AhmadOS · 1 program installed
+              AhmadOS · {ids.length} programs installed
             </p>
-            <button role="menuitem" type="button" className={MENU_ITEM} onClick={choose(onAppClick)}>
-              <TerminalSquare className="h-4 w-4" /> {app === "open" ? "Minimize" : "Open"} ahmad.bat
-            </button>
+            {ids.map((id) => {
+              const { icon: Icon, title } = APPS[id];
+              return (
+                <button key={id} role="menuitem" type="button" className={MENU_ITEM} onClick={choose(() => onAppClick(id))}>
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span className="truncate">
+                    {verb(apps[id], activeApp === id)} {title}
+                  </span>
+                </button>
+              );
+            })}
+            <span className="block h-px bg-border my-1" aria-hidden="true" />
             <button
               role="menuitem"
               type="button"
@@ -119,30 +114,41 @@ export const Dock = forwardRef<HTMLButtonElement, DockProps>(function Dock(
 
       <span className="h-6 w-px bg-border mx-1" aria-hidden="true" />
 
-      <button
-        ref={appIconRef}
-        type="button"
-        aria-label={label}
-        title={label}
-        onClick={onAppClick}
-        className={`relative h-10 w-10 rounded-xl flex items-center justify-center transition-colors ${
-          app === "open" ? "bg-secondary" : "hover:bg-secondary"
-        }`}
-      >
-        <TerminalSquare className="h-6 w-6 text-primary" />
-        {running && (
-          <span
-            aria-hidden="true"
-            className={`absolute bottom-0.5 h-1 rounded-full bg-primary transition-all ${
-              app === "open" ? "w-4" : "w-1"
+      {docked.map((id) => {
+        const { icon: Icon, title } = APPS[id];
+        const state = apps[id];
+        const active = activeApp === id && state === "open";
+        const label = `${verb(state, active)} ${title}`;
+        return (
+          <button
+            key={id}
+            ref={(el) => {
+              iconRefs.current[id] = el;
+            }}
+            type="button"
+            aria-label={label}
+            title={label}
+            onClick={() => onAppClick(id)}
+            className={`relative h-10 w-10 rounded-xl flex items-center justify-center transition-colors animate-fade-in ${
+              active ? "bg-secondary" : "hover:bg-secondary"
             }`}
-          />
-        )}
-      </button>
+          >
+            <Icon className="h-6 w-6 text-primary" />
+            {state !== "closed" && (
+              <span
+                aria-hidden="true"
+                className={`absolute bottom-0.5 h-1 rounded-full bg-primary transition-all ${
+                  active ? "w-4" : "w-1"
+                }`}
+              />
+            )}
+          </button>
+        );
+      })}
 
       <span className="h-6 w-px bg-border mx-1" aria-hidden="true" />
 
-      <Clock />
+      <Clock className="px-2 text-xs text-muted-foreground" />
     </nav>
   );
-});
+}

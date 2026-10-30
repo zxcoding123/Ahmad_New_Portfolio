@@ -155,6 +155,9 @@ html.crt .crt-screen::after {
 :root {
   /* Room a maximized window leaves for the dock. */
   --dock-space: 4.75rem;
+  /* Phone layout: the status bar above apps and the home bar below them. */
+  --status-bar: 1.75rem;
+  --home-bar: 1.5rem;
 }
 
 @keyframes os-window-open {
@@ -177,6 +180,11 @@ html.crt .crt-screen::after {
 /* Box changes must track the pointer 1:1 while dragging or resizing. */
 .os-window[data-gesturing] {
   transition: none;
+}
+
+/* An iframe under the pointer would eat the pointermove events of a drag. */
+body[data-window-gesture] iframe {
+  pointer-events: none;
 }
 
 .os-window[data-state="minimized"] {

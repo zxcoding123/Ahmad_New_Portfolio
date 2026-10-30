@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-interface Rect {
+export interface Rect {
   x: number;
   y: number;
   w: number;
@@ -28,7 +28,9 @@ const HANDLES: { gesture: Gesture; className: string }[] = [
   { gesture: "se", className: "-bottom-1 -right-1 h-4 w-4 cursor-nwse-resize" },
 ];
 
-const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
+const PHONE_FULLSCREEN = "fixed inset-x-0 top-[var(--status-bar)] bottom-[var(--home-bar)]";
+
+const clamp =(n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
 
 /** Phones get a fixed window: dragging fights page scroll and there is no room to resize. */
 const canManage = () => window.matchMedia("(min-width: 640px)").matches;
@@ -80,20 +82,42 @@ interface AppWindowProps {
   minimized: boolean;
   /** Where the window shrinks to when minimized — the app's dock icon. */
   getMinimizeTarget: () => DOMRect | null;
+  /** Stacking order among windows; higher is in front. */
+  zIndex: number;
+  /** Called whenever the visitor interacts with the window, to raise it. */
+  onFocus: () => void;
+  /**
+   * Where a window opened after page load first appears. Without it the
+   * window sits in page flow like the terminal does on first paint.
+   */
+  defaultRect?: () => Rect;
   children: (frame: WindowFrame) => React.ReactNode;
 }
 
 /**
- * A draggable, resizable window. It starts in normal page flow (centred by
- * the page) and switches to fixed positioning the first time it is moved or
- * resized, so the server-rendered layout is exactly what it always was.
+ * A draggable, resizable window. Without `defaultRect` it starts in normal
+ * page flow (centred by the page) and switches to fixed positioning the first
+ * time it is moved or resized, so the server-rendered layout is exactly what
+ * it always was.
  */
-export function AppWindow({ minimized, getMinimizeTarget, children }: AppWindowProps) {
+export function AppWindow({
+  minimized,
+  getMinimizeTarget,
+  zIndex,
+  onFocus,
+  defaultRect,
+  children,
+}: AppWindowProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [rect, setRect] = useState<Rect | null>(null);
+  const [rect, setRect] = useState<Rect | null>(() =>
+    defaultRect && canManage() ? keepOnScreen(defaultRect()) : null
+  );
   const [maximized, setMaximized] = useState(false);
   const [gesturing, setGesturing] = useState(false);
   const [minimizeTransform, setMinimizeTransform] = useState<string>();
+  const onFocusRef = useRef(onFocus);
+  onFocusRef.current = onFocus;
+  const defaultRectRef = useRef(defaultRect);
 
   const measure = (): Rect => {
     const r = ref.current!.getBoundingClientRect();
@@ -126,10 +150,13 @@ export function AppWindow({ minimized, getMinimizeTarget, children }: AppWindowP
         window.removeEventListener("pointerup", onEnd);
         window.removeEventListener("pointercancel", onEnd);
         document.body.style.userSelect = "";
+        delete document.body.dataset.windowGesture;
         setGesturing(false);
       };
 
       document.body.style.userSelect = "none";
+      // Lets CSS stop iframes from swallowing the pointer mid-drag.
+      document.body.dataset.windowGesture = "";
       window.addEventListener("pointermove", onMove);
       window.addEventListener("pointerup", onEnd);
       window.addEventListener("pointercancel", onEnd);
@@ -138,6 +165,8 @@ export function AppWindow({ minimized, getMinimizeTarget, children }: AppWindowP
   );
 
   const toggleMaximize = useCallback(() => {
+    // Phone apps are already full screen.
+    if (!canManage()) return;
     if (maximized) {
       setMaximized(false);
       return;
@@ -166,17 +195,31 @@ export function AppWindow({ minimized, getMinimizeTarget, children }: AppWindowP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [minimized]);
 
-  // A shrinking browser window must not strand the terminal off screen.
+  // A shrinking browser window must not strand the window off screen.
   useEffect(() => {
     const onResize = () => {
       if (!canManage()) {
         setRect(null);
+        setMaximized(false);
         return;
       }
-      setRect((r) => (r ? keepOnScreen(r) : r));
+      const initial = defaultRectRef.current;
+      setRect((r) => (r ? keepOnScreen(r) : initial ? keepOnScreen(initial()) : r));
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Clicks inside an iframe never reach this page; focus moving into it is the only sign.
+  useEffect(() => {
+    const onBlur = () =>
+      window.setTimeout(() => {
+        if (document.activeElement instanceof HTMLIFrameElement && ref.current?.contains(document.activeElement)) {
+          onFocusRef.current();
+        }
+      });
+    window.addEventListener("blur", onBlur);
+    return () => window.removeEventListener("blur", onBlur);
   }, []);
 
   const placed = maximized || rect !== null;
@@ -194,9 +237,14 @@ export function AppWindow({ minimized, getMinimizeTarget, children }: AppWindowP
       data-placed={placed || undefined}
       data-occludes-background={!minimized || undefined}
       aria-hidden={minimized || undefined}
-      style={{ ...style, transform: minimizeTransform }}
-      className={`os-window z-30 ${
-        placed ? "fixed" : "relative w-full h-[75vh] max-h-[700px] max-w-5xl"
+      onPointerDownCapture={onFocus}
+      onFocusCapture={onFocus}
+      style={{ ...style, zIndex, transform: minimizeTransform }}
+      className={`os-window ${
+        placed
+          ? "fixed"
+          : // Phones: every app fills the screen between the status bar and the home bar.
+            `${PHONE_FULLSCREEN} ${defaultRect ? "" : "sm:relative sm:inset-auto sm:w-full sm:h-[75vh] sm:max-h-[700px] sm:max-w-5xl"}`
       }`}
     >
       {children({ maximized, toggleMaximize, startMove: (e) => beginGesture(e, "move") })}

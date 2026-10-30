@@ -34,6 +34,7 @@ const Neofetch = dynamic(() => import("./content/Neofetch").then((module) => mod
 });
 import { Boot } from "./content/Boot";
 import { trackEvent } from "@/lib/analytics";
+import { PHONE_APP_FRAME, TITLE_BAR_ACTION, TitleBar, type WindowControls } from "@/components/os/WindowChrome";
 import { isCrt, restoreCrt, setCrt } from "@/lib/crt";
 import { COMMAND_LIST, THEME_ARGS, PROJECT_COMMANDS } from "@/data/commands";
 import { onCliCommand } from "@/lib/cli-events";
@@ -107,24 +108,11 @@ function welcome(): React.ReactNode {
   );
 }
 
-/** Hooks the title bar into the desktop's window manager. */
-export interface WindowControls {
-  onClose: () => void;
-  onMinimize: () => void;
-  onToggleMaximize: () => void;
-  maximized: boolean;
-  /** Starts a window drag; ignores presses that land on a title-bar button. */
-  onTitleBarPointerDown: (e: React.PointerEvent<HTMLElement>) => void;
-}
-
 interface TerminalProps {
   controls?: WindowControls;
   /** Play the boot log even for returning visitors (e.g. after "power on"). */
   bootOnMount?: boolean;
 }
-
-const TRAFFIC_LIGHT =
-  "group/light h-4 w-4 rounded-full flex items-center justify-center text-[10px] leading-none font-bold text-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
 export function Terminal({ controls, bootOnMount = false }: TerminalProps) {
   const [input, setInput] = useState("");
@@ -462,64 +450,22 @@ export function Terminal({ controls, bootOnMount = false }: TerminalProps) {
     <div
       className={`crt-screen relative overflow-hidden w-full h-full bg-background border-2 border-border shadow-2xl font-code text-base flex flex-col ${
         controls?.maximized ? "rounded-none" : "rounded-lg"
-      }`}
+      } ${PHONE_APP_FRAME}`}
     >
 
       {/* Header — doubles as the window's drag handle */}
-      <div
-        onPointerDown={controls?.onTitleBarPointerDown}
-        onDoubleClick={(e) => {
-          if ((e.target as HTMLElement).closest("button")) return;
-          controls?.onToggleMaximize();
-        }}
-        className={`relative bg-secondary p-3 flex items-center gap-2 border-b-2 border-primary shrink-0 select-none ${
-          controls?.maximized ? "" : "rounded-t-md sm:cursor-grab sm:active:cursor-grabbing"
-        }`}
-      >
-        <div className="flex gap-2">
-          <button
-            type="button"
-            aria-label="Close ahmad.bat"
-            title="Close"
-            onClick={controls?.onClose}
-            className={`${TRAFFIC_LIGHT} bg-red-500`}
-          >
-            <span className="opacity-0 group-hover/light:opacity-100 group-focus-visible/light:opacity-100">×</span>
-          </button>
-          <button
-            type="button"
-            aria-label="Minimize ahmad.bat"
-            title="Minimize"
-            onClick={controls?.onMinimize}
-            className={`${TRAFFIC_LIGHT} bg-yellow-500`}
-          >
-            <span className="opacity-0 group-hover/light:opacity-100 group-focus-visible/light:opacity-100">−</span>
-          </button>
-          <button
-            type="button"
-            aria-label={controls?.maximized ? "Restore ahmad.bat" : "Maximize ahmad.bat"}
-            title={controls?.maximized ? "Restore" : "Maximize"}
-            onClick={controls?.onToggleMaximize}
-            className={`${TRAFFIC_LIGHT} bg-green-500`}
-          >
-            <span className="opacity-0 group-hover/light:opacity-100 group-focus-visible/light:opacity-100">+</span>
-          </button>
-        </div>
-        <div className="text-center flex-grow text-sm text-muted-foreground">
-          ahmad.bat
-        </div>
-
+      <TitleBar title="ahmad.bat" controls={controls}>
         {/* Command menu — tap-friendly shortcut to every command */}
         <button
           type="button"
           aria-label="Toggle command menu"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((o) => !o)}
-          className="text-xs px-2 py-1 rounded border border-border text-muted-foreground hover:text-foreground hover:border-primary transition-colors"
+          className={TITLE_BAR_ACTION}
         >
           {menuOpen ? "✕" : "☰"} menu
         </button>
-      </div>
+      </TitleBar>
 
       {/* Menu panel */}
       {menuOpen && (
