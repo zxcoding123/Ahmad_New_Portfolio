@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Read(//c/Users/AHMAD/Desktop/Projects/agenter_project/landing_page/**)",
-      "Read(//c/Users/AHMAD/Desktop/Projects/agenter_project/app/**)"
+      "Read(//c/Users/AHMAD/Desktop/Projects/agenter_project/app/**)",
+      "Read(//c/Users/AHMAD/Desktop/Projects/freelens_project/freelens_app/**)",
+      "Read(//c/Users/AHMAD/Desktop/Projects/freelens_project/freelens/**)"
     ]
   }
 }
