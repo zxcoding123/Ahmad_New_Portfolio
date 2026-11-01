@@ -99,7 +99,7 @@ html.crt .crt-screen {
   animation: crt-flicker 8s infinite;
 }
 
-/* Green phosphor on dark, scoped to the terminal so the chat widget is untouched. */
+/* Green phosphor on dark, scoped to the terminal so the other app windows are untouched. */
 html.crt.dark .crt-screen {
   --foreground: 130 100% 72%;
   --primary: 130 100% 62%;

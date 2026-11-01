@@ -20,7 +20,7 @@ export function LatestProject() {
   const verb = latest.status === "ongoing" ? "Currently building" : "Last worked on";
 
   return (
-    <div className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted-foreground">
+    <div className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-xs sm:text-sm text-muted-foreground">
       <span className="text-accent">▸</span>
       <span>{verb}:</span>
 

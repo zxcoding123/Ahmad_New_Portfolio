@@ -2,14 +2,14 @@
 
 import React from "react";
 import Image from "next/image";
-import { Download, ExternalLink, FileText, Github, Linkedin, Mail, TerminalSquare, Trash2 } from "lucide-react";
+import { Bot, Download, ExternalLink, FileText, Github, Linkedin, Mail, TerminalSquare, Trash2 } from "lucide-react";
 import { GithubContributions } from "@/components/GithubContributions";
 import { trackEvent } from "@/lib/analytics";
 import { RESUME, SITE, SOCIALS } from "@/data/site";
 import type { Rect } from "./AppWindow";
 import { TITLE_BAR_ACTION } from "./WindowChrome";
 
-export type AppId = "terminal" | "resume" | "github" | "linkedin" | "trash";
+export type AppId = "terminal" | "resume" | "github" | "linkedin" | "chat" | "trash";
 
 /** Mirrors --dock-space in globals.css, plus a little breathing room. */
 const DOCK_PX = 76 + 16;
@@ -37,6 +37,7 @@ export const APPS: Record<AppId, AppMeta> = {
   resume: { title: "resume.pdf", icon: FileText, defaultRect: centred(820, 1000, 0) },
   github: { title: "github.com/zxcoding123", icon: Github, defaultRect: centred(860, 480, 32) },
   linkedin: { title: "LinkedIn", icon: Linkedin, defaultRect: centred(560, 480, 48) },
+  chat: { title: "Ahmad's AI", icon: Bot, defaultRect: centred(400, 560, 56) },
   trash: { title: "Recycle Bin", icon: Trash2, defaultRect: centred(460, 300, 64) },
 };
 

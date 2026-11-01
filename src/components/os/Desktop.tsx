@@ -18,6 +18,7 @@ import {
   TrashApp,
   type AppId,
 } from "./apps";
+import { ChatApp } from "./ChatApp";
 import { trackEvent } from "@/lib/analytics";
 import { onOpenApp } from "@/lib/os-events";
 
@@ -42,6 +43,7 @@ const ALL_CLOSED: Record<AppId, AppState> = {
   resume: "closed",
   github: "closed",
   linkedin: "closed",
+  chat: "closed",
   trash: "closed",
 };
 
@@ -50,6 +52,7 @@ const CONTENT: Record<Exclude<AppId, "terminal">, { body: React.ReactNode; actio
   resume: { body: <ResumeApp />, actions: <ResumeActions /> },
   github: { body: <GithubApp />, actions: <GithubActions /> },
   linkedin: { body: <LinkedinApp />, actions: <LinkedinActions /> },
+  chat: { body: <ChatApp /> },
   trash: { body: <TrashApp /> },
 };
 
@@ -200,6 +203,7 @@ export function Desktop() {
         <DesktopIcon icon={APPS.resume.icon} label="resume.pdf" onOpen={() => open("resume")} />
         <DesktopIcon icon={APPS.github.icon} label="GitHub" onOpen={() => open("github")} />
         <DesktopIcon icon={APPS.linkedin.icon} label="LinkedIn" onOpen={() => open("linkedin")} />
+        <DesktopIcon icon={APPS.chat.icon} label="Ask AI" onOpen={() => open("chat")} />
         <DesktopIcon icon={APPS.trash.icon} label="Recycle Bin" onOpen={() => open("trash")} />
       </div>
 

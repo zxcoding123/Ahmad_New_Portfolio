@@ -14,6 +14,7 @@ const TILE: Record<string, string> = {
   resume: "bg-red-500 text-white",
   github: "bg-neutral-800 text-white",
   linkedin: "bg-[#0A66C2] text-white",
+  chat: "bg-emerald-500 text-white",
   trash: "bg-neutral-400 text-white dark:bg-neutral-600",
   mail: "bg-sky-500 text-white",
   calendar: "bg-white text-red-500 border border-neutral-200",
@@ -27,6 +28,7 @@ const LABEL: Record<AppId, string> = {
   resume: "Resume",
   github: "GitHub",
   linkedin: "LinkedIn",
+  chat: "Ask AI",
   trash: "Bin",
 };
 
@@ -83,7 +85,8 @@ interface MobileHomeProps {
 export function MobileHome({ onOpen, iconRefs, onRestart }: MobileHomeProps) {
   const now = useNow();
   const { resolvedTheme, setTheme } = useTheme();
-  const dark = resolvedTheme === "dark";
+  // The theme is unknown on the server; `now` is null until mount, so wait for it to avoid a hydration mismatch.
+  const dark = now !== null && resolvedTheme === "dark";
 
   const app = (id: AppId, label = true) => (
     <Tile
@@ -109,6 +112,7 @@ export function MobileHome({ onOpen, iconRefs, onRestart }: MobileHomeProps) {
       </section>
 
       <div className="grid grid-cols-4 gap-x-3 gap-y-5 mt-8">
+        {app("chat")}
         {app("trash")}
         <Tile
           tile="mail"

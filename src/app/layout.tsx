@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
-import ChatBot from '@/components/ChatBot';
 import { SITE, SITE_URL, SOCIALS } from '@/data/site';
 
 export const metadata: Metadata = {
@@ -85,7 +84,6 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
-          <ChatBot />
         </ThemeProvider>
       </body>
     </html>
